@@ -1,8 +1,15 @@
 <!doctype html>
 <?php
 include 'includes/session.php'; 
-if(!isset($_SESSION['email']))
-        header('location: index.php');
+if(isset($_GET['token'])){
+  $token=$_GET['token'];
+  $conn = $pdo->open();
+    $stmt = $conn->prepare("SELECT *,COUNT(*) AS numrows FROM users WHERE user_token=:token12");
+    $stmt->execute(['token12' => $token]);
+    $row = $stmt->fetch();
+    if($row['numrows'] > 0){
+    $stmt1 = $conn->prepare("UPDATE users SET user_token=:token WHERE user_token=:token1");
+  $stmt1->execute(['token' => 0, 'token1' => $token]);
 ?>
 <html lang="en">
 <head>
@@ -68,3 +75,6 @@ if(!isset($_SESSION['email']))
          </div>
     </body>
     </html>
+    <?php }
+   $pdo->close();
+  }?>

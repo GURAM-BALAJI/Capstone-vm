@@ -14,7 +14,7 @@ if(isset($_SESSION['vm_user']))
     <body>
          <div class="login-box">
            <h2>FORGOT PASSWORD</h2>
-           <form action="forgot-password-otp-send.php" method="post" onsubmit="myclick();">
+           <form action="forgot-password-mail-send.php" method="post" onsubmit="myclick();">
              <div class="user-box">
                <input type="email" name="email" required value="<?php if(isset($_SESSION['email'])) echo $_SESSION['email']; ?>">
                <label>Email</label>
