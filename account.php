@@ -73,7 +73,7 @@ include 'includes/header.php';
       <table>
         <tr>
           <th>
-            <img src="logo.png" width="100%" height="70px">
+            <img src="newmain.jpg" width="100%" height="100px">
           </th>
         </tr>
       </table>
@@ -120,7 +120,7 @@ include 'includes/header.php';
         </div>
         <center>
           <hr>
-          <a href="https://elonsportsempire.com/success_fail.php?user-id=<?php echo $id; ?>">
+          <a href="form.php">
           <button style="width:95%;height:50px;font-family:monospace;" class="btn btn-primary btn-sm btn-flat">RECHARGE</button></a>
           <hr>
           <button style="width:95%;height:50px;font-family:monospace;" class="btn btn-primary btn-sm pay btn-flat">Pay To Friend</button>

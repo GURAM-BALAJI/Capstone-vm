@@ -29,12 +29,12 @@ if($reciver_id!=$users_id){
 if(isset($sender_amount)){  
     if(isset($reciver_id)){
         date_default_timezone_set('Asia/Kolkata');
-		$today = date('d-m-Y h:i:s a');
+		$today = date('Y-m-d h:i:s a');
 		$date = date('Y-m-d');
-            $stmt = $conn->prepare("INSERT INTO transaction (transaction_user_id, transaction_send_to, transaction_amount, transaction_method, transaction_added_by, transaction_type, date_transaction, transaction_date) VALUES (:transaction_user_id, :transaction_send_to, :transaction_amount, :transaction_method, :transaction_added_by, :transaction_type, :date_transaction, :transaction_date)");
-$stmt->execute(['transaction_user_id'=>$users_id, 'transaction_send_to'=>$phone,'transaction_amount'=>'-'.$amount, 'transaction_method'=>'pay friend', 'transaction_added_by'=>$users_id, 'transaction_type'=>2, 'date_transaction'=>$date, 'transaction_date'=>$today]);
-$stmt = $conn->prepare("INSERT INTO transaction ( transaction_user_id, transaction_send_to, transaction_amount, transaction_method, transaction_added_by, transaction_type, date_transaction, transaction_date) VALUES (:transaction_user_id, :transaction_send_to, :transaction_amount, :transaction_method, :transaction_added_by, :transaction_type, :date_transaction, :transaction_date)");
-$stmt->execute(['transaction_user_id'=>$reciver_id, 'transaction_send_to'=>$sender_phone, 'transaction_amount'=>$amount, 'transaction_method'=>'pay friend', 'transaction_added_by'=>$users_id, 'transaction_type'=>2, 'date_transaction'=>$date, 'transaction_date'=>$today]);
+            $stmt = $conn->prepare("INSERT INTO transaction (transaction_user_id, transaction_send_to, transaction_amount, transaction_method, transaction_added_by, transaction_type, transaction_date) VALUES (:transaction_user_id, :transaction_send_to, :transaction_amount, :transaction_method, :transaction_added_by, :transaction_type, :date_transaction)");
+$stmt->execute(['transaction_user_id'=>$users_id, 'transaction_send_to'=>$phone,'transaction_amount'=>'-'.$amount, 'transaction_method'=>'pay friend', 'transaction_added_by'=>$users_id, 'transaction_type'=>2, 'date_transaction'=>$today]);
+$stmt = $conn->prepare("INSERT INTO transaction ( transaction_user_id, transaction_send_to, transaction_amount, transaction_method, transaction_added_by, transaction_type, transaction_date) VALUES (:transaction_user_id, :transaction_send_to, :transaction_amount, :transaction_method, :transaction_added_by, :transaction_type, :date_transaction)");
+$stmt->execute(['transaction_user_id'=>$reciver_id, 'transaction_send_to'=>$sender_phone, 'transaction_amount'=>$amount, 'transaction_method'=>'pay friend', 'transaction_added_by'=>$users_id, 'transaction_type'=>2, 'date_transaction'=>$today]);
         $amount1=$sender_amount-$amount;
         $stmt = $conn->prepare("UPDATE users SET user_amount=:amount WHERE user_id=:id");
 			$stmt->execute(['amount'=>$amount1, 'id'=>$users_id]);

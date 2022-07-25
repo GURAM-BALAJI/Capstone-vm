@@ -81,7 +81,7 @@ include 'includes/header.php';
             <table>
                 <tr>
                     <th>
-                        <img src="logo.png" width="100%" height="70px">
+                        <img src="newmain.jpg" width="100%" height="100px">
                     </th><?php if (!isset($_SESSION['vm_id'])) { ?><th>
                             <a href="login.php">
                                 <button style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">

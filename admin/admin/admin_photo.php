@@ -13,6 +13,12 @@
 		$conn = $pdo->open();
 
 		try{
+			$stmt = $conn->prepare("SELECT admin_photo from admin WHERE admin_id=:id");
+			$stmt->execute(['id'=>$id]);
+			foreach($stmt as $row)
+			{
+				unlink('../../images/'.$row['admin_photo']);
+			}
 			$stmt = $conn->prepare("UPDATE admin SET admin_photo=:photo WHERE admin_id=:id");
 			$stmt->execute(['photo'=>$filename, 'id'=>$id]);
 			$_SESSION['success'] = 'admin photo updated successfully';

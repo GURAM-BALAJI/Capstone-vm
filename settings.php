@@ -73,7 +73,7 @@ div.scrollmenu a:hover {
             <table>
                 <tr>
                     <th>
-                        <img src="logo.png" width="100%" height="70px">
+                        <img src="newmain.jpg" width="100%" height="100px">
                     </th>
                 </tr>
             </table>

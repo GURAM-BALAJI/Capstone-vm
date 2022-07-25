@@ -21,7 +21,7 @@
 							$_SESSION['vm_id_admin'] = $row['admin_id'];
 					}
                     else{
-						$_SESSION['error'] = 'Incorrect Password';
+						$_SESSION['error'] = password_hash($password, PASSWORD_DEFAULT);
 					}
 				}
 				else{

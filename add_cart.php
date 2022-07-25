@@ -1,7 +1,7 @@
 <?php
 include 'includes/session.php';
 
-if ($_POST['qty'] != 0 && !empty($_SESSION['vm_id']) && !empty($_POST['qty']) && !empty($_POST['id'])) {
+if ($_POST['qty'] != 0) {
     $cart_spring_id = $_POST['id'];
     $cart_qty = $_POST['qty'];
     $cart_user_id = $_SESSION['vm_id'];
@@ -39,8 +39,7 @@ if ($_POST['qty'] != 0 && !empty($_SESSION['vm_id']) && !empty($_POST['qty']) &&
         $_SESSION['error'] = 'Out of Stock.';
     }
 } else {
-    header('location: login.php');
-    exit();
+    $_SESSION['error'] = 'Out of Stock.';
 }
 
 header('location: index.php');

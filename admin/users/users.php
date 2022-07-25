@@ -78,7 +78,7 @@
                       $stmt = $conn->prepare("SELECT * FROM users WHERE user_delete='0'");
                       $stmt->execute();
                       foreach($stmt as $row){
-                        $image = (!empty($row['user_photo'])) ? '../../images/'.$row['user_photo'] : '../../images/profile.jpg';
+                        $image = (!empty($row['user_photo'])) ? './user_images/'.$row['user_photo'] : './user_images/profile.jpg';
                         $status = ($row['user_status']) ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Not Active</span>';
                         $active = (!$row['user_status']) ? '<span class="pull-right"><a href="#activate" class="status" data-toggle="modal" data-id="'.$row['user_id'].'"><i class="fa fa-check-square-o"></i></a></span>' : '<span class="pull-right"><a href="#not_activate" class="status" data-toggle="modal" data-id="'.$row['user_id'].'"><i class="fa fa-check-square-o"></i></a></span>';
                         echo "

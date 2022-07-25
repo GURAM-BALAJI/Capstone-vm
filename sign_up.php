@@ -1,6 +1,8 @@
 <!doctype html>
 <?php
 include 'includes/session.php'; 
+if(isset($_SESSION['user-otp']))
+    header('location:user-otp.php');
 if(isset($_SESSION['vm_user']))
         header('location: index.php');
 ?>
