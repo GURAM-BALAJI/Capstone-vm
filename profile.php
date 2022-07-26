@@ -13,7 +13,8 @@
     </head>
     <style>
       body {
-        background-color: #cfcfd2;
+        background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
+    font-family: 'Roboto', sans-serif;
       }
 
       hr {
@@ -66,13 +67,7 @@
     <body>
       <center>
         <div style="background-color: #333;">
-          <table>
-            <tr>
-              <th>
-                <img src="logo.png" width="100%" height="70px">
-              </th>
-            </tr>
-          </table>
+                <img src="logo.jpg" width="100%" height="70px">
         </div>
         <div style="background-color: #001a35;color: #89E6C4;"> Update Profile </div>
       </center>
@@ -206,4 +201,5 @@
       </nav>
     </body>
     <?php include 'includes/scripts.php'; ?>
+    <?php include './includes/req_end.php'; ?>
     </html>

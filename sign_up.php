@@ -15,7 +15,8 @@ if(isset($_SESSION['vm_user']))
     </head>
       <style>
     body {
-  background-image: url('img.jpg');
+      background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
+    font-family: 'Roboto', sans-serif;
 }
     </style>
     <body>
@@ -53,7 +54,7 @@ if(isset($_SESSION['vm_user']))
         unset($_SESSION['error']);
       }
     ?></center></div>
-             <a >
+             <a style="float:right;">
                <span></span>
                <span></span>
                <span></span>
@@ -71,8 +72,10 @@ if(isset($_SESSION['vm_user']))
                       text-decoration: none;
                       overflow: hidden;
                              font-size: 18px;"></a>
-           </form><br>
+           </form><br><br><br><br><br><br>
+           <center>
            <a  href="login.php" style="color:aquamarine;text-decoration: none;">I have account already,<b> Click Me..</b> </a>
+           </center>
          </div>
         <script type="text/javascript">
     function myclick(){

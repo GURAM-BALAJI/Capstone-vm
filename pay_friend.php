@@ -1,6 +1,7 @@
 <?php
 include 'includes/session.php';
-
+include './includes/req_start.php';
+if ($req_per == 1) {
 if (isset($_POST['pay'])) {
     $phone = $_POST['phone'];
     $amount = $_POST['amount'];
@@ -60,5 +61,6 @@ if (isset($_POST['pay'])) {
     }
 } else {
     $_SESSION['error'] = 'Fill up form first';
+}
 }
 header('location: account.php');

@@ -29,7 +29,7 @@ if (isset($_SESSION['vm_id'])) {
 	$paramList["CHANNEL_ID"] = $CHANNEL_ID;
 	$paramList["TXN_AMOUNT"] = $TXN_AMOUNT;
 	$paramList["WEBSITE"] = PAYTM_MERCHANT_WEBSITE;
-	$paramList["CALLBACK_URL"] = "http://localhost/vending-machine-in-php/pgResponse.php";
+	$paramList["CALLBACK_URL"] = "http://192.168.0.103/vending-machine-in-php/pgResponse.php";
 
 
 

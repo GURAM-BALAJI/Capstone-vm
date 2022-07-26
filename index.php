@@ -82,7 +82,7 @@ include 'includes/header.php';
             <table>
                 <tr>
                     <th>
-                        <img src="logo.jpg" width="100%" height="100px">
+                        <img src="logo.jpg" width="100%" height="70px">
                     </th><?php if (!isset($_SESSION['vm_id'])) { ?><th>
                             <a href="login.php">
                                 <button style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
@@ -133,7 +133,7 @@ include 'includes/header.php';
     <section class="content">
         <div class="modal-content">
             <div class="modal-body">
-                <table style="width: 100%;">
+                <table style="width: 100%;" >
                     <?php
                     $stmt = $conn->prepare("SELECT * FROM display_items WHERE display_items_qty>'0'");
                     $stmt->execute();
@@ -169,9 +169,8 @@ include 'includes/header.php';
                                 <tr>
                                     <td colspan="2">
                                         <input type="hidden" name="id" value="<?php echo $row['display_spring_id']; ?>">
-                                        <button name='add_cart' class='btn btn-warning btn-sm'><i class='fa fa-cart-plust'></i>
-                                            Add To Cart</button>
-                                        <button name='buy_now' style='float:right;' class='btn btn-success btn-sm'> Buy
+                                        <button name='add_cart' class='btn btn-warning btn' style="font-size:1rem"><i class='fa fa-cart-plust'></i>Add To Cart</button>
+                                        <button name='buy_now' style='float:right;font-size:1rem' class='btn btn-success btn'>Buy
                                             Now</button>
                                     </td>
                                 </tr>
@@ -226,4 +225,5 @@ include 'includes/header.php';
 
 </body>
 <?php include 'includes/scripts.php'; ?>
+<?php include './includes/req_end.php'; ?>
 </html>

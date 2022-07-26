@@ -2,12 +2,14 @@
 include 'includes/session.php';
 include './includes/req_start.php';
 if (isset($_SESSION["vm_id"])) {
-	
+
 	$vm_id = $_SESSION["vm_id"];
 ?>
 	<html>
 
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8">
 		<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -136,25 +138,25 @@ if (isset($_SESSION["vm_id"])) {
 
 				//Process your transaction here as success transaction.
 				//Verify amount & order id received from Payment gateway with your application's order id and amount.
-				
+
 				$ORDERID = $_POST['ORDERID'];
 				$TXNAMOUNT = $_POST['TXNAMOUNT'];
 				$date = $_POST['TXNDATE'];
 				$mode = $_POST['PAYMENTMODE'];
 				$status = $_POST['STATUS'];
 				$gatewayname = 0;
-				if($req_per==1){
-				$conn = $pdo->open();
-				$query = "INSERT INTO `transaction` (`transaction_send_to`,`transaction_added_by`,`transaction_id`, `transaction_user_id`,`transaction_amount`,`transaction_date`, transaction_type, transaction_method, transaction_status) VALUES (:transaction_send_to,:transaction_added_by,:transaction_id, :transaction_user_id, :transaction_amount, :date  ,:type ,:mode1 ,:status1 )";
-				$stmt = $conn->prepare("$query");
-				$stmt->execute(['transaction_send_to'=>'Recharged','transaction_added_by' => $vm_id, 'transaction_id' => $ORDERID, 'transaction_user_id' => $vm_id, 'transaction_amount' => $TXNAMOUNT, 'date' => $date, 'type' => $gatewayname, 'mode1' => $mode, 'status1' => $status]);
-				$stmt = $conn->prepare("SELECT user_amount FROM users WHERE user_id=:id");
-				$stmt->execute(['id' => $vm_id]);
-				$user = $stmt->fetch();
-				$total_amount = $user['user_amount'] + $TXNAMOUNT;
-				$stmt = $conn->prepare("UPDATE users SET user_amount=:user_amount WHERE user_id=:id");
-				$stmt->execute(['user_amount' => $total_amount, 'id' => $vm_id]);
-				$pdo->close();
+				if ($req_per == 1) {
+					$conn = $pdo->open();
+					$query = "INSERT INTO `transaction` (`transaction_send_to`,`transaction_added_by`,`transaction_id`, `transaction_user_id`,`transaction_amount`,`transaction_date`, transaction_type, transaction_method, transaction_status) VALUES (:transaction_send_to,:transaction_added_by,:transaction_id, :transaction_user_id, :transaction_amount, :date  ,:type ,:mode1 ,:status1 )";
+					$stmt = $conn->prepare("$query");
+					$stmt->execute(['transaction_send_to' => 'Recharged', 'transaction_added_by' => $vm_id, 'transaction_id' => $ORDERID, 'transaction_user_id' => $vm_id, 'transaction_amount' => $TXNAMOUNT, 'date' => $date, 'type' => $gatewayname, 'mode1' => $mode, 'status1' => $status]);
+					$stmt = $conn->prepare("SELECT user_amount FROM users WHERE user_id=:id");
+					$stmt->execute(['id' => $vm_id]);
+					$user = $stmt->fetch();
+					$total_amount = $user['user_amount'] + $TXNAMOUNT;
+					$stmt = $conn->prepare("UPDATE users SET user_amount=:user_amount WHERE user_id=:id");
+					$stmt->execute(['user_amount' => $total_amount, 'id' => $vm_id]);
+					$pdo->close();
 				}
 		?>
 
@@ -184,8 +186,8 @@ if (isset($_SESSION["vm_id"])) {
 			//Process transaction as suspicious.
 		}
 		$_SESSION["vm_id"] = $vm_id;
-		$_SESSION['vm_user']='True';
-	}else{
+		$_SESSION['vm_user'] = 'True';
+	} else {
 		header('location:account.php');
 	}
 	?>

@@ -118,7 +118,7 @@ table {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <center>
         <div style="background-color: #333;">
-                        <img src="logo.jpg" width="100%" height="100px">
+                        <img src="logo.jpg" width="100%" height="70px">
         </div>
 
 
@@ -326,5 +326,5 @@ $(function() {
     });
 });
 </script>
-
+<?php include './includes/req_end.php'; ?>
 </html>

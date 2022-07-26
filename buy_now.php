@@ -1,5 +1,7 @@
 <?php
 include 'includes/session.php';
+include './includes/req_start.php';
+if ($req_per == 1) {
 $redirect = 0;
 if (isset($_SESSION['vm_id'])) {
     $id = $_SESSION['vm_id'];
@@ -81,7 +83,8 @@ if (isset($_SESSION['vm_id'])) {
         }
     }
 }
-if ($redirect == 1)
+}
+if ($redirect == 1 && isset($redirect))
     header('location: vend_now.php');
 else
     header('location: cart.php');

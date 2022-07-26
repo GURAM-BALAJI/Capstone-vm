@@ -15,6 +15,14 @@
 		date_default_timezone_set('Asia/Kolkata');
 		$today = date('d-m-Y h:i:s a');
 		$date = date('Y-m-d');
+		
+	$stmt = $conn->prepare("SELECT *, COUNT(*) AS numrows FROM users WHERE user_email=:email || user_phone=:phone");
+	$stmt->execute(['email' => $email, 'phone' => $contact]);
+	$row = $stmt->fetch();
+
+	if ($row['numrows'] > 0) {
+		$_SESSION['error'] = 'Email or phone number already taken.';
+	} else {
 		if($password == $row['password']){
 			$password = $row['password'];
 		}
@@ -31,7 +39,7 @@
 		catch(PDOException $e){
 			$_SESSION['error'] = $e->getMessage();
 		}
-		
+	}
 
 		$pdo->close();
 	}
@@ -40,5 +48,3 @@
 	}
 
 	header('location: users.php');
-
-?>

@@ -15,7 +15,8 @@ if(isset($_SESSION['vm_user']))
     </head>
     <style>
     body {
-  background-image: url('img1.jpg');
+      background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
+    font-family: 'Roboto', sans-serif;
 }
     </style>
     <body>
@@ -31,6 +32,8 @@ if(isset($_SESSION['vm_user']))
              <div class="user-box">
                <input type="password" name="password" required="" value="<?php if(isset($_SESSION['password'])) echo $_SESSION['password']; ?>">
                <label>Password</label>
+               </div>
+             <div class="user-box">
                  <a href="forgot-password.php" style="font-size:10px;">Forgot Password..?</a>
              </div>
                                <center>  <?php
@@ -51,7 +54,7 @@ if(isset($_SESSION['vm_user']))
         unset($_SESSION['success']);
       }
     ?></center>
-             <a >
+             <a  style="float:right;">
                <span></span>
                <span></span>
                <span></span>
@@ -71,11 +74,13 @@ if(isset($_SESSION['vm_user']))
                       font-size: 18px;
 " >
              </a>
-           </form>><br>
+           </form><br><br><br><br><br>
+           <center>
            <a  href="sign_up.php" 
                      style="color:aquamarine;text-decoration: none;">
                       I dont have an account, <b>Create New</b>
              </a>
+           </center>
          </div>
     </body>
     </html>

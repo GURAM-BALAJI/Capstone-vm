@@ -1,4 +1,6 @@
 <?php include 'includes/session.php';
+include './includes/req_start.php';
+if ($req_per == 1) {
 if (isset($_POST['submit'])) {
   $name = $_POST['name'];
   $email = $_POST['email'];
@@ -16,6 +18,7 @@ VALUES ('$name', '$phone', '$email', '$country', '$subject','$today')";
     echo "<center><h2 style='color:red;'>Something Went Wrong!</h2></center>";
   }
 }
+}
 ?>
 <html>
 
@@ -31,7 +34,8 @@ VALUES ('$name', '$phone', '$email', '$country', '$subject','$today')";
   </head>
   <style>
     body {
-      background-color: aquamarine;
+      background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
+    font-family: 'Roboto', sans-serif;
       align-content: center;
     }
 
@@ -145,5 +149,5 @@ VALUES ('$name', '$phone', '$email', '$country', '$subject','$today')";
   </nav>
 
 </body>
-
+<?php include './includes/req_end.php'; ?>
 </html>

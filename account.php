@@ -86,6 +86,7 @@ include 'includes/header.php';
 
   .amount {
     font-size: 55px;
+    color:green;
   }
 
   .amount-box p {
@@ -101,7 +102,7 @@ include 'includes/header.php';
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <center>
     <div style="background-color: #333;">
-            <img src="logo.jpg" width="100%" height="100px">
+            <img src="logo.jpg" width="100%" height="70px">
     </div>
     <div style="background-color: #001a35;color: #89E6C4;"> WALLET </div>
   </center>
@@ -135,11 +136,11 @@ include 'includes/header.php';
     $stmt->execute();
     foreach ($stmt as $row) { ?>
       <section class="content">
-        <div class="modal-content" style="background-color:rgba(235, 224, 232, 1);box-shadow:1px 1px 8px #000000;">
+        <div class="modal-content" style="background-color:rgba(235, 224, 232, 0.900);box-shadow:1px 1px 8px #000000;">
           <div class="amount-box text-center">
-            <img src="https://lh3.googleusercontent.com/ohLHGNvMvQjOcmRpL4rjS3YQlcpO0D_80jJpJ-QA7-fQln9p3n7BAnqu3mxQ6kI4Sw" alt="wallet">
+            <img src="./images/wallet.png" alt="wallet">
             <p style="font-size:large;">Total Balance</p>
-            <p class="amount">&#8377;<?php echo $row['user_amount']; ?></p>
+            <p class="amount" style="<?php if($row['user_amount']<=0) echo "color:red;";?>">&#8377;<?php echo $row['user_amount']; ?></p>
             <a href="recharge_form.php">
               <button type="button" style="width: 30%;height:35px;border:1.5px solid black;border-radius: 20px !important;margin:5% 2% 5% auto;color:#001a35;background-color:snow;  box-shadow: 2px 1px 4px #000000; " class="btn-sm">Add Money</button></a>
             <button type="button" style="width: 30%;height:35px;border:1.5px solid black;border-radius: 20px !important;margin:5% auto 5% 2%;color:#001a35;background-color:snow;  box-shadow: 2px 1px 4px #000000; "  class="btn-sm pay ">PAY FRIEND</button>
@@ -173,8 +174,8 @@ if (isset($_SESSION['vm_id'])) {
                     </td>
                     <td  style="width: 150px;color:<?php echo $color; ?>;">&#8377;<?php echo floatval($row['transaction_amount']); ?> /-</td>
                 <tr>
-                    <td style="background-color:white;"><?php echo date("d-M-Y h:i:s A", strtotime($row['transaction_date'])); ?></td>
-                    <td style="width: 150px;color:<?php echo $color; ?>;background-color:white;"><?php echo $val; ?> </td>
+                    <td><?php echo date("d-M-Y h:i:s A", strtotime($row['transaction_date'])); ?></td>
+                    <td style="width: 150px;color:<?php echo $color; ?>;"><?php echo $val; ?> </td>
                 <tr>
                 </tr>
                 </tr>

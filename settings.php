@@ -71,7 +71,7 @@ div.scrollmenu a:hover {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <center>
         <div style="background-color: #333;">
-                        <img src="logo.jpg" width="100%" height="100px">
+                        <img src="logo.jpg" width="100%" height="70px">
         </div>
         <div style="background-color: #001a35;color: #89E6C4;"> SETTINGS </div>
     </center>
@@ -172,5 +172,5 @@ div.scrollmenu a:hover {
     </nav>
     <!-- partial -->
 </body>
-
+<?php include './includes/req_end.php'; ?>
 </html>
