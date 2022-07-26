@@ -14,7 +14,8 @@ include 'includes/header.php';
 </head>
 <style>
     body {
-        background-color: #cfcfd2;
+        background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
+      font-family: 'Roboto', sans-serif;
     }
 
     hr {
@@ -144,7 +145,7 @@ include 'includes/header.php';
                     ?>
                             <form method="POST" action="add_cart.php">
                                 <tr>
-                                    <td rowspan="3"> <img src="./items_images/<?php echo $row1['items_image']; ?>" height="150px" width="150px"> </td>
+                                    <td rowspan="3" style="padding-right:8px;"> <img src="./items_images/<?php echo $row1['items_image']; ?>" height="150px" width="150px"> </td>
                                     <td colspan="2">
                                         <?php echo "<h2 style='text-transform: uppercase;'>" . $row1['items_name'] . "</h2>"; ?>
                                     </td>

@@ -14,7 +14,8 @@ include 'includes/header.php';
 </head>
 <style>
 body {
-    background-color: #cfcfd2;
+    background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
+      font-family: 'Roboto', sans-serif;
 }
 
 hr {
@@ -70,13 +71,7 @@ div.scrollmenu a:hover {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <center>
         <div style="background-color: #333;">
-            <table>
-                <tr>
-                    <th>
                         <img src="logo.jpg" width="100%" height="100px">
-                    </th>
-                </tr>
-            </table>
         </div>
         <div style="background-color: #001a35;color: #89E6C4;"> SETTINGS </div>
     </center>
@@ -109,21 +104,21 @@ div.scrollmenu a:hover {
             <div class="modal-body">
                 <center>
                     <hr>
-                    <a href="profile.php"><button style="width:95%;height:50px;font-family:monospace;"><i
+                    <a href="profile.php"><button style="width:95%;height:50px;color:black"><i
                                 class="fa fa-user" aria-hidden="true"></i> Profile</button></a>
                     <hr>
-                    <a href="contact.php"><button style="width:95%;height:50px;font-family:monospace;"><i
+                    <a href="contact.php"><button style="width:95%;height:50px;color:black"><i
                                 class="fa fa-commenting" aria-hidden="true"></i> Contact</button></a>
                     <hr>
-                    <button onclick="window.open('whatsapp://send?text=')"
-                        style="width:95%;height:50px;font-family:monospace;"><i class="fa fa-share-alt"
+                    <button onclick="window.open('whatsapp://send?text=balaji.com')"
+                        style="width:95%;height:50px;color:black"><i class="fa fa-share-alt"
                             aria-hidden="true"></i> Share </button>
                     <hr>
-                    <a href="our_team/html.html"><button style="width:95%;height:50px;font-family:monospace;"><i
+                    <a href="our_team/html.html"><button style="width:95%;height:50px;color:black"><i
                                 class="fa fa-users" aria-hidden="true"></i> Our Team</button></a>
                     <hr>
-                    <a href="logout.php"><button style="width:95%;height:50px;font-family:monospace;"><i
-                                class="fa fa-sign-out" aria-hidden="true"></i> LOG_OUT</button></a>
+                    <a href="logout.php"><button style="width:95%;height:50px;color:black"><i
+                                class="fa fa-sign-out" aria-hidden="true"></i> LOG OUT</button></a>
                     <hr>
                 </center>
             </div>

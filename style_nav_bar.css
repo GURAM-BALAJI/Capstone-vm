@@ -31,11 +31,11 @@ body {
 }
 
 .nav__link:hover {
-    background-color: #6b6767;
+    background-color: rgba(235, 224, 232, 1);
 }
 
 .nav__link--active {
-    color: #ef1616;
+    color: rgba(254, 191, 1, 1);
 }
 
 .nav__icon {

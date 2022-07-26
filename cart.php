@@ -14,7 +14,8 @@ include 'includes/header.php';
 </head>
 <style>
 body {
-    background-color: #cfcfd2;
+    background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
+      font-family: 'Roboto', sans-serif;
 }
 
 hr {
@@ -71,6 +72,45 @@ p {
     color: darkgray;
     margin-top: -10px;
 }
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td,
+  th {
+    border: 0.8px solid #dddddd;
+    text-align: center;
+    padding: 3px;
+  }
+
+.vend_btn {
+    display: inline-block;
+    padding: 5px 100px 5px 100px;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: orange;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px #999;
+    margin-bottom: 7px;
+  }
+
+  .vend_btn:hover {
+    background-color: #3e8e41
+  }
+
+  .vend_btn:active {
+    background-color: #3e8e41;
+    box-shadow: 0 3px #666;
+    transform: translateY(4px);
+  }
+
 </style>
 
 <body>
@@ -78,13 +118,7 @@ p {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <center>
         <div style="background-color: #333;">
-            <table>
-                <tr>
-                    <th>
                         <img src="logo.jpg" width="100%" height="100px">
-                    </th>
-                </tr>
-            </table>
         </div>
 
 
@@ -127,6 +161,7 @@ p {
             ?>
     </center>
     <section class="content">
+        <button style="width:100%;height:50px;border:2px solid black;margin-bottom:8px;border-radius :15px;background-color:lightblue;" class="btn btn-sm history btn-flat "><b>ORDERS HISTORY</b></button>
         <div class="modal-content">
             <div class="modal-body">
                 <table style="width: 100%;">
@@ -275,8 +310,7 @@ p {
         </a>
 
     </nav>
-    <!-- partial -->
-
+  
 </body>
 <?php include './cart_module.php'; ?>
 <?php include 'includes/scripts.php'; ?>
@@ -285,6 +319,10 @@ $(function() {
     $(document).on('click', '.buy', function(e) {
         e.preventDefault();
         $('#buy').modal('show');
+    });
+    $(document).on('click', '.history', function(e) {
+        e.preventDefault();
+        $('#history').modal('show');
     });
 });
 </script>
