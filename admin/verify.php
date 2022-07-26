@@ -21,15 +21,15 @@
 							$_SESSION['vm_id_admin'] = $row['admin_id'];
 					}
                     else{
-						$_SESSION['error'] = password_hash($password, PASSWORD_DEFAULT);
+						$_SESSION['error'] = 'Invalid.';
 					}
 				}
 				else{
-					$_SESSION['error'] = 'Account not activated.';
+					$_SESSION['error'] = 'Invalid.';
 				}
 			}
             else{
-				$_SESSION['error'] = 'Email not found';
+				$_SESSION['error'] = 'Invalid.';
 			}
 		}
 		catch(PDOException $e){

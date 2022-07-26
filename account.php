@@ -73,7 +73,7 @@ include 'includes/header.php';
       <table>
         <tr>
           <th>
-            <img src="newmain.jpg" width="100%" height="100px">
+            <img src="logo.jpg" width="100%" height="100px">
           </th>
         </tr>
       </table>
@@ -183,7 +183,7 @@ include 'includes/header.php';
   </nav>
   <!-- partial -->
   <?php include 'includes/scripts.php'; ?>
-  <script>
+  <script type="text/javascript">
       $(document).ready(function() {
       $('#phone').keyup(function(ev) {
         var phone = $('#phone').val();
@@ -219,7 +219,8 @@ include 'includes/header.php';
         $('#orders').modal('show');
       });
     });
+  
   </script>
 </body>
-
+<?php include './includes/req_end.php'; ?>
 </html>

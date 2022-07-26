@@ -11,8 +11,8 @@
 		$photo = $_FILES['photo']['name'];
 		if(password_verify($curr_password, $user['user_password'])){
 			if(!empty($photo)){
-				move_uploaded_file($_FILES['photo']['tmp_name'], 'images/'.$photo);
-				$filename = $photo;	
+				$filename=$user['user_id'].'_'.date('Y-m-d').'_'.time().'.'.$ext;
+			move_uploaded_file($_FILES['photo']['tmp_name'], './images/'.$filename);	
 			}
 			else{
 				$filename = $user['photo'];
@@ -51,5 +51,3 @@
 	}
 
 	header('location:profile.php');
-
-?>

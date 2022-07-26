@@ -47,14 +47,17 @@
                       <tbody>
                         <?php
                         date_default_timezone_set('Asia/Kolkata');
-                        if (isset($_GET['submit']))
-                          $today = $_GET['date'];
-                        else
+                        if (isset($_GET['submit'])){
+                          $today = strtotime($_GET['date']);
+                          $day=date('d',$today);
+                          $month=date('m',$today);
+                          $year=date('Y',$today);
+                        }else
                           $today = date("Y-m-d");
                         $conn = $pdo->open();
                         try {
                           $slno = 1;
-                          $stmt = $conn->prepare("SELECT * FROM transaction WHERE date_transaction='$today' AND transaction_type='0' ORDER BY transaction_id DESC");
+                          $stmt = $conn->prepare("SELECT * FROM transaction WHERE day(transaction_date)=$day AND month(transaction_date)=$month AND year(transaction_date)=$year AND transaction_type='0' ORDER BY transaction_id DESC");
                           $stmt->execute();
                           foreach ($stmt as $row) {
                             echo "<tr>";

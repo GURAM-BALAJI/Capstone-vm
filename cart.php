@@ -81,7 +81,7 @@ p {
             <table>
                 <tr>
                     <th>
-                        <img src="newmain.jpg" width="100%" height="100px">
+                        <img src="logo.jpg" width="100%" height="100px">
                     </th>
                 </tr>
             </table>

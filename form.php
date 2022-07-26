@@ -1,4 +1,6 @@
 <?php
+include 'includes/session.php';
+if (isset($_SESSION["vm_id"])) {
 header("Pragma: no-cache");
 header("Cache-Control: no-cache");
 header("Expires: 0");
@@ -110,7 +112,6 @@ header("Expires: 0");
       height: 14px;
       width: 10px;
       display: inline-block;
-      background-image: url('rupee.png');
     }
   </style>
 </head>
@@ -155,51 +156,54 @@ header("Expires: 0");
 </body>
 <script>
   function onchange_price() {
-    document.getElementById('pay').value = "Proceed To Add +" + document.getElementById('price').value;
+    document.getElementById('pay').value = "Proceed To Add + " + document.getElementById('price').value;
   }
 
   function onclickbutton_100() {
     val = document.getElementById('price').value;
     if (val == "")
       val = 0;
-    document.getElementById('price').value = parseInt(val) + 100;
-    document.getElementById('pay').value = "Proceed To Add +" + document.getElementById('price').value;
+    document.getElementById('price').value =  100;
+    document.getElementById('pay').value = "Proceed To Add + " + document.getElementById('price').value;
   }
 
   function onclickbutton_200() {
     val = document.getElementById('price').value;
     if (val == "")
       val = 0;
-    document.getElementById('price').value = parseInt(val) + 200;
-    document.getElementById('pay').value = "Proceed To Add +" + document.getElementById('price').value;
+    document.getElementById('price').value =  200;
+    document.getElementById('pay').value = "Proceed To Add + " + document.getElementById('price').value;
   }
 
   function onclickbutton_400() {
     val = document.getElementById('price').value;
     if (val == "")
       val = 0;
-    document.getElementById('price').value = parseInt(val) + 400;
-    document.getElementById('pay').value = "Proceed To Add +" + document.getElementById('price').value;
+    document.getElementById('price').value =  400;
+    document.getElementById('pay').value = "Proceed To Add + " + document.getElementById('price').value;
   }
 
   function onclickbutton_500() {
     val = document.getElementById('price').value;
     if (val == "")
       val = 0;
-    document.getElementById('price').value = parseInt(val) + 500;
-    document.getElementById('pay').value = "Proceed To Add +" + document.getElementById('price').value;
+    document.getElementById('price').value =  500;
+    document.getElementById('pay').value = "Proceed To Add + " + document.getElementById('price').value;
   }
-  document.getElementById('pay').value = "Proceed To Add +" + document.getElementById('price').value;
+  document.getElementById('pay').value = "Proceed To Add + " + document.getElementById('price').value;
 
   function onclickbutton_1000() {
     val = document.getElementById('price').value;
     if (val == "")
       val = 0;
-    document.getElementById('price').value = parseInt(val) + 1000;
-    document.getElementById('pay').value = "Proceed To Add +" + document.getElementById('price').value;
+    document.getElementById('price').value =  1000;
+    document.getElementById('pay').value = "Proceed To Add + " + document.getElementById('price').value;
   }
 </script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </html>
+<?php 	}else{
+		header('location:account.php');
+	}?>

@@ -12,6 +12,12 @@
 			if(!empty($photo)){
 				move_uploaded_file($_FILES['photo']['tmp_name'], '../../images/'.$photo);
 				$filename = $photo;	
+				$stmt = $conn->prepare("SELECT admin_photo from admin WHERE admin_id=:id");
+				$stmt->execute(['id'=>$id]);
+				foreach($stmt as $row)
+				{
+					unlink('../../images/'.$row['admin_photo']);
+				}
 			}
 			else{
 				$filename = $admin['admin_photo'];

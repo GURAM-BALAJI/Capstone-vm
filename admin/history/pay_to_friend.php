@@ -54,7 +54,7 @@
                         $conn = $pdo->open();
                         try {
                           $slno = 1;
-                          $stmt = $conn->prepare("SELECT * FROM transaction WHERE date_transaction='$today' AND transaction_type='2' ORDER BY transaction_id DESC");
+                          $stmt = $conn->prepare("SELECT * FROM transaction WHERE transaction_date='$today' AND transaction_type='2' ORDER BY transaction_id DESC");
                           $stmt->execute();
                           foreach ($stmt as $row) {
                             echo "<tr>";

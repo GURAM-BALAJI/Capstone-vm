@@ -1,7 +1,9 @@
 <?php
 include 'includes/session.php';
+include './includes/req_start.php';
 if (isset($_SESSION["vm_id"])) {
-	$CUST_ID = $_SESSION["vm_id"];
+	
+	$vm_id = $_SESSION["vm_id"];
 ?>
 	<html>
 
@@ -141,17 +143,19 @@ if (isset($_SESSION["vm_id"])) {
 				$mode = $_POST['PAYMENTMODE'];
 				$status = $_POST['STATUS'];
 				$gatewayname = 5;
+				if($req_per==1){
 				$conn = $pdo->open();
 				$query = "INSERT INTO `transaction` (`transaction_added_by`,`transaction_id`, `transaction_user_id`,`transaction_amount`,`transaction_date`, transaction_type, transaction_method, transaction_status) VALUES (:transaction_added_by,:transaction_id, :transaction_user_id, :transaction_amount, :date  ,:type ,:mode1 ,:status1 )";
 				$stmt = $conn->prepare("$query");
-				$stmt->execute(['transaction_added_by' => $CUST_ID, 'transaction_id' => $ORDERID, 'transaction_user_id' => $CUST_ID, 'transaction_amount' => $TXNAMOUNT, 'date' => $date, 'type' => $gatewayname, 'mode1' => $mode, 'status1' => $status]);
+				$stmt->execute(['transaction_added_by' => $vm_id, 'transaction_id' => $ORDERID, 'transaction_user_id' => $vm_id, 'transaction_amount' => $TXNAMOUNT, 'date' => $date, 'type' => $gatewayname, 'mode1' => $mode, 'status1' => $status]);
 				$stmt = $conn->prepare("SELECT user_amount FROM users WHERE user_id=:id");
-				$stmt->execute(['id' => $CUST_ID]);
+				$stmt->execute(['id' => $vm_id]);
 				$user = $stmt->fetch();
 				$total_amount = $user['user_amount'] + $TXNAMOUNT;
 				$stmt = $conn->prepare("UPDATE users SET user_amount=:user_amount WHERE user_id=:id");
-				$stmt->execute(['user_amount' => $total_amount, 'id' => $CUST_ID]);
+				$stmt->execute(['user_amount' => $total_amount, 'id' => $vm_id]);
 				$pdo->close();
+				}
 		?>
 
 				<div class="modal-dialog modal-confirm">
@@ -179,7 +183,10 @@ if (isset($_SESSION["vm_id"])) {
 			echo "<b>Checksum mismatched.</b>";
 			//Process transaction as suspicious.
 		}
-		$_SESSION["vm_id"] = $CUST_ID;
+		$_SESSION["vm_id"] = $vm_id;
+		$_SESSION['vm_user']='True';
+	}else{
+		header('location:account.php');
 	}
 	?>
 	</body>

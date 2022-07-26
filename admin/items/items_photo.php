@@ -9,12 +9,19 @@
 			$today = date('d-m-Y h:i:s a');
             $ext = pathinfo($filename, PATHINFO_EXTENSION);
                 $filename=date('Y-m-d').'_'.time().'.'.$ext;
-			move_uploaded_file($_FILES['photo']['tmp_name'], '../../items_images/'.$filename);	
+			move_uploaded_file($_FILES['photo']['tmp_name'], '../../items_images/'.$filename);
+
 		}
 		
 		$conn = $pdo->open();
 
 		try{
+			$stmt = $conn->prepare("SELECT items_image from items WHERE items_id=:id");
+			$stmt->execute(['id'=>$id]);
+			foreach($stmt as $row)
+			{
+				unlink('../../items_images/'.$row['items_image']);
+			}
 			$stmt = $conn->prepare("UPDATE items SET items_image=:photo,items_updated_date=:items_updated_date WHERE items_id=:id");
 			$stmt->execute(['photo'=>$filename,'items_updated_date'=>$today, 'id'=>$id]);
 			$_SESSION['success'] = 'Item photo updated successfully';
@@ -31,4 +38,3 @@
 	}
 
 	header('location: items.php');
-?>
