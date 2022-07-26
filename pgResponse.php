@@ -142,12 +142,12 @@ if (isset($_SESSION["vm_id"])) {
 				$date = $_POST['TXNDATE'];
 				$mode = $_POST['PAYMENTMODE'];
 				$status = $_POST['STATUS'];
-				$gatewayname = 5;
+				$gatewayname = 0;
 				if($req_per==1){
 				$conn = $pdo->open();
-				$query = "INSERT INTO `transaction` (`transaction_added_by`,`transaction_id`, `transaction_user_id`,`transaction_amount`,`transaction_date`, transaction_type, transaction_method, transaction_status) VALUES (:transaction_added_by,:transaction_id, :transaction_user_id, :transaction_amount, :date  ,:type ,:mode1 ,:status1 )";
+				$query = "INSERT INTO `transaction` (`transaction_send_to`,`transaction_added_by`,`transaction_id`, `transaction_user_id`,`transaction_amount`,`transaction_date`, transaction_type, transaction_method, transaction_status) VALUES (:transaction_send_to,:transaction_added_by,:transaction_id, :transaction_user_id, :transaction_amount, :date  ,:type ,:mode1 ,:status1 )";
 				$stmt = $conn->prepare("$query");
-				$stmt->execute(['transaction_added_by' => $vm_id, 'transaction_id' => $ORDERID, 'transaction_user_id' => $vm_id, 'transaction_amount' => $TXNAMOUNT, 'date' => $date, 'type' => $gatewayname, 'mode1' => $mode, 'status1' => $status]);
+				$stmt->execute(['transaction_send_to'=>'Recharged','transaction_added_by' => $vm_id, 'transaction_id' => $ORDERID, 'transaction_user_id' => $vm_id, 'transaction_amount' => $TXNAMOUNT, 'date' => $date, 'type' => $gatewayname, 'mode1' => $mode, 'status1' => $status]);
 				$stmt = $conn->prepare("SELECT user_amount FROM users WHERE user_id=:id");
 				$stmt->execute(['id' => $vm_id]);
 				$user = $stmt->fetch();

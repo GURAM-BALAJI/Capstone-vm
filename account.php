@@ -63,6 +63,43 @@ include 'includes/header.php';
     background-color: #777;
 
   }
+  table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: px solid #dddddd;
+  text-align: left;
+  padding: 5px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.vend_btn{
+  display: inline-block;
+  padding: 5px 100px 5px 100px;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: orange;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px #999;
+  margin-bottom:7px ;
+}
+.vend_btn:hover {background-color: #3e8e41}
+
+.vend_btn:active {
+  background-color: #3e8e41;
+  box-shadow: 0 3px #666;
+  transform: translateY(4px);
+}
 </style>
 
 <body>
@@ -78,7 +115,7 @@ include 'includes/header.php';
         </tr>
       </table>
     </div>
-    <div style="background-color: #001a35;color: #89E6C4;"> ACCOUNT </div>
+    <div style="background-color: #001a35;color: #89E6C4;"> WALLET </div>
   </center>
   <?php
   if (isset($_SESSION['error'])) {
@@ -124,8 +161,6 @@ include 'includes/header.php';
           <button style="width:95%;height:50px;font-family:monospace;" class="btn btn-primary btn-sm btn-flat">RECHARGE</button></a>
           <hr>
           <button style="width:95%;height:50px;font-family:monospace;" class="btn btn-primary btn-sm pay btn-flat">Pay To Friend</button>
-          <hr>
-          <button style="width:95%;height:50px;font-family:monospace;" class="btn btn-primary btn-sm orders btn-flat">Present Orders</button>
           <hr>
           <button style="width:95%;height:50px;font-family:monospace;" class="btn btn-primary btn-sm history btn-flat">Orders History</button>
           <hr>

@@ -46,12 +46,7 @@ if (isset($_SESSION['vm_id'])) {
             foreach ($stmt_user as $row_user)
                 if ($row_user['user_amount'] >= $total) {
                     $redirect = 1;
-                    do {
-                        $orders_otp = rand(9999, 1111);
-                        $stmt = $conn->prepare("SELECT COUNT(*) AS numrows FROM orders WHERE orders_otp=:orders_otp");
-                        $stmt->execute(['orders_otp' => $orders_otp]);
-                        $row = $stmt->fetch();
-                    } while ($row['numrows']);
+            
                     $update_qty = explode(',', $qty_array);
                     $update_items = explode(',', $item_array);
                     $i = 0;
@@ -69,15 +64,15 @@ if (isset($_SESSION['vm_id'])) {
                     date_default_timezone_set('Asia/Kolkata');
                     $today = date('d-m-Y h:i:s a');
                     $date = date('Y-m-d');
-                    $stmt = $conn->prepare("INSERT INTO orders (orders_qty,orders_cost,orders_items, orders_otp,orders_user_id,orders_date) VALUES (:orders_qty,:orders_cost,:orders_items,:orders_otp,:orders_user_id,:orders_date)");
-                    $stmt->execute(['orders_qty' => $qty_array, 'orders_cost' => $cost_array, 'orders_items' => $item_array, 'orders_otp' => $orders_otp, 'orders_user_id' => $id, 'orders_date'=>$today]);
+                    $stmt = $conn->prepare("INSERT INTO orders (orders_qty,orders_cost,orders_items,orders_user_id,orders_date) VALUES (:orders_qty,:orders_cost,:orders_items,:orders_user_id,:orders_date)");
+                    $stmt->execute(['orders_qty' => $qty_array, 'orders_cost' => $cost_array, 'orders_items' => $item_array, 'orders_user_id' => $id, 'orders_date'=>$today]);
                     $stmt = $conn->prepare("DELETE FROM cart WHERE cart_user_id=:id");
                     $stmt->execute(['id' => $id]);
                     $balance = $row_user['user_amount'] - $total;
                     $stmt_user_update = $conn->prepare("UPDATE users SET user_amount=$balance WHERE user_id=$id");
                     $stmt_user_update->execute();
-                    $stmt = $conn->prepare("INSERT INTO transaction (transaction_user_id,transaction_send_to,transaction_amount,transaction_method,transaction_added_by,transaction_type,transaction_date,) VALUES (:transaction_user_id,:transaction_send_to,:transaction_amount,:transaction_method,:transaction_added_by,:transaction_type,:transaction_date,:transaction_date)");
-                    $stmt->execute(['transaction_user_id' => $id, 'transaction_send_to' => 'Order', 'transaction_amount' => $total, 'transaction_method' => 'Ordered', 'transaction_added_by' => $id, 'transaction_type'=>1, 'transaction_date'=>$today, 'transaction_date'=>$date]);
+                    $stmt = $conn->prepare("INSERT INTO transaction (transaction_user_id,transaction_send_to,transaction_amount,transaction_method,transaction_added_by,transaction_type,transaction_date) VALUES (:transaction_user_id,:transaction_send_to,:transaction_amount,:transaction_method,:transaction_added_by,:transaction_type,:transaction_date)");
+                    $stmt->execute(['transaction_user_id' => $id, 'transaction_send_to' => 'Order', 'transaction_amount' => $total, 'transaction_method' => 'Ordered', 'transaction_added_by' => $id, 'transaction_type'=>1, 'transaction_date'=>$today]);
                 } else
                     $_SESSION['error'] = 'Insufficient Balance.';
             $stmt_semopher = $conn->prepare("UPDATE semopher SET semopher_value=0 WHERE semopher_id=1");
@@ -87,6 +82,6 @@ if (isset($_SESSION['vm_id'])) {
     }
 }
 if ($redirect == 1)
-    header('location: otp_display.php?otp=' . $orders_otp . '');
+    header('location: vend_now.php');
 else
     header('location: cart.php');
