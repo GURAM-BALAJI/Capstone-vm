@@ -16,7 +16,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> Home</li>
-        <li>REPORTS</li>
+        <li>REQUESTS</li>
         <li class="active"> Viewed Contact</li>
       </ol>
     </section>
@@ -53,25 +53,23 @@
                
                   <?php
                     $conn = $pdo->open();
-$print=0;
+                    echo "<table id='example1' class='table table-bordered'>
+                    <thead>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Country</th>
+                      <th>Subject</th>
+                         
+                    </thead>
+                    <tbody>";
                     try{
                       $now = date('Y-m-d');
                       $stmt = $conn->prepare("SELECT * FROM contact WHERE contact_view=1");
                       $stmt->execute();
                       foreach($stmt as $row){
-                                if($print==0){
-                              echo "<table id='example1' class='table table-bordered'>
-                <thead>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Country</th>
-                  <th>Subject</th>
-                     
-                </thead>
-                <tbody><h2>Viewed Contacts</h2>";
-                              $print=1;
-                          }
+                             
+                             
                         echo "
                           <tr>
                             <td>".$row['contact_name']."</td>

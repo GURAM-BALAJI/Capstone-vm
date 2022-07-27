@@ -1,6 +1,8 @@
 <?php
 include 'includes/session.php';
-
+if (isset($_SESSION['vm_id'])){
+    include './includes/req_start.php';
+if ($req_per == 1) {
 if ($_POST['qty'] != 0) {
     $cart_spring_id = $_POST['id'];
     $cart_qty = $_POST['qty'];
@@ -41,5 +43,6 @@ if ($_POST['qty'] != 0) {
 } else {
     $_SESSION['error'] = 'Out of Stock.';
 }
-
+}
+}
 header('location: index.php');

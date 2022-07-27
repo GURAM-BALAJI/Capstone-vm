@@ -1,7 +1,8 @@
 <?php include 'includes/session.php';
-include './includes/req_start.php';
-if ($req_per == 1) {
+
 if (isset($_POST['submit'])) {
+  include './includes/req_start.php';
+if ($req_per == 1) {
   $name = $_POST['name'];
   $email = $_POST['email'];
   $phone = $_POST['phone'];
@@ -149,5 +150,4 @@ VALUES ('$name', '$phone', '$email', '$country', '$subject','$today')";
   </nav>
 
 </body>
-<?php include './includes/req_end.php'; ?>
 </html>

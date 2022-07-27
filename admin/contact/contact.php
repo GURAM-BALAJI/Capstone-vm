@@ -12,12 +12,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-    Contact
+    New Contact
       </h1>
       <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> Home</li>
-        <li>REPORTS</li>
-        <li class="active">Contact</li>
+        <li>REQUESTS</li>
+        <li class="active">New Contact</li>
       </ol>
     </section>
 
@@ -65,16 +65,12 @@
                 <tbody>
                   <?php
                     $conn = $pdo->open();
-$print=0;
                     try{
                       $now = date('Y-m-d');
                       $stmt = $conn->prepare("SELECT * FROM contact WHERE contact_view=0");
                       $stmt->execute();
                       foreach($stmt as $row){
-                            if($print==0){
-                              echo "<h2>Contacts</h2>";
-                              $print=1;
-                          }
+                          
                         echo "
                           <tr>
                             <td>".$row['contact_name']."</td>

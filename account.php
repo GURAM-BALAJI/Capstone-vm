@@ -136,7 +136,7 @@ include 'includes/header.php';
     $stmt->execute();
     foreach ($stmt as $row) { ?>
       <section class="content">
-        <div class="modal-content" style="background-color:rgba(235, 224, 232, 0.900);box-shadow:1px 1px 8px #000000;">
+        <div class="modal-content" style="background-color:rgba(235, 224, 232, 1);box-shadow:1px 1px 8px #000000;">
           <div class="amount-box text-center">
             <img src="./images/wallet.png" alt="wallet">
             <p style="font-size:large;">Total Balance</p>

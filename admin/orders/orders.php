@@ -50,7 +50,6 @@
                             echo "<td>" . $row['orders_qty'] . "</td>";
                             echo "<td>" . $row['orders_cost'] . "</td>";
                             echo "<td>" . $row['orders_otp'] . "</td>";
-                            echo "<td>" . $row['orders_date'] . "</td>";
                             echo "</tr>";
                           }
                         } catch (PDOException $e) {

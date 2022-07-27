@@ -64,8 +64,7 @@ if (isset($_SESSION['vm_id'])) {
                         $i++;
                     }
                     date_default_timezone_set('Asia/Kolkata');
-                    $today = date('d-m-Y h:i:s a');
-                    $date = date('Y-m-d');
+                    $today = date('Y-m-d h:i:s a');
                     $stmt = $conn->prepare("INSERT INTO orders (orders_qty,orders_cost,orders_items,orders_user_id,orders_date) VALUES (:orders_qty,:orders_cost,:orders_items,:orders_user_id,:orders_date)");
                     $stmt->execute(['orders_qty' => $qty_array, 'orders_cost' => $cost_array, 'orders_items' => $item_array, 'orders_user_id' => $id, 'orders_date'=>$today]);
                     $stmt = $conn->prepare("DELETE FROM cart WHERE cart_user_id=:id");
