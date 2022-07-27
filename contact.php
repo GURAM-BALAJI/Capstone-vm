@@ -6,13 +6,12 @@ if ($req_per == 1) {
   $name = $_POST['name'];
   $email = $_POST['email'];
   $phone = $_POST['phone'];
-  $country = $_POST['country'];
   $subject = $_POST['subject'];
   date_default_timezone_set('Asia/Kolkata');
-		$today = date('d-m-Y h:i:s a');
+		$today = date('Y-m-d h:i:s a');
   $conn = $pdo->open();
-  $sql = "INSERT INTO contact (contact_name, contact_phone, contact_email, contact_country, contact_subject,contact_date)
-VALUES ('$name', '$phone', '$email', '$country', '$subject','$today')";
+  $sql = "INSERT INTO contact (contact_name, contact_phone, contact_email, contact_subject,contact_date)
+VALUES ('$name', '$phone', '$email', '$subject','$today')";
   if ($conn->query($sql) == TRUE) {
     echo "<center><h2 style='color:green;'>Sent successfully</h2></center>";
   } else {
@@ -110,11 +109,6 @@ VALUES ('$name', '$phone', '$email', '$country', '$subject','$today')";
           <input type="text" id="email" name="email" placeholder="Your Email.." required>
           <label for="phone">Phone</label>
           <input type="text" id="phone" name="phone" placeholder="Your phone..">
-          <label for="country">Country</label>
-          <select id="country" name="country">
-            <option value="India">India</option>
-            <option value="Other">Other</option>
-          </select>
           <label for="subject">Subject</label>
           <textarea id="subject" name="subject" placeholder="Write something.." style="height:170px" required></textarea>
           <input type="submit" name="submit" id="submit" value="Submit">

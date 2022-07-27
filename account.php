@@ -189,8 +189,19 @@ if (isset($_SESSION['vm_id'])) {
       </section>
     <?php }
   } else { ?>
-    <center>
-      <h4 style="color:red">To View Your Account Balance:</h4>
+    <center style="margin-top:20rem;">
+    <?php
+            $conn = $pdo->open();
+            try {
+                $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
+                $stmt->execute(); ?>
+                <h4 style="color:red;font-size:30px;font-family: cursive;text-transform: capitalize;"><?php
+                                        foreach ($stmt as $row)
+                                            echo $row['slogan_sentance']; ?></h4>
+            <?php } catch (PDOException $e) {
+                $_SESSION['error'] = $e->getMessage();
+            }
+            $pdo->close(); ?>
       <a href="login.php">
         <button style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
           LOGIN</button>

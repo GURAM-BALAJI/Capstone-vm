@@ -10,7 +10,7 @@ if(isset($_SESSION['vm_user']))
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.70">
 <meta charset="utf-8">
-    <title>  Sign In </title>
+    <title>  Sign Up </title>
     <link rel="stylesheet" type="text/css" href="style.css">
     </head>
       <style>
@@ -21,7 +21,7 @@ if(isset($_SESSION['vm_user']))
 
 .area{
        width: 100%;
-       height:100vh;     
+       height:100vh;   
    }
    
    .circles{
@@ -41,7 +41,7 @@ if(isset($_SESSION['vm_user']))
        height: 20px;
        background: rgba(255, 255, 255, 0.900);
        animation: animate 25s linear infinite;
-       bottom: -0px;
+       bottom: -50px;
        
    }
    
@@ -176,8 +176,8 @@ if(isset($_SESSION['vm_user']))
             </ul>
     </div >
          <div class="login-box">
-             <a  href="index.php" style=" color: #ff1c1c;float:right;text-decoration: none;">X</a>
-           <h2>Sign In</h2>
+             <a  href="index.php" style=" color: #ff1c1c;float:right;text-decoration: none;font-size:x-large;">X</a>
+           <h2>Sign Up</h2>
            <form action="add_user.php" method="post" onsubmit="myclick();">
              <div class="user-box">
         <input type="text" name="name" required value="<?php if(isset($_SESSION['name'])) echo $_SESSION['name']; ?>"/>
@@ -229,7 +229,7 @@ if(isset($_SESSION['vm_user']))
                              font-size: 18px;"></a>
            </form><br><br><br><br><br><br>
            <center>
-           <a  href="login.php" style="color:aquamarine;text-decoration: none;">I have account already,<b> Click Me..</b> </a>
+           <a  href="login.php" style="color:aquamarine;text-decoration: none;">Already have an account?<b> Sign In.</b> </a>
            </center>
          </div>
         <script type="text/javascript">

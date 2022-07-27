@@ -23,7 +23,7 @@ $stmt = $conn->prepare("SELECT * FROM users WHERE user_phone=:phone AND user_del
         echo "</div></div>";
      }
  }else{
-     echo "<h2 style='color:red;'>User Phone Number Not Found..!</h2>";
+     echo "<img style='width:100px;height:100px;' src='images/no_results.png'><br><b style='color:red;'>NOT FOUND..!</b>";
  }
   $pdo->close();
 }

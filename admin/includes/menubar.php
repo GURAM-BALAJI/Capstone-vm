@@ -52,6 +52,8 @@
       <?php }
       if ($admin['items_view']) { ?>
         <li><a href="../items/items.php"><i class="fa fa-sitemap"></i> <span>Items</span></a></li>
+      <?php }  if ($admin['slogan_view']) { ?>
+        <li><a href="../slogan/slogan.php"><i class="fa fa-comments-o"></i> <span>Slogan</span></a></li>
       <?php }?>
       <?php if ($admin['history_view'] ) { ?>
         <li class="treeview">

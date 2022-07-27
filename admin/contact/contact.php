@@ -56,8 +56,8 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone</th>
-                  <th>Country</th>
                   <th>Subject</th>
+                  <th>Date</th>
                      <?php if($admin['contact_edit']){ ?>
                        <th>View</th>
                     <?php } ?>
@@ -76,8 +76,8 @@
                             <td>".$row['contact_name']."</td>
                               <td>".$row['contact_email']."</td>
                                 <td>".$row['contact_phone']."</td>
-                                  <td>".$row['contact_country']."</td>
-                                    <td>".$row['contact_subject']."</td>";
+                                    <td>".$row['contact_subject']."</td>
+                                    <td>".$row['contact_date']."</td>";
                            if($admin['contact_edit']){
                                   echo "<td><form action='contact_view_row.php' method='get'>
                             <input type='text' name='id' value='".$row['contact_id']."' hidden>

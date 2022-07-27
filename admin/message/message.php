@@ -60,6 +60,10 @@
                        <?php } if($row['message_id']==2){?>
                  <h2>Message 2</h2>
                 <textarea name="win" rols="10" cols="90"><?php echo $row['message'];?></textarea>
+                <?php }
+                if($row['message_id']==3){?>
+                 <h2>Share Message</h2>
+                <textarea name="share" rols="10" cols="90"><?php echo $row['message'];?></textarea>
                 <?php } ?>
                      <?php }}catch(PDOException $e){
                       echo $e->getMessage();

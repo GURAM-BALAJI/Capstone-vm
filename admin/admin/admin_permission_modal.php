@@ -81,6 +81,16 @@
                 </tr>
                 <tr>
                     <td> </td>
+                    <td> SLOGAN </td>
+                    <td style="text-align: center;"> <input type="checkbox" name="slogan_view" <?php if ($row['slogan_view']) echo "checked"; ?>> </td>
+                    <td style="text-align: center;"> <input type="checkbox" name="slogan_create" <?php if ($row['slogan_create']) echo "checked"; ?>> </td>
+                    <td style="text-align: center;"> <input type="checkbox" name="slogan_edit" <?php if ($row['slogan_edit']) echo "checked"; ?>> </td>
+                    <td style="text-align: center;"> <input type="checkbox" name="slogan_del" <?php if ($row['slogan_del']) echo "checked"; ?>> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td> </td>
                     <td> ITEMS </td>
                     <td style="text-align: center;"> <input type="checkbox" name="items_view" <?php if ($row['items_view']) echo "checked"; ?>> </td>
                     <td style="text-align: center;"> <input type="checkbox" name="items_create" <?php if ($row['items_create']) echo "checked"; ?>> </td>

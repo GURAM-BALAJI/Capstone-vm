@@ -10,7 +10,7 @@ if(isset($_SESSION['vm_user']))
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.70">
 <meta charset="utf-8">
-    <title>  Login </title>
+    <title>  Sign in </title>
     <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <style>
@@ -41,7 +41,7 @@ if(isset($_SESSION['vm_user']))
        height: 20px;
        background: rgba(255, 255, 255, 0.900);
        animation: animate 25s linear infinite;
-       bottom: -150px;
+       bottom: -50px;
        
    }
    
@@ -176,9 +176,9 @@ if(isset($_SESSION['vm_user']))
             </ul>
     </div >
          <div class="login-box">
-             <a  href="index.php" style=" color: #ff1c1c;float:right;text-decoration: none;">X</a>
+             <a  href="index.php" style=" color: #ff1c1c;float:right;text-decoration: none;font-size:x-large;">X</a>
  
-           <h2>Login</h2>
+           <h2>Sign in</h2>
            <form action="verify.php" method="post">
              <div class="user-box">
                <input type="text" name="email" required="" value="<?php if(isset($_SESSION['email'])) echo $_SESSION['email']; ?>">
@@ -214,7 +214,7 @@ if(isset($_SESSION['vm_user']))
                <span></span>
                <span></span>
                <span></span>
-               <input type="submit" name="login" value="LOG IN"
+               <input type="submit" name="login" value="SIGN IN"
                       style="border:none;
                       background:none;
                       outline: none;
@@ -233,7 +233,7 @@ if(isset($_SESSION['vm_user']))
            <center>
            <a  href="sign_up.php" 
                      style="color:aquamarine;text-decoration: none;">
-                      I dont have an account, <b>Create New</b>
+                      Don't have an account?<b> Sign Up.</b>
              </a>
            </center>
          </div>

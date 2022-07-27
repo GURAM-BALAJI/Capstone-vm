@@ -33,6 +33,7 @@
                             <input class="form-control" type="password" name="password" id="password" placeholder="login password" required>
                         </div>
                     </div>
+                    <center style="font-size:small;text-transform: capitalize;margin:20px"><b>NOTE: </b>Your friend must also be registered. </center>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
                         <?php if (!isset($_SESSION['vm_id'])) { ?>
@@ -43,8 +44,11 @@
                             <button type="submit" class="btn btn-primary btn-flat" name="pay"><i class="fa fa-paper-plane-o"></i> PAY</button>
                         <?php } ?>
                     </div>
+                    
                 </form>
+                
             </div>
+           
         </div>
     </div>
 </div>

@@ -15,7 +15,7 @@ include 'includes/header.php';
 <style>
     body {
         background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
-      font-family: 'Roboto', sans-serif;
+        font-family: 'Roboto', sans-serif;
     }
 
     hr {
@@ -60,7 +60,7 @@ include 'includes/header.php';
 
     .back_ground {
         background-color: #777;
-       
+
     }
 
     div.scrollmenu a:hover {
@@ -79,18 +79,7 @@ include 'includes/header.php';
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <center>
         <div style="background-color: #333;">
-            <table>
-                <tr>
-                    <th>
-                        <img src="logo.jpg" width="100%" height="70px">
-                    </th><?php if (!isset($_SESSION['vm_id'])) { ?><th>
-                            <a href="login.php">
-                                <button style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
-                                    LOGIN</button>
-                            </a>
-                        </th><?php } ?>
-                </tr>
-            </table>
+            <img src="logo.jpg" width="100%" height="70px">
         </div>
 
 
@@ -133,7 +122,7 @@ include 'includes/header.php';
     <section class="content">
         <div class="modal-content">
             <div class="modal-body">
-                <table style="width: 100%;" >
+                <table style="width: 100%;">
                     <?php
                     $stmt = $conn->prepare("SELECT * FROM display_items WHERE display_items_qty>'0'");
                     $stmt->execute();
@@ -145,13 +134,13 @@ include 'includes/header.php';
                     ?>
                             <form method="POST" action="add_cart.php">
                                 <tr>
-                                    <td rowspan="3" style="padding-right:8px;"> <img src="./items_images/<?php echo $row1['items_image']; ?>" height="150px" width="150px"> </td>
+                                    <td rowspan="3" style="padding-right:0.8rem;"> <img src="./items_images/<?php echo $row1['items_image']; ?>" height="150rem" width="150rem"> </td>
                                     <td colspan="2">
                                         <?php echo "<h2 style='text-transform: uppercase;'>" . $row1['items_name'] . "</h2>"; ?>
                                     </td>
                                 <tr>
                                     <td>
-                                        <?php echo "<b style='font-size:20px;'> &#8377;" . $row1['items_cost'] . "</b>"; ?>
+                                        <?php echo "<b style='font-size:2rem;'> &#8377;" . $row1['items_cost'] . "</b>"; ?>
                                     </td>
                                     <td>
                                         <select name="qty" class="form-control" style="float: right;">
@@ -167,10 +156,10 @@ include 'includes/header.php';
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
+                                    <td colspan="2" style="padding-top: 0.5rem;">
                                         <input type="hidden" name="id" value="<?php echo $row['display_spring_id']; ?>">
-                                        <button name='add_cart' class='btn btn-warning btn' style="font-size:1rem"><i class='fa fa-cart-plust'></i>Add To Cart</button>
-                                        <button name='buy_now' style='float:right;font-size:1rem' class='btn btn-success btn'>Buy
+                                        <button name='add_cart' class='btn btn-warning btn' style="font-size:0.9rem"><i class='fa fa-cart-plust'></i>Add To Cart</button>
+                                        <button name='buy_now' style='float:right;font-size:0.9rem' class='btn btn-success btn'>Buy
                                             Now</button>
                                     </td>
                                 </tr>
@@ -185,6 +174,26 @@ include 'includes/header.php';
                 </table>
             </div>
         </div>
+        <?php if (!isset($_SESSION['vm_id'])) { ?>
+            <center style="margin-top:4rem;">
+            <?php
+            $conn = $pdo->open();
+            try {
+                $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
+                $stmt->execute(); ?>
+                <h4 style="color:red;font-size:30px;font-family: cursive;text-transform: capitalize;"><?php
+                                        foreach ($stmt as $row)
+                                            echo $row['slogan_sentance']; ?></h4>
+            <?php } catch (PDOException $e) {
+                $_SESSION['error'] = $e->getMessage();
+            }
+            $pdo->close(); ?>
+                <a href="login.php">
+                    <button style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
+                        LOGIN</button>
+                </a>
+            </center>
+        <?php } ?>
     </section>
 
     <br><br><br><br>
@@ -200,17 +209,17 @@ include 'includes/header.php';
             <span class="nav__text">Wallet</span>
         </a>
         <a href="cart.php" class="nav__link ">
-            <?php 
-            if (isset($_SESSION['vm_id'])){
-                $user_id=$_SESSION['vm_id'];
-             $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=$user_id");
-            $stmt->execute();
-            $i=0;
-            foreach ($stmt as $row)
-            $i++;
+            <?php
+            if (isset($_SESSION['vm_id'])) {
+                $user_id = $_SESSION['vm_id'];
+                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=$user_id");
+                $stmt->execute();
+                $i = 0;
+                foreach ($stmt as $row)
+                    $i++;
             ?>
-            <b style="color:red;"><?php if($i!=0) echo $i; ?></b>
-            <?php }?>
+                <b style="color:red;"><?php if ($i != 0) echo $i; ?></b>
+            <?php } ?>
             <i class="material-icons nav__icon">shopping_cart</i>
             <span class="nav__text">Cart</span>
         </a>
@@ -226,4 +235,5 @@ include 'includes/header.php';
 </body>
 <?php include 'includes/scripts.php'; ?>
 <?php include './includes/req_end.php'; ?>
+
 </html>

@@ -12,16 +12,16 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Orders
+            History Orders
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Orders</li>
+            <li class="active">History Orders</li>
           </ol>
         </section>
         <section class="content">
           <div class="panel panel-default" style="overflow-x:auto;">
-          <form method="get">
+          <form method="POST">
                 <div class="form-group">
                   <div class="col-sm-4">
                     <input type="date" class="form-control" name="date" id="date" required>
@@ -47,14 +47,20 @@
                       <tbody>
                         <?php
                         date_default_timezone_set('Asia/Kolkata');
-                        if (isset($_GET['submit']))
-                          $today = $_GET['date'];
-                        else
-                          $today = date("Y-m-d");
+                        if (isset($_POST['submit'])){
+                          $today = strtotime($_POST['date']);
+                          $day=date('d',$today);
+                          $month=date('m',$today);
+                          $year=date('Y',$today);
+                        }else{
+                          $day=date('d');
+                          $month=date('m');
+                          $year=date('Y');
+                      }
                         $conn = $pdo->open();
                         try {
                           $slno = 1;
-                          $stmt = $conn->prepare("SELECT * FROM history WHERE date_history='$today' ORDER BY history_id DESC");
+                          $stmt = $conn->prepare("SELECT * FROM history WHERE day(history_date)=$day AND month(history_date)=$month AND year(history_date)=$year ORDER BY history_id DESC");
                           $stmt->execute();
                           foreach ($stmt as $row) {
                             echo "<tr>";

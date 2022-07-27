@@ -21,7 +21,7 @@
         </section>
         <section class="content">
           <div class="panel panel-default" style="overflow-x:auto;">
-          <form method="get">
+          <form method="POST">
                 <div class="form-group">
                   <div class="col-sm-4">
                     <input type="date" class="form-control" name="date" id="date" required>
@@ -47,13 +47,16 @@
                       <tbody>
                         <?php
                         date_default_timezone_set('Asia/Kolkata');
-                        if (isset($_GET['submit'])){
-                          $today = strtotime($_GET['date']);
+                        if (isset($_POST['submit'])){
+                          $today = strtotime($_POST['date']);
                           $day=date('d',$today);
                           $month=date('m',$today);
                           $year=date('Y',$today);
-                        }else
-                          $today = date("Y-m-d");
+                        }else{
+                          $day=date('d');
+                          $month=date('m');
+                          $year=date('Y');
+                      }
                         $conn = $pdo->open();
                         try {
                           $slno = 1;

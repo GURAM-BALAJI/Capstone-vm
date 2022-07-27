@@ -13,104 +13,104 @@ include 'includes/header.php';
 
 </head>
 <style>
-body {
-    background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
-      font-family: 'Roboto', sans-serif;
-}
+    body {
+        background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
+        font-family: 'Roboto', sans-serif;
+    }
 
-hr {
-    display: block;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-    margin-left: auto;
-    margin-right: auto;
-    border-style: dot-dot-dash;
-    border-width: 2px;
-    color: #0E2231;
-    width: 98%;
-}
+    hr {
+        display: block;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        margin-left: auto;
+        margin-right: auto;
+        border-style: dot-dot-dash;
+        border-width: 2px;
+        color: #0E2231;
+        width: 98%;
+    }
 
-h5 {
-    margin-left: 10px;
-    color: darkgreen;
-    font-family: bold;
-}
+    h5 {
+        margin-left: 10px;
+        color: darkgreen;
+        font-family: bold;
+    }
 
-.hr_last {
-    border-style: dot-dash;
-    border-width: 4px;
-    color: #181914;
-    width: 98%;
-}
+    .hr_last {
+        border-style: dot-dash;
+        border-width: 4px;
+        color: #181914;
+        width: 98%;
+    }
 
-div.scrollmenu {
-    background-color: #333;
-    overflow: auto;
-    white-space: nowrap;
-}
+    div.scrollmenu {
+        background-color: #333;
+        overflow: auto;
+        white-space: nowrap;
+    }
 
-div.scrollmenu a {
-    display: inline-block;
-    text-align: center;
-    padding: 14px;
-    color: white;
-    text-decoration: none;
-    text-decoration-color: snow;
-}
+    div.scrollmenu a {
+        display: inline-block;
+        text-align: center;
+        padding: 14px;
+        color: white;
+        text-decoration: none;
+        text-decoration-color: snow;
+    }
 
-.back_ground {
-    background-color: #777;
+    .back_ground {
+        background-color: #777;
 
-}
+    }
 
-div.scrollmenu a:hover {
-    background-color: #777;
-}
+    div.scrollmenu a:hover {
+        background-color: #777;
+    }
 
-p {
-    float: right;
-    color: darkgray;
-    margin-top: -10px;
-}
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
+    p {
+        float: right;
+        color: darkgray;
+        margin-top: -10px;
+    }
 
-  td,
-  th {
-    border: 0.8px solid #dddddd;
-    text-align: center;
-    padding: 3px;
-  }
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
 
-.vend_btn {
-    display: inline-block;
-    padding: 5px 100px 5px 100px;
-    font-size: 12px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color: #fff;
-    background-color: orange;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 5px #999;
-    margin-bottom: 7px;
-  }
+    td,
+    th {
+        border: 0.8px solid #dddddd;
+        text-align: center;
+        padding: 3px;
+    }
 
-  .vend_btn:hover {
-    background-color: #3e8e41
-  }
+    .vend_btn {
+        display: inline-block;
+        padding: 5px 100px 5px 100px;
+        font-size: 12px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: orange;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px #999;
+        margin-bottom: 7px;
+    }
 
-  .vend_btn:active {
-    background-color: #3e8e41;
-    box-shadow: 0 3px #666;
-    transform: translateY(4px);
-  }
+    .vend_btn:hover {
+        background-color: #3e8e41
+    }
 
+    .vend_btn:active {
+        background-color: #3e8e41;
+        box-shadow: 0 3px #666;
+        transform: translateY(4px);
+    }
 </style>
 
 <body>
@@ -118,7 +118,7 @@ table {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <center>
         <div style="background-color: #333;">
-                        <img src="logo.jpg" width="100%" height="70px">
+            <img src="logo.jpg" width="100%" height="70px">
         </div>
 
 
@@ -131,13 +131,13 @@ table {
             $stmt->execute();
             foreach ($stmt as $row) {
                 if ($row['message_id'] == 1 && !empty($row['message'])) { ?>
-        <marquee style="color:yellow;"><?php echo $row['message']; ?></marquee>
-        <?php }
+                    <marquee style="color:yellow;"><?php echo $row['message']; ?></marquee>
+                <?php }
                 if ($row['message_id'] == 2 && !empty($row['message'])) { ?>
-        <marquee style="color:yellow;"><?php echo $row['message']; ?></marquee>
-        <?php }
+                    <marquee style="color:yellow;"><?php echo $row['message']; ?></marquee>
+            <?php }
             } ?>
-        <?php
+            <?php
             if (isset($_SESSION['error'])) {
                 echo "
             <div class='alert alert-danger alert-dismissible'>
@@ -166,17 +166,17 @@ table {
             <div class="modal-body">
                 <table style="width: 100%;">
                     <?php
-                     $stmt = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id WHERE cart_user_id=$user_id");
-                     $stmt->execute();
-                     foreach ($stmt as $row111) {
-                        $id=$row111['cart_id'];
+                    $stmt = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id WHERE cart_user_id=$user_id");
+                    $stmt->execute();
+                    foreach ($stmt as $row111) {
+                        $id = $row111['cart_id'];
                         $qty = $row111['display_items_qty'];
-                        if($qty==0){
-                        $stmt = $conn->prepare("DELETE FROM cart WHERE cart_id=:id");
-                        $stmt->execute(['id' => $id]);
-                        }elseif($row111['display_items_qty']<$row111['cart_qty']){
-                        $stmt = $conn->prepare("UPDATE cart SET cart_qty=:qty WHERE cart_id=:id");
-                        $stmt->execute(['qty' => $qty, 'id' => $id]);
+                        if ($qty == 0) {
+                            $stmt = $conn->prepare("DELETE FROM cart WHERE cart_id=:id");
+                            $stmt->execute(['id' => $id]);
+                        } elseif ($row111['display_items_qty'] < $row111['cart_qty']) {
+                            $stmt = $conn->prepare("UPDATE cart SET cart_qty=:qty WHERE cart_id=:id");
+                            $stmt->execute(['qty' => $qty, 'id' => $id]);
                         }
                     }
                     $total = $i = 0;
@@ -189,107 +189,122 @@ table {
                         $stmt1->execute();
                         foreach ($stmt1 as $row1) {
                     ?>
-                    <tr>
-                        <td rowspan="3"> <img src="./items_images/<?php echo $row1['items_image']; ?>" height="150px"
-                                width="150px"> </td>
-                        <td colspan="2">
-                            <?php echo "<h2 style='text-transform: uppercase;'>" . $row1['items_name'] . "</h2>"; ?>
-                        </td>
-                    <tr>
-                        <td colspan="2">
-                            <form method="POST" action="add_minus.php">
-                                <center>
-                                    <input type="hidden" name="id" value="<?php echo $row11['cart_id']; ?>">
-                                    <?php if($row11['cart_qty']=='1'){?>
-                                    <input style="background-color:aliceblue;border: none;" type="submit" name="remove"
-                                        value="&#10060;">
-                                    <?php }else{?>
-                                    <input style="background-color: #d24026;border: none;" type="submit" name="minus"
-                                        value=" - ">
-                                    <?php }?>
-                                    &nbsp;
-                                    <input type="text" name="qty" size="1" onfocus="blur()"
-                                        value="<?php echo $row11['cart_qty']; ?>">
-                                    &nbsp;
-                                    <input style="background-color:chartreuse;border: none;" type="submit" name="add"
-                                        value=" + ">
-                                </center>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Sub-Total
-                        </td>
-                        <td>
-                            <?php
+                            <tr>
+                                <td rowspan="3"> <img src="./items_images/<?php echo $row1['items_image']; ?>" height="150px" width="150px"> </td>
+                                <td colspan="2">
+                                    <?php echo "<h2 style='text-transform: uppercase;'>" . $row1['items_name'] . "</h2>"; ?>
+                                </td>
+                            <tr>
+                                <td colspan="2">
+                                    <form method="POST" action="add_minus.php">
+                                        <center>
+                                            <input type="hidden" name="id" value="<?php echo $row11['cart_id']; ?>">
+                                            <?php if ($row11['cart_qty'] == '1') { ?>
+                                                <input style="background-color:aliceblue;border: none;" type="submit" name="remove" value="&#10060;">
+                                            <?php } else { ?>
+                                                <input style="background-color: #d24026;border: none;" type="submit" name="minus" value=" - ">
+                                            <?php } ?>
+                                            &nbsp;
+                                            <input type="text" name="qty" size="1" onfocus="blur()" value="<?php echo $row11['cart_qty']; ?>">
+                                            &nbsp;
+                                            <input style="background-color:chartreuse;border: none;" type="submit" name="add" value=" + ">
+                                        </center>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sub-Total
+                                </td>
+                                <td>
+                                    <?php
                                     $total += $row11['cart_qty'] * $row1['items_cost'];
                                     echo '<b>&#8377;' . $row11['cart_qty'] * $row1['items_cost'] . '</b>'; ?>
-                        </td>
-                    </tr>
-                    <?php } ?>
-                    <tr>
-                        <td colspan="3">
-                            <hr>
-                        </td>
-                    </tr>
-                    <?php 
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        <tr>
+                            <td colspan="3">
+                                <hr>
+                            </td>
+                        </tr>
+                    <?php
                     }
-                    if ($i == 1){?>
-                    <tr>
-                        <th colspan='2'>
-                            <center>TOTAL:</center>
-                        </th>
-                        <th>
-                            <center>&#8377;<?php echo $total; ?></center>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td colspan='2'>
-                            <button
-                                style="width:95%;height:50px;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;border-radius:25px;;"
-                                class="btn btn-success btn-sm buy btn-flat">Buy Now</button>
-                        </td>
-                    </tr>
+                    if ($i == 1) { ?>
+                        <tr>
+                            <th colspan='2'>
+                                <center>TOTAL:</center>
+                            </th>
+                            <th>
+                                <center>&#8377;<?php echo $total; ?></center>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td colspan='2'>
+                                <button style="width:95%;height:50px;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;border-radius:25px;;" class="btn btn-success btn-sm buy btn-flat">Buy Now</button>
+                            </td>
+                        </tr>
                     <?php }
                     ?>
                 </table>
                 <?php if ($i == 0) {
-                    echo "<center><h1>Your Stomach Is Empty.</h1>";
+                    echo "<center>"; ?>
+                    <?php
+                    $conn = $pdo->open();
+                    try {
+                        $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
+                        $stmt->execute(); ?>
+                        <h4 style="font-size:30px;font-family: cursive;text-transform: capitalize;"><?php
+                                                                                                    foreach ($stmt as $row)
+                                                                                                        echo $row['slogan_sentance']; ?></h4>
+                <?php } catch (PDOException $e) {
+                        $_SESSION['error'] = $e->getMessage();
+                    }
+                    $pdo->close();
                     echo "<img src='./images/hunger.png'>";
-                    echo "<h2>Order Somthing..</h2></center>";
+                    echo "<h2 style='font-family: cursive;'>Order Somthing..</h2></center>";
                 }
                 ?>
             </div>
         </div>
     </section>
-    <?php } else { ?>
-    <center>
-        <h4 style="color:red">To View Your Cart :</h4>
+<?php } else { ?>
+    <center style="margin-top:20rem;">
+        <?php
+            $conn = $pdo->open();
+            try {
+                $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
+                $stmt->execute(); ?>
+            <h4 style="color:red;font-size:30px;font-family: cursive;text-transform: capitalize;"><?php
+                                                                                                    foreach ($stmt as $row)
+                                                                                                        echo $row['slogan_sentance']; ?></h4>
+        <?php } catch (PDOException $e) {
+                $_SESSION['error'] = $e->getMessage();
+            }
+            $pdo->close(); ?>
         <a href="login.php">
-            <button
-                style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
+            <button style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
                 LOGIN</button>
         </a>
 
     </center>
-    <?php } ?>
-    <br><br><br><br>
-    <nav class="nav">
+<?php } ?>
+<br><br><br><br>
+<nav class="nav">
 
-        <a href="index.php" class="nav__link ">
-            <i class="material-icons nav__icon">home</i>
-            <span class="nav__text">Home</span>
-        </a>
+    <a href="index.php" class="nav__link ">
+        <i class="material-icons nav__icon">home</i>
+        <span class="nav__text">Home</span>
+    </a>
 
-        <a href="account.php" class="nav__link">
-            <i class="material-icons nav__icon">account_balance_wallet</i>
-            <span class="nav__text">Wallet</span>
-        </a>
+    <a href="account.php" class="nav__link">
+        <i class="material-icons nav__icon">account_balance_wallet</i>
+        <span class="nav__text">Wallet</span>
+    </a>
 
-        <a href="cart.php" class="nav__link nav__link--active">
-            <?php
+    <a href="cart.php" class="nav__link nav__link--active">
+        <?php
         if (isset($_SESSION['vm_id'])) {
             $user_id = $_SESSION['vm_id'];
             $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=$user_id");
@@ -299,32 +314,33 @@ table {
                 $i++;
         ?>
             <b style="color:red;"><?php if ($i != 0) echo $i; ?></b>
-            <?php } ?>
-            <i class="material-icons nav__icon">shopping_cart</i>
-            <span class="nav__text">Cart</span>
-        </a>
+        <?php } ?>
+        <i class="material-icons nav__icon">shopping_cart</i>
+        <span class="nav__text">Cart</span>
+    </a>
 
-        <a href="settings.php" class="nav__link">
-            <i class="material-icons nav__icon">settings</i>
-            <span class="nav__text">Settings</span>
-        </a>
+    <a href="settings.php" class="nav__link">
+        <i class="material-icons nav__icon">settings</i>
+        <span class="nav__text">Settings</span>
+    </a>
 
-    </nav>
-  
+</nav>
+
 </body>
 <?php include './cart_module.php'; ?>
 <?php include 'includes/scripts.php'; ?>
 <script>
-$(function() {
-    $(document).on('click', '.buy', function(e) {
-        e.preventDefault();
-        $('#buy').modal('show');
+    $(function() {
+        $(document).on('click', '.buy', function(e) {
+            e.preventDefault();
+            $('#buy').modal('show');
+        });
+        $(document).on('click', '.history', function(e) {
+            e.preventDefault();
+            $('#history').modal('show');
+        });
     });
-    $(document).on('click', '.history', function(e) {
-        e.preventDefault();
-        $('#history').modal('show');
-    });
-});
 </script>
 <?php include './includes/req_end.php'; ?>
+
 </html>

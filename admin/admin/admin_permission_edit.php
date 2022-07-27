@@ -51,6 +51,24 @@
             $items_del =1;
         else
             $items_del =0;
+
+            if(isset($_POST['slogan_view']))
+            $slogan_view =1;
+        else
+            $slogan_view=0;
+        if(isset($_POST['slogan_create']))
+            $slogan_create =1;
+        else
+            $slogan_create=0;
+        if(isset($_POST['slogan_edit']))
+            $slogan_edit =1;
+        else
+            $slogan_edit=0;
+        if(isset($_POST['slogan_del']))
+            $slogan_del =1;
+        else
+            $slogan_del=0;
+
             if(isset($_POST['display_items_view']))
             $display_items_view =1;
         else
@@ -97,8 +115,8 @@
             $orders_view=0;
         $conn = $pdo->open();
         try {
-            $stmt = $conn->prepare("UPDATE admin SET users_special=:users_special,admin_special=:admin_special,users_view=:users_view,users_create=:users_create,users_edit=:users_edit,users_del=:users_del,admin_view=:admin_view,admin_create=:admin_create,admin_edit=:admin_edit,admin_del=:admin_del,items_view=:items_view,items_create=:items_create,items_edit=:items_edit,items_del=:items_del,contact_view=:contact_view,contact_edit=:contact_edit,message_view=:message_view,display_items_view=:display_items_view,display_items_create=:display_items_create,display_items_edit=:display_items_edit,display_items_del=:display_items_del,history_view=:history_view,orders_view=:orders_view WHERE admin_id=:id");
-            $stmt->execute(['users_special'=>$users_special, 'admin_special'=>$admin_special, 'users_view' => $users_view, 'users_create' => $users_create, 'users_edit' => $users_edit, 'users_del' => $users_del, 'admin_view' => $admin_view, 'admin_create' => $admin_create, 'admin_edit' => $admin_edit, 'admin_del' => $admin_del, 'items_view' => $items_view, 'items_create' => $items_create, 'items_edit' => $items_edit, 'items_del' => $items_del,'contact_view' => $contact_view,'contact_edit' => $contact_edit,'message_view'=>$message_view, 'display_items_view' => $display_items_view, 'display_items_create' => $display_items_create, 'display_items_edit' => $display_items_edit, 'display_items_del' => $display_items_del, 'history_view'=>$history_view,'orders_view'=>$orders_view, 'id' => $id]);
+            $stmt = $conn->prepare("UPDATE admin SET users_special=:users_special,admin_special=:admin_special,users_view=:users_view,users_create=:users_create,users_edit=:users_edit,users_del=:users_del,admin_view=:admin_view,admin_create=:admin_create,admin_edit=:admin_edit,admin_del=:admin_del,items_view=:items_view,items_create=:items_create,items_edit=:items_edit,items_del=:items_del,contact_view=:contact_view,contact_edit=:contact_edit,message_view=:message_view,display_items_view=:display_items_view,display_items_create=:display_items_create,display_items_edit=:display_items_edit,display_items_del=:display_items_del,history_view=:history_view,orders_view=:orders_view,slogan_view=:slogan_view,slogan_create=:slogan_create,slogan_edit=:slogan_edit,slogan_del=:slogan_del WHERE admin_id=:id");
+            $stmt->execute(['users_special'=>$users_special, 'admin_special'=>$admin_special, 'users_view' => $users_view, 'users_create' => $users_create, 'users_edit' => $users_edit, 'users_del' => $users_del, 'admin_view' => $admin_view, 'admin_create' => $admin_create, 'admin_edit' => $admin_edit, 'admin_del' => $admin_del, 'items_view' => $items_view, 'items_create' => $items_create, 'items_edit' => $items_edit, 'items_del' => $items_del,'contact_view' => $contact_view,'contact_edit' => $contact_edit,'message_view'=>$message_view, 'display_items_view' => $display_items_view, 'display_items_create' => $display_items_create, 'display_items_edit' => $display_items_edit, 'display_items_del' => $display_items_del, 'history_view'=>$history_view,'orders_view'=>$orders_view,'slogan_view'=>$slogan_view,'slogan_create'=>$slogan_create,'slogan_edit'=>$slogan_edit,'slogan_del'=>$slogan_del,'id' => $id]);
             $_SESSION['success'] = 'Admin Permission Updated Successfully';
 
         } catch (PDOException $e) {
@@ -107,5 +125,3 @@
         $pdo->close();
     }
 header('location: admin.php');
-
-?>

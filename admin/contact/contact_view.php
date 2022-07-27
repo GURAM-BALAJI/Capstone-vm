@@ -46,6 +46,16 @@
         }
       ?>
         <div class="panel panel-default" style="overflow-x:auto;">
+        <form method="POST">
+                <div class="form-group">
+                  <div class="col-sm-4">
+                    <input type="date" class="form-control" name="date" id="date" required>
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="submit" class="form-control-static" name="submit" id="submit" value=" Submit ">
+                  </div>
+                </div>
+              </form>
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -58,14 +68,25 @@
                       <th>Name</th>
                       <th>Email</th>
                       <th>Phone</th>
-                      <th>Country</th>
                       <th>Subject</th>
-                         
+                      <th>Date</th>                         
                     </thead>
                     <tbody>";
                     try{
-                      $now = date('Y-m-d');
-                      $stmt = $conn->prepare("SELECT * FROM contact WHERE contact_view=1");
+
+                      date_default_timezone_set('Asia/Kolkata');
+                        if (isset($_POST['submit'])){
+                          $today = strtotime($_POST['date']);
+                          $day=date('d',$today);
+                          $month=date('m',$today);
+                          $year=date('Y',$today);
+                        }else{
+                          $day=date('d');
+                          $month=date('m');
+                          $year=date('Y');
+                      }
+
+                      $stmt = $conn->prepare("SELECT * FROM contact WHERE day(contact_date)=$day AND month(contact_date)=$month AND year(contact_date)=$year AND contact_view=1");
                       $stmt->execute();
                       foreach($stmt as $row){
                              
@@ -75,8 +96,8 @@
                             <td>".$row['contact_name']."</td>
                               <td>".$row['contact_email']."</td>
                                 <td>".$row['contact_phone']."</td>
-                                  <td>".$row['contact_country']."</td>
                                     <td>".$row['contact_subject']."</td>
+                                    <td>".$row['contact_date']."</td>
                             
                           </tr>
                         ";

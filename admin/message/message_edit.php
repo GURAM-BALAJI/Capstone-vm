@@ -4,6 +4,7 @@
 	if(isset($_POST['save'])){
 		$message= $_POST['message'];
 		$win = $_POST['win'];
+		$share = $_POST['share'];
 
 		$conn = $pdo->open();
 		try{
@@ -11,8 +12,10 @@
 			$stmt->execute([ 'message'=>$message,  'id'=>1]);
             $stmt = $conn->prepare("UPDATE message SET message=:win WHERE message_id=:id");
 			$stmt->execute([ 'win'=>$win,  'id'=>2]);
+			$stmt = $conn->prepare("UPDATE message SET message=:share WHERE message_id=:id");
+			$stmt->execute([ 'share'=>$share,  'id'=>3]);
 			$_SESSION['success'] = 'Message updated successfully';
-
+			
 		}
 		catch(PDOException $e){
 			$_SESSION['error'] = $e->getMessage();

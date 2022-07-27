@@ -12,11 +12,11 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Orders
+            Present Orders
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Orders</li>
+            <li class="active">Present Orders</li>
           </ol>
         </section>
         <section class="content">
@@ -32,7 +32,6 @@
                         <th>ITEMS</th>
                         <th>QTY</th>
                         <th>COST</th>
-                        <th>OTP</th>
                         <th>DATE</th>
                       </thead>
                       <tbody>
@@ -49,7 +48,7 @@
                             echo "<td>" . $row['orders_items'] . "</td>";
                             echo "<td>" . $row['orders_qty'] . "</td>";
                             echo "<td>" . $row['orders_cost'] . "</td>";
-                            echo "<td>" . $row['orders_otp'] . "</td>";
+                            echo "<td>" . $row['orders_date'] . "</td>";
                             echo "</tr>";
                           }
                         } catch (PDOException $e) {
