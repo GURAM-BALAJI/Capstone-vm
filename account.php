@@ -77,7 +77,7 @@ include 'includes/header.php';
     padding: 5px;
   }
 
- 
+
 
   .amount-box>img {
     padding-top: 20px;
@@ -86,15 +86,13 @@ include 'includes/header.php';
 
   .amount {
     font-size: 55px;
-    color:green;
+    color: green;
   }
 
   .amount-box p {
     margin-top: 10px;
     margin-bottom: -10px;
   }
-
-    
 </style>
 
 <body>
@@ -102,7 +100,7 @@ include 'includes/header.php';
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <center>
     <div style="background-color: #333;">
-            <img src="logo.jpg" width="100%" height="70px">
+      <img src="logo.jpg" width="100%" height="70px">
     </div>
     <div style="background-color: #001a35;color: #89E6C4;"> WALLET </div>
   </center>
@@ -140,68 +138,70 @@ include 'includes/header.php';
           <div class="amount-box text-center">
             <img src="./images/wallet.png" alt="wallet">
             <p style="font-size:large;">Total Balance</p>
-            <p class="amount" style="<?php if($row['user_amount']<=0) echo "color:red;";?>">&#8377;<?php echo $row['user_amount']; ?></p>
+            <p class="amount" style="<?php if ($row['user_amount'] <= 0) echo "color:red;"; ?>">&#8377;<?php echo $row['user_amount']; ?></p>
             <a href="recharge_form.php">
               <button type="button" style="width: 30%;height:35px;border:1.5px solid black;border-radius: 20px !important;margin:5% 2% 5% auto;color:#001a35;background-color:snow;  box-shadow: 2px 1px 4px #000000; " class="btn-sm">Add Money</button></a>
-            <button type="button" style="width: 30%;height:35px;border:1.5px solid black;border-radius: 20px !important;margin:5% auto 5% 2%;color:#001a35;background-color:snow;  box-shadow: 2px 1px 4px #000000; "  class="btn-sm pay ">PAY FRIEND</button>
-         
+            <button type="button" style="width: 30%;height:35px;border:1.5px solid black;border-radius: 20px !important;margin:5% auto 5% 2%;color:#001a35;background-color:snow;  box-shadow: 2px 1px 4px #000000; " class="btn-sm pay ">PAY FRIEND</button>
+
           </div>
 
         </div>
-          <hr>
-          
-          
-          <p style="font-size:large;padding-left: 10px;"><u><b>TRANSACTION</b></u></p>
-<?php
-if (isset($_SESSION['vm_id'])) {
-    $id = $_SESSION['vm_id'];
-    $conn = $pdo->open();
-    $stmt = $conn->prepare("SELECT * FROM transaction WHERE transaction_user_id = $id ORDER BY transaction_id DESC LIMIT 7");
-    $stmt->execute();
-    foreach ($stmt as $row) { ?>
-        <?php if ($row['transaction_amount'] < 0){
-            $color = "red";
-            $val="Debited from..";
-        }else{
-            $color = "green";
-            $val="Credited to..";
-         } ?>
-        <div style="padding: 5px; margin: 5px; border-radius: 9px; border: 2px solid #001a35;background-color:white;">
-            <table style="width:100%;">
+        <hr>
+
+
+        <p style="font-size:large;padding-left: 10px;"><u><b>TRANSACTION</b></u></p>
+        <?php
+        if (isset($_SESSION['vm_id'])) {
+          $id = $_SESSION['vm_id'];
+          $conn = $pdo->open();
+          $stmt = $conn->prepare("SELECT * FROM transaction WHERE transaction_user_id = $id ORDER BY transaction_id DESC LIMIT 7");
+          $stmt->execute();
+          foreach ($stmt as $row) { ?>
+            <?php if ($row['transaction_amount'] < 0) {
+              $color = "red";
+              $val = "Debited from..";
+            } else {
+              $color = "green";
+              $val = "Credited to..";
+              if ($row['transaction_status'] == 'TXN_INIT' || $row['transaction_status'] == 'TXN_FAILURE') {
+                $color = "orange";
+                $val = "Failed..";
+              }
+            } ?>
+            <div style="padding: 5px; margin: 5px; border-radius: 9px; border: 2px solid #001a35;background-color:white;">
+              <table style="width:100%;">
                 <tr>
-                    <td style="float:left;font-size:large;">
-                        <b><?php echo $row['transaction_send_to']; ?></b>
-                    </td>
-                    <td  style="width: 150px;color:<?php echo $color; ?>;">&#8377;<?php echo floatval($row['transaction_amount']); ?> /-</td>
+                  <td style="float:left;font-size:large;">
+                    <b><?php echo $row['transaction_send_to']; ?></b>
+                  </td>
+                  <td style="width: 150px;color:<?php echo $color; ?>;">&#8377;<?php echo floatval($row['transaction_amount']); ?> /-</td>
                 <tr>
-                    <td><?php echo date("d-M-Y h:i:s A", strtotime($row['transaction_date'])); ?></td>
-                    <td style="width: 150px;color:<?php echo $color; ?>;"><?php echo $val; ?> </td>
+                  <td><?php echo date("d-M-Y H:i:s", strtotime($row['transaction_date'])); ?></td>
+                  <td style="width: 150px;color:<?php echo $color; ?>;"><?php echo $val; ?> </td>
                 <tr>
                 </tr>
                 </tr>
-            </table>
-        </div>
-<?php }
-} ?>
-
-
+              </table>
+            </div>
+        <?php }
+        } ?>
         </center>
       </section>
     <?php }
   } else { ?>
     <center style="margin-top:20rem;">
-    <?php
-            $conn = $pdo->open();
-            try {
-                $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
-                $stmt->execute(); ?>
-                <h4 style="color:red;font-size:30px;font-family: cursive;text-transform: capitalize;"><?php
-                                        foreach ($stmt as $row)
-                                            echo $row['slogan_sentance']; ?></h4>
-            <?php } catch (PDOException $e) {
-                $_SESSION['error'] = $e->getMessage();
-            }
-            $pdo->close(); ?>
+      <?php
+      $conn = $pdo->open();
+      try {
+        $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
+        $stmt->execute(); ?>
+        <h4 style="color:red;font-size:30px;font-family: cursive;text-transform: capitalize;"><?php
+                                                                                              foreach ($stmt as $row)
+                                                                                                echo $row['slogan_sentance']; ?></h4>
+      <?php } catch (PDOException $e) {
+        $_SESSION['error'] = $e->getMessage();
+      }
+      $pdo->close(); ?>
       <a href="login.php">
         <button style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
           LOGIN</button>

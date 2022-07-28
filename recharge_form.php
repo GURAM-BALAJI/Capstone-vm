@@ -142,7 +142,6 @@ header("Expires: 0");
             <input type="submit" class="btn btn-primary" id="pay" value="Proceed To Add +100">
             <input type="hidden" name="INDUSTRY_TYPE_ID" value="Retail">
             <input type="hidden" name="CHANNEL_ID" value="WEB">
-            <input type="hidden" name="order_id" value="<?php echo  "ORDS" . rand(10000, 99999999) ?>">
 
           </div>
         </div>

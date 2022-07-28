@@ -42,7 +42,7 @@
                         <th>ITEMS</th>
                         <th>QTY</th>
                         <th>COST</th>
-                        <th>Date</th>
+                        <th>DATE</th>
                       </thead>
                       <tbody>
                         <?php

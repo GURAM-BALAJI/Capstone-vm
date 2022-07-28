@@ -13,14 +13,10 @@ $checkSum = "";
 $paramList = array();
 if (isset($_SESSION['vm_id'])) {
 	$CUST_ID = $_SESSION['vm_id'];
-	$_SESSION["vm_id"] = $CUST_ID;
-	$_SESSION['vm_user'] = 'True';
-	
-	$ORDER_ID = $_POST['order_id'];
+	$ORDER_ID = $CUST_ID . rand(10000, 99999) . time();
 	$INDUSTRY_TYPE_ID = $_POST["INDUSTRY_TYPE_ID"];
 	$CHANNEL_ID = $_POST["CHANNEL_ID"];
 	$TXN_AMOUNT = $_POST["price"];
-
 	// Create an array having all required parameters for creating checksum.
 	$paramList["MID"] = PAYTM_MERCHANT_MID;
 	$paramList["ORDER_ID"] = $ORDER_ID;
@@ -30,33 +26,14 @@ if (isset($_SESSION['vm_id'])) {
 	$paramList["TXN_AMOUNT"] = $TXN_AMOUNT;
 	$paramList["WEBSITE"] = PAYTM_MERCHANT_WEBSITE;
 	$paramList["CALLBACK_URL"] = "http://192.168.0.104/vending-machine-in-php/pgResponse.php";
-
-
-
-	/*$paramList["MSISDN"] = $MSISDN; //Mobile number of customer
-$paramList["EMAIL"] = $EMAIL; //Email ID of customer
-$paramList["VERIFIED_BY"] = "EMAIL"; //
-$paramList["IS_USER_VERIFIED"] = "YES"; //
-*/
-
-
-
-
-
-
-	//Here checksum string will return by getChecksumFromArray() function.
+	date_default_timezone_set('Asia/Kolkata');
+	$date = date('Y-m-d h:i:s a');
 	$checkSum = getChecksumFromArray($paramList, PAYTM_MERCHANT_KEY);
-
-	// send data to database
-	//$conn = $pdo->open();
-	//
-	//	$stmt = $conn->prepare("INSERT INTO `transaction` ( `transaction_user_id`, `transaction_send_to`, `transaction_amount`, `transaction_method`, `transaction_date`, `transaction_added_by`, `transaction_type`, `transaction_date`) 
-	//	VALUES ('', '', '', '', '', '', '', '', '');
-	//	$stmt->execute();
-	//
-
-
-
+	$conn = $pdo->open();
+	$query = "INSERT INTO `transaction` (`transaction_send_to`,`transaction_added_by`,`transaction_order`, `transaction_user_id`,`transaction_amount`,`transaction_date`, transaction_type, transaction_status) VALUES (:transaction_send_to,:transaction_added_by,:transaction_order, :transaction_user_id, :transaction_amount, :date  ,:type ,:status1 )";
+	$stmt = $conn->prepare("$query");
+	$stmt->execute(['transaction_send_to' => 'Recharged', 'transaction_added_by' => $CUST_ID, 'transaction_order' => $ORDER_ID, 'transaction_user_id' => $CUST_ID, 'transaction_amount' => $TXN_AMOUNT, 'date' => $date, 'type' => '5', 'status1' => 'TXN_INIT']);
+	$pdo->close();
 ?>
 
 	<html>

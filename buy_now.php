@@ -72,8 +72,8 @@ if (isset($_SESSION['vm_id'])) {
                     $balance = $row_user['user_amount'] - $total;
                     $stmt_user_update = $conn->prepare("UPDATE users SET user_amount=$balance WHERE user_id=$id");
                     $stmt_user_update->execute();
-                    $stmt = $conn->prepare("INSERT INTO transaction (transaction_user_id,transaction_send_to,transaction_amount,transaction_method,transaction_added_by,transaction_type,transaction_date) VALUES (:transaction_user_id,:transaction_send_to,:transaction_amount,:transaction_method,:transaction_added_by,:transaction_type,:transaction_date)");
-                    $stmt->execute(['transaction_user_id' => $id, 'transaction_send_to' => 'Order', 'transaction_amount' => $total, 'transaction_method' => 'Ordered', 'transaction_added_by' => $id, 'transaction_type'=>1, 'transaction_date'=>$today]);
+                    $stmt = $conn->prepare("INSERT INTO transaction (transaction_user_id,transaction_send_to,transaction_amount,transaction_added_by,transaction_type,transaction_date) VALUES (:transaction_user_id,:transaction_send_to,:transaction_amount,:transaction_added_by,:transaction_type,:transaction_date)");
+                    $stmt->execute(['transaction_user_id' => $id, 'transaction_send_to' => 'Order', 'transaction_amount' => $total,  'transaction_added_by' => $id, 'transaction_type'=>1, 'transaction_date'=>$today]);
                 } else
                     $_SESSION['error'] = 'Insufficient Balance.';
             $stmt_semopher = $conn->prepare("UPDATE semopher SET semopher_value=0 WHERE semopher_id=1");

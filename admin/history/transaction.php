@@ -42,7 +42,8 @@
                         <th>AMOUNT</th>
                         <th>HOW</th>
                         <th>BY(ADMIN)</th>
-                        <th>Date</th>
+                        <th>STATUS</th>
+                        <th>DATE</th>
                       </thead>
                       <tbody>
                         <?php
@@ -60,7 +61,7 @@
                         $conn = $pdo->open();
                         try {
                           $slno = 1;
-                          $stmt = $conn->prepare("SELECT * FROM transaction WHERE day(transaction_date)=$day AND month(transaction_date)=$month AND year(transaction_date)=$year AND transaction_type='0' ORDER BY transaction_id DESC");
+                          $stmt = $conn->prepare("SELECT * FROM transaction WHERE day(transaction_date)=$day AND month(transaction_date)=$month AND year(transaction_date)=$year AND transaction_type!='2' ORDER BY transaction_id DESC");
                           $stmt->execute();
                           foreach ($stmt as $row) {
                             echo "<tr>";
@@ -69,6 +70,7 @@
                             echo "<td>" . $row['transaction_amount'] . "</td>";
                             echo "<td>" . $row['transaction_send_to'] . "</td>";
                             echo "<td>" . $row['transaction_added_by'] . "</td>";
+                            echo "<td>" . $row['transaction_status'] . "</td>";
                             echo "<td>" . $row['transaction_date'] . "</td>";
                             echo "</tr>";
                           }

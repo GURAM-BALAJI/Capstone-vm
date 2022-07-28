@@ -119,7 +119,7 @@ include 'includes/header.php';
                             $_SESSION['error'] = $e->getMessage();
                         }
                         $pdo->close();  ?>
-                        <a href="our_team/html.html"><button style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i class="fa fa-users" style="padding: 0.7rem;" aria-hidden="true"></i><br />OurTeam</button></a>
+                        <a href="our_team/html.html"><button style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i class="fa fa-users" style="padding: 0.7rem;" aria-hidden="true"></i><br />Team</button></a>
                         <a href="logout.php"><button style="border-radius:3rem;width:85%;margin:2%;height:7rem;color:white;font-size:x-large;margin-bottom:2rem;background-color:red;"><i class="fa fa-sign-out" aria-hidden="true"></i> LOG OUT</button></a>
                     </center>
                 </div>
