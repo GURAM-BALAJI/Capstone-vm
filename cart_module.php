@@ -8,18 +8,17 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" method="POST" action="buy_now.php">
-                    <center><h1 style="color: #d24026;">Are you sure, You want to buy.</h1></center>
+                    <center>
+                        <h1 style="color: #d24026;">Are you sure, You want to buy.</h1>
+                    </center>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
-                                class="fa fa-close"></i> NO</button>
-                        <?php if(!isset($_SESSION['vm_id'])){ ?>
-                        <a href="login.php">
-                            <button
-                                style=" background-color: #d24026; border: none; color: white; padding: 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
-                                LOGIN</button>
-                        </a><?php }else{?>
-                        <button type="submit" class="btn btn-success btn-flat" name="buy"><i
-                                class="fa fa-lightbulb-o"></i> YES</button>
+                        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> NO</button>
+                        <?php if (!isset($_SESSION['vm_id'])) { ?>
+                            <a href="login.php">
+                                <button style=" background-color: #d24026; border: none; color: white; padding: 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
+                                    LOGIN</button>
+                            </a><?php } else { ?>
+                            <button type="submit" class="btn btn-success btn-flat" name="buy"><i class="fa fa-lightbulb-o"></i> YES</button>
                         <?php } ?>
                     </div>
                 </form>
@@ -28,8 +27,13 @@
     </div>
 </div>
 
-    <!-- history list -->
-  <?php if (isset($_SESSION['vm_id'])) { ?>
+<!-- 
+history list 
+1-vended.
+2-cancel.
+3-time out.
+-->
+<?php if (isset($_SESSION['vm_id'])) { ?>
     <div class="modal fade" id="history">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -43,7 +47,7 @@
                         <?php
                         $id = $_SESSION['vm_id'];
                         $conn = $pdo->open();
-                        $stmt = $conn->prepare("SELECT * FROM orders WHERE orders_user_id = $id ORDER BY orders_id DESC");
+                        $stmt = $conn->prepare("SELECT * FROM orders WHERE orders_user_id = $id ORDER BY orders_date DESC");
                         $stmt->execute();
                         foreach ($stmt as $row) {
                         ?>
@@ -86,16 +90,20 @@
                                     <th><?php echo $total; ?></th>
                                 </tr>
                                 <tr>
-                                    <th colspan="4">
-                                        <center><button class="vend_btn">Vend Now</button></center>
+                                    <th colspan="2">
+                                        <center><a href="./cancel_order.php"><button class="btn btn-secondary">Cancel</button></a></center>
+                                    </th>
+                                    <th colspan="2">
+                                        <center><a href="./vend_now.php"><button class="vend_btn">Vend Now</button></a></center>
                                     </th>
                                 </tr>
-                            </table><hr><?php
-                                }
-                        $stmt = $conn->prepare("SELECT * FROM history WHERE history_user_id = $id ORDER BY history_id DESC LIMIT 7");
-                        $stmt->execute();
-                        foreach ($stmt as $row) {
-                        ?>
+                            </table>
+                            <hr><?php
+                            }
+                            $stmt = $conn->prepare("SELECT * FROM history WHERE history_user_id = $id ORDER BY history_date DESC LIMIT 7");
+                            $stmt->execute();
+                            foreach ($stmt as $row) {
+                                ?>
                             <table>
                                 <tr style="background-color: lightblue;">
                                     <th colspan="2">ORDER ID : <?php echo $row['history_id']; ?></th>
@@ -136,16 +144,19 @@
                                 </tr>
                                 <tr>
                                     <th colspan="4">
-                                    <?php if($row['history_delivered']==0){ ?>
-                                        <center><button class="btn btn-success">ORDER HAS BEEN COMPLETED</button></center>
-                                        <?php }elseif($row['history_delivered']==1){?>
+                                        <?php if ($row['history_delivered'] == 1) { ?>
+                                            <center><button class="btn btn-success">ORDER HAS BEEN COMPLETED</button></center>
+                                        <?php } elseif ($row['history_delivered'] == 3) { ?>
                                             <center><button class="btn btn-danger">TIME OUT</button></center>
-                                            <?php } ?>
+                                        <?php } elseif ($row['history_delivered'] == 2) { ?>
+                                            <center><button class="btn btn-secondary">CANCELLED</button></center>
+                                        <?php } ?>
                                     </th>
                                 </tr>
-                            </table><hr><?php
-                                }
-                                    ?>
+                            </table>
+                            <hr><?php
+                            }
+                                ?>
 
                     </center>
                 </div>
