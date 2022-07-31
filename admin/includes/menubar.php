@@ -43,19 +43,7 @@
       <?php if ($admin['users_view']) { ?>
         <li><a href="../users/users.php"><i class="fa fa-users"></i> <span>Users</span></a></li>
       <?php }
-      if ($admin['admin_view']) { ?>
-        <li><a href="../admin/admin.php"><i class="fa fa-grav"></i> <span>Admin</span></a></li>
-      <?php } ?>
-      <?php
-      if ($admin['display_items_view']) { ?>
-        <li><a href="../display_items/display_items.php"><i class="fa fa-sitemap"></i> <span>Display Items</span></a></li>
-      <?php }
-      if ($admin['items_view']) { ?>
-        <li><a href="../items/items.php"><i class="fa fa-sitemap"></i> <span>Items</span></a></li>
-      <?php }  if ($admin['slogan_view']) { ?>
-        <li><a href="../slogan/slogan.php"><i class="fa fa-comments-o"></i> <span>Slogan</span></a></li>
-      <?php }?>
-      <?php if ($admin['history_view'] ) { ?>
+      if ($admin['history_view']) { ?>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-history"></i>
@@ -65,16 +53,30 @@
             </span>
           </a>
           <ul class="treeview-menu">
-          <li><a href="../history/orders.php"><i class="fa fa-shopping-bag"></i> Orders</a></li>
-            <li><a href="../history/transaction.php"><i class="fa fa-exchange"></i> Transaction</a></li>
-           <li><a href="../history/pay_to_friend.php"><i class="fa fa-handshake-o"></i> Pay To Friend</a></li>
+            <li><a href="../history/ordered_history.php"><i class="fa fa-first-order"></i> Orders</a></li>
+            <li><a href="../history/pay_to_friend.php"><i class="fa fa-paper-plane"></i> Pay To Friend</a></li>
+            <li><a href="../history/recharged_history.php"><i class="fa fa-retweet"></i> Recharged</a></li>
+            <li><a href="../history/refunded_history.php"><i class="fa fa-undo"></i> Refunded</a></li>
           </ul>
         </li>
       <?php } ?>
       <?php if ($admin['orders_view']) { ?>
+        <li><a href="../orders/orders_histroy.php"><i class="fa fa-shopping-bag"></i> <span>Orders History</span></a></li>
         <li><a href="../orders/orders.php"><i class="fa fa-shopping-cart"></i> <span>Present Orders</span></a></li>
-      <?php } ?>
-      <?php if ($admin['message_view']) { ?>
+      <?php }
+      if ($admin['display_items_view']) { ?>
+        <li><a href="../display_items/display_items.php"><i class="fa fa-television"></i> <span>Display Items</span></a></li>
+      <?php }
+      if ($admin['items_view']) { ?>
+        <li><a href="../items/items.php"><i class="fa fa-sitemap"></i> <span>Items</span></a></li>
+      <?php }
+      if ($admin['slogan_view']) { ?>
+        <li><a href="../slogan/slogan.php"><i class="fa fa-comments-o"></i> <span>Slogan</span></a></li>
+      <?php }
+      if ($admin['admin_view']) { ?>
+        <li><a href="../admin/admin.php"><i class="fa fa-grav"></i> <span>Admin</span></a></li>
+      <?php }
+      if ($admin['message_view']) { ?>
         <li><a href="../message/message.php"><i class="fa fa-comment"></i> <span>Message</span></a></li>
       <?php } ?>
     </ul>

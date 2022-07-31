@@ -12,13 +12,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Pay To Friend
+            Ordered
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Manage</li>
             <li class="active">History</li>
-            <li class="active">Pay To Friend</li>
+            <li class="active">Ordered</li>
           </ol>
         </section>
         <section class="content">
@@ -42,8 +42,7 @@
                         <th>#</th>
                         <th>USER ID</th>
                         <th>AMOUNT</th>
-                        <th>HOW</th>
-                        <th>BY(ADMIN)</th>
+                        <th>ORDER ID</th>
                         <th>DATE</th>
                       </thead>
                       <tbody>
@@ -66,15 +65,14 @@
                           // 2 - pay to friend
                           // 3 - refunded
                           // 4 - recharged
-                          $stmt = $conn->prepare("SELECT * FROM transaction WHERE day(transaction_date)=$day AND month(transaction_date)=$month AND year(transaction_date)=$year  AND transaction_type='2' ORDER BY transaction_id DESC");
+                          $stmt = $conn->prepare("SELECT * FROM transaction WHERE day(transaction_date)=$day AND month(transaction_date)=$month AND year(transaction_date)=$year AND transaction_type='1' ORDER BY transaction_id DESC");
                           $stmt->execute();
                           foreach ($stmt as $row) {
                             echo "<tr>";
                             echo "<td>" . $slno++ . "</td>";
                             echo "<td>" . $row['transaction_user_id'] . "</td>";
                             echo "<td>" . $row['transaction_amount'] . "</td>";
-                            echo "<td>" . $row['transaction_send_to'] . "</td>";
-                            echo "<td>" . $row['transaction_added_by'] . "</td>";
+                            echo "<td>" . $row['transaction_order'] . "</td>";
                             echo "<td>" . $row['transaction_date'] . "</td>";
                             echo "</tr>";
                           }

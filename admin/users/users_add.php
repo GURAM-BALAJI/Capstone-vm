@@ -39,7 +39,7 @@ if (isset($_POST['add'])) {
 			};
 
 			$stmt = $conn->prepare("INSERT INTO transaction ( transaction_user_id, transaction_send_to, transaction_amount, transaction_added_by,transaction_type,transaction_date) VALUES (:transaction_user_id, :transaction_send_to, :transaction_amount, :transaction_added_by, :transaction_type,:transaction_date)");
-			$stmt->execute(['transaction_user_id' => $user_id, 'transaction_send_to' => 0, 'transaction_amount' => $amount,  'transaction_added_by' => $by, 'transaction_type' => 0, 'transaction_date'=>$today]);
+			$stmt->execute(['transaction_user_id' => $user_id, 'transaction_send_to' => 'Added Manually', 'transaction_amount' => $amount,  'transaction_added_by' => $by, 'transaction_type' => 4, 'transaction_date'=>$today]);
 
 			$_SESSION['success'] = 'User added successfully';
 		} catch (PDOException $e) {

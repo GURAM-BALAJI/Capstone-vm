@@ -12,11 +12,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            History Orders
+            Recharged
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">History Orders</li>
+            <li class="active">Manage</li>
+            <li class="active">History</li>
+            <li class="active">Recharged</li>
           </ol>
         </section>
         <section class="content">
@@ -39,9 +41,10 @@
                       <thead>
                         <th>#</th>
                         <th>USER ID</th>
-                        <th>ITEMS</th>
-                        <th>QTY</th>
-                        <th>COST</th>
+                        <th>AMOUNT</th>
+                        <th>ORDER ID</th>
+                        <th>BY(ADMIN)</th>
+                        <th>STATUS</th>
                         <th>DATE</th>
                       </thead>
                       <tbody>
@@ -60,16 +63,21 @@
                         $conn = $pdo->open();
                         try {
                           $slno = 1;
-                          $stmt = $conn->prepare("SELECT * FROM history WHERE day(history_date)=$day AND month(history_date)=$month AND year(history_date)=$year ORDER BY history_id DESC");
+                          // 1 - Ordered
+                          // 2 - pay to friend
+                          // 3 - refunded
+                          // 4 - recharged
+                          $stmt = $conn->prepare("SELECT * FROM transaction WHERE day(transaction_date)=$day AND month(transaction_date)=$month AND year(transaction_date)=$year  AND transaction_type='4' ORDER BY transaction_id DESC");
                           $stmt->execute();
                           foreach ($stmt as $row) {
                             echo "<tr>";
                             echo "<td>" . $slno++ . "</td>";
-                            echo "<td>" . $row['history_user_id'] . "</td>";
-                            echo "<td>" . $row['history_item'] . "</td>";
-                            echo "<td>" . $row['history_qty'] . "</td>";
-                            echo "<td>" . $row['history_cost'] . "</td>";
-                            echo "<td>" . $row['history_date'] . "</td>";
+                            echo "<td>" . $row['transaction_user_id'] . "</td>";
+                            echo "<td>" . $row['transaction_amount'] . "</td>";
+                            echo "<td>" . $row['transaction_order'] . "</td>";
+                            echo "<td>" . $row['transaction_added_by'] . "</td>";
+                            echo "<td>" . $row['transaction_status'] . "</td>";
+                            echo "<td>" . $row['transaction_date'] . "</td>";
                             echo "</tr>";
                           }
                         } catch (PDOException $e) {

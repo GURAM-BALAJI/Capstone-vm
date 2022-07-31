@@ -7,9 +7,11 @@ if (isset($_SESSION["vm_id"])) {
     $conn = $pdo->open();
     $stmt = $conn->prepare("SELECT * FROM orders WHERE orders_user_id = '$id' LIMIT 1");
     $stmt->execute();
+    $redirect=0;
     foreach ($stmt as $row) {
+        $redirect=1;
         date_default_timezone_set('Asia/Kolkata');
-        $today = date('Y-m-d h:i:s a');
+        $today = date('Y-m-d h:i:s');
         $remaing_time = (strtotime($row['orders_date']) + 900) - strtotime($today);
         if (intval($remaing_time) <= 0) {
             if ($req_per == 1) {
@@ -37,7 +39,7 @@ if (isset($_SESSION["vm_id"])) {
                     $stmt_user_update->execute();
                 }
                 $stmt = $conn->prepare("INSERT INTO transaction (transaction_user_id,transaction_send_to,transaction_amount,transaction_added_by,transaction_type,transaction_date) VALUES (:transaction_user_id,:transaction_send_to,:transaction_amount,:transaction_added_by,:transaction_type,:transaction_date)");
-                $stmt->execute(['transaction_user_id' => $id, 'transaction_send_to' => 'Refunded', 'transaction_amount' => $cost,  'transaction_added_by' => $id, 'transaction_type' => 1, 'transaction_date' => $today]);
+                $stmt->execute(['transaction_user_id' => $id, 'transaction_send_to' => 'Refunded', 'transaction_amount' => $cost,  'transaction_added_by' => $id, 'transaction_type' => 3, 'transaction_date' => $today]);
                 $stmt_user_update = $conn->prepare("UPDATE orders SET orders_delivered='3' WHERE orders_user_id = '$id' AND orders_id='" . $row['orders_id'] . "'");
                 $stmt_user_update->execute();
                 $stmt = $conn->prepare("DELETE FROM orders WHERE orders_id=:id AND orders_user_id=:user_id");
@@ -396,6 +398,11 @@ if (isset($_SESSION["vm_id"])) {
         </html>
         <?php include './includes/req_end.php'; ?>
 <?php    }
+if($redirect==0)
+{
+    header('location:cart.php');
+    exit();
+}
 } else {
     header('location:cart.php');
 }

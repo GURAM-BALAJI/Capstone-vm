@@ -32,7 +32,7 @@ if (isset($_SESSION['vm_id'])) {
 	$conn = $pdo->open();
 	$query = "INSERT INTO `transaction` (`transaction_send_to`,`transaction_added_by`,`transaction_order`, `transaction_user_id`,`transaction_amount`,`transaction_date`, transaction_type, transaction_status) VALUES (:transaction_send_to,:transaction_added_by,:transaction_order, :transaction_user_id, :transaction_amount, :date  ,:type ,:status1 )";
 	$stmt = $conn->prepare("$query");
-	$stmt->execute(['transaction_send_to' => 'Recharged', 'transaction_added_by' => $CUST_ID, 'transaction_order' => $ORDER_ID, 'transaction_user_id' => $CUST_ID, 'transaction_amount' => $TXN_AMOUNT, 'date' => $date, 'type' => '5', 'status1' => 'TXN_INIT']);
+	$stmt->execute(['transaction_send_to' => 'Recharged', 'transaction_added_by' => $CUST_ID, 'transaction_order' => $ORDER_ID, 'transaction_user_id' => $CUST_ID, 'transaction_amount' => $TXN_AMOUNT, 'date' => $date, 'type' => '4', 'status1' => 'TXN_INIT']);
 	$pdo->close();
 ?>
 

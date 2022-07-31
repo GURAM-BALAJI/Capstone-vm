@@ -19,7 +19,7 @@
 			$stmt->execute(['amount'=>$amount, 'by'=>$by, 'id'=>$id]);
             
              $stmt = $conn->prepare("INSERT INTO transaction ( transaction_user_id, transaction_send_to, transaction_amount, transaction_added_by, transaction_type,transaction_date) VALUES (:transaction_user_id, :transaction_send_to, :transaction_amount, :transaction_added_by, :transaction_type,:transaction_date)");
-$stmt->execute(['transaction_user_id'=>$id, 'transaction_send_to'=>'Added Manually', 'transaction_amount'=>$add_amount,  'transaction_added_by'=>$by, 'transaction_type'=>0, 'transaction_date'=>$today]);
+$stmt->execute(['transaction_user_id'=>$id, 'transaction_send_to'=>'Added Manually', 'transaction_amount'=>$add_amount,  'transaction_added_by'=>$by, 'transaction_type'=>4, 'transaction_date'=>$today]);
             
 			$_SESSION['success'] = $add_amount.' Rs updated successfully';
 		}
