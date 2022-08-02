@@ -124,7 +124,7 @@ include 'includes/header.php';
 
         <div style="background-color: #001a35;color: #89E6C4;">CART</div>
         <?php
-        if (isset($_SESSION['vm_id'])) {
+        if (isset($_SESSION['vm_user'])) {
             $user_id = $_SESSION['vm_id'];
             $conn = $pdo->open();
             $stmt = $conn->prepare("SELECT * FROM message");
@@ -166,8 +166,8 @@ include 'includes/header.php';
             <div class="modal-body">
                 <table style="width: 100%;">
                     <?php
-                    $stmt = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id WHERE cart_user_id=$user_id");
-                    $stmt->execute();
+                    $stmt = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id WHERE cart_user_id=:user_id");
+                    $stmt->execute(['user_id' => $user_id]);
                     foreach ($stmt as $row111) {
                         $id = $row111['cart_id'];
                         $qty = $row111['display_items_qty'];
@@ -180,13 +180,13 @@ include 'includes/header.php';
                         }
                     }
                     $total = $i = 0;
-                    $stmt = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id WHERE cart_user_id=$user_id");
-                    $stmt->execute();
+                    $stmt = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id WHERE cart_user_id=:user_id");
+                    $stmt->execute(['user_id' => $user_id]);
                     foreach ($stmt as $row11) {
                         $i = 1;
                         $items_id = $row11['display_items_id'];
-                        $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_id=$items_id");
-                        $stmt1->execute();
+                        $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_id=:items_id");
+                        $stmt1->execute(['items_id' => $items_id]);
                         foreach ($stmt1 as $row1) {
                     ?>
                             <tr>
@@ -305,17 +305,21 @@ include 'includes/header.php';
 
     <a href="cart.php" class="nav__link nav__link--active">
         <?php
+         $i = 0;
         if (isset($_SESSION['vm_id'])) {
-            $user_id = $_SESSION['vm_id'];
-            $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=$user_id");
-            $stmt->execute();
-            $i = 0;
+            $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
+            $stmt->execute(['user_id' => $_SESSION['vm_id']]);
             foreach ($stmt as $row)
                 $i++;
         ?>
-            <b style="color:red;"><?php if ($i != 0) echo $i; ?></b>
+           
         <?php } ?>
-        <i class="material-icons nav__icon">shopping_cart</i>
+        <div class="container_cart">
+            <i class="material-icons nav__icon">shopping_cart</i>
+            <?php if ($i != 0){?>
+            <span class="badge_cart"><?php echo $i; ?></span>
+            <?php }?>
+        </div>
         <span class="nav__text">Cart</span>
     </a>
 

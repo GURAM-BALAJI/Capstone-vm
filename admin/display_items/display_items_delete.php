@@ -2,7 +2,7 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['delete'])){
-		$id = $_POST['id'];
+		$id = strip_tags($_POST['id']);
 		
 		$conn = $pdo->open();
 

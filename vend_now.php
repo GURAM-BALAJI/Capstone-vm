@@ -2,14 +2,14 @@
 include 'includes/session.php';
 include './includes/req_start.php';
 
-if (isset($_SESSION["vm_id"])) {
+if (isset($_SESSION['vm_user'])) {
     $id = $_SESSION['vm_id'];
     $conn = $pdo->open();
-    $stmt = $conn->prepare("SELECT * FROM orders WHERE orders_user_id = '$id' LIMIT 1");
-    $stmt->execute();
-    $redirect=0;
+    $stmt = $conn->prepare("SELECT * FROM orders WHERE orders_user_id = :id LIMIT 1");
+    $stmt->execute(['id' => $id]);
+    $redirect = 0;
     foreach ($stmt as $row) {
-        $redirect=1;
+        $redirect = 1;
         date_default_timezone_set('Asia/Kolkata');
         $today = date('Y-m-d h:i:s');
         $remaing_time = (strtotime($row['orders_date']) + 900) - strtotime($today);
@@ -22,26 +22,26 @@ if (isset($_SESSION["vm_id"])) {
                 foreach ($update_items as $dis_id) {
                     if (!empty($dis_id)) {
                         $cost += $orders_cost[$i] * $update_qty[$i];
-                        $stmt_display = $conn->prepare("SELECT * FROM display_items WHERE display_id='$dis_id'");
-                        $stmt_display->execute();
+                        $stmt_display = $conn->prepare("SELECT * FROM display_items WHERE display_id=:dis_id");
+                        $stmt_display->execute(['dis_id' => $dis_id]);
                         foreach ($stmt_display as $row_display)
                             $rem_qty = $row_display['display_items_qty'] + $update_qty[$i];
-                        $stmt_display_update = $conn->prepare("UPDATE display_items SET display_items_qty=$rem_qty WHERE display_id=$dis_id");
-                        $stmt_display_update->execute();
+                        $stmt_display_update = $conn->prepare("UPDATE display_items SET display_items_qty=:rem_qty WHERE display_id=:dis_id");
+                        $stmt_display_update->execute(['rem_qty'=>$rem_qty,'dis_id' => $dis_id]);
                     }
                     $i++;
                 }
-                $stmt_user = $conn->prepare("SELECT * FROM users WHERE user_id=$id");
-                $stmt_user->execute();
+                $stmt_user = $conn->prepare("SELECT * FROM users WHERE user_id=:id");
+                $stmt_user->execute(['id' => $id]);
                 foreach ($stmt_user as $row_user) {
                     $balance = $row_user['user_amount'] + $cost;
-                    $stmt_user_update = $conn->prepare("UPDATE users SET user_amount=$balance WHERE user_id=$id");
-                    $stmt_user_update->execute();
+                    $stmt_user_update = $conn->prepare("UPDATE users SET user_amount=:balance WHERE user_id=:id");
+                    $stmt_user_update->execute(['balance' => $balance,'id' => $id]);
                 }
                 $stmt = $conn->prepare("INSERT INTO transaction (transaction_user_id,transaction_send_to,transaction_amount,transaction_added_by,transaction_type,transaction_date) VALUES (:transaction_user_id,:transaction_send_to,:transaction_amount,:transaction_added_by,:transaction_type,:transaction_date)");
                 $stmt->execute(['transaction_user_id' => $id, 'transaction_send_to' => 'Refunded', 'transaction_amount' => $cost,  'transaction_added_by' => $id, 'transaction_type' => 3, 'transaction_date' => $today]);
-                $stmt_user_update = $conn->prepare("UPDATE orders SET orders_delivered='3' WHERE orders_user_id = '$id' AND orders_id='" . $row['orders_id'] . "'");
-                $stmt_user_update->execute();
+                $stmt_user_update = $conn->prepare("UPDATE orders SET orders_delivered=:orders_delivered WHERE orders_user_id = :id AND orders_id=:orders_id");
+                $stmt_user_update->execute(['orders_delivered' => 3,'id' => $id, 'orders_id' => $row['orders_id']]);
                 $stmt = $conn->prepare("DELETE FROM orders WHERE orders_id=:id AND orders_user_id=:user_id");
                 $stmt->execute(['id' => $row['orders_id'], 'user_id' => $id]);
                 header('location:cart.php');
@@ -64,6 +64,54 @@ if (isset($_SESSION["vm_id"])) {
                 body {
                     background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
                     font-family: 'Roboto', sans-serif;
+                }
+
+                /* The Modal (background) */
+                .modal {
+                    display: none;
+                    /* Hidden by default */
+                    position: fixed;
+                    /* Stay in place */
+                    z-index: 1;
+                    /* Sit on top */
+                    padding-top: 100px;
+                    /* Location of the box */
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    /* Full width */
+                    height: 100%;
+                    /* Full height */
+                    overflow: auto;
+                    /* Enable scroll if needed */
+                    background-color: rgb(0, 0, 0);
+                    /* Fallback color */
+                    background-color: rgba(0, 0, 0, 0.4);
+                    /* Black w/ opacity */
+                }
+
+                /* Modal Content */
+                .modal-content {
+                    background-color: #fefefe;
+                    margin: auto;
+                    padding: 20px;
+                    border: 1px solid #888;
+                    width: 80%;
+                }
+
+                /* The Close Button */
+                .close {
+                    color: #aaaaaa;
+                    float: right;
+                    font-size: 28px;
+                    font-weight: bold;
+                }
+
+                .close:hover,
+                .close:focus {
+                    color: #000;
+                    text-decoration: none;
+                    cursor: pointer;
                 }
 
                 .card {
@@ -252,7 +300,7 @@ if (isset($_SESSION["vm_id"])) {
                                         <spam style="color:red;">*</spam> In case of Not Vend, You will get refunded within 5 minutes of Time out.
                                     </p>
                                     <p class="text-warning mb-0 col-sm-12">
-                                        <spam style="color:red;">*</spam> To cancel order <a style="color:red;text-decoration:none;" href="./cancel_order.php"> <b>Click me.</b></a>
+                                        <spam style="color:red;">*</spam> To cancel order <b id="myBtn" style="color:red;text-decoration:none;"> Click me.</b>
                                     </p>
                                     <center>
                                         <div id="app"></div>
@@ -267,7 +315,30 @@ if (isset($_SESSION["vm_id"])) {
                 </div>
 
             </form>
-
+            <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" method="POST" action="./cancel_order.php">
+                                <center>
+                                    <h1 style="color: #d24026;text-transform:capitalize;">Are you sure, You want to cancel Order.</h1>
+                                </center>
+                                <div class="modal-footer">
+                                     <?php if (!isset($_SESSION['vm_id'])) { ?>
+                                        <a href="login.php">
+                                            <button style=" background-color: #d24026; border: none; color: white; padding: 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
+                                                LOGIN</button>
+                                        </a><?php } else { ?>
+                                        <button type="submit" style="background-color:red;border: none;border-radius: 10px;font-size:20px;padding:15px;" name="cancel"><i class="fa fa-lightbulb-o"></i> YES</button>
+                                    <?php } ?>
+                                </div>
+                            </form>
+                        </div>
+                </div>
+            </div>
 
         </body>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
@@ -393,16 +464,40 @@ if (isset($_SESSION["vm_id"])) {
                     .getElementById("base-timer-path-remaining")
                     .setAttribute("stroke-dasharray", circleDasharray);
             }
+            // Get the modal
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks the button, open the modal 
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
         </script>
 
         </html>
         <?php include './includes/req_end.php'; ?>
 <?php    }
-if($redirect==0)
-{
-    header('location:cart.php');
-    exit();
-}
+    if ($redirect == 0) {
+        header('location:cart.php');
+        exit();
+    }
 } else {
     header('location:cart.php');
 }

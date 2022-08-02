@@ -72,8 +72,8 @@
                     $conn = $pdo->open();
 
                     try{
-                      $stmt = $conn->prepare("SELECT * FROM admin WHERE admin_delete='0'");
-                      $stmt->execute();
+                      $stmt = $conn->prepare("SELECT * FROM admin WHERE admin_delete=:admin_delete");
+                      $stmt->execute(['admin_delete'=>0]);
                       foreach($stmt as $row){
                         $image = (!empty($row['admin_photo'])) ? '../../images/'.$row['admin_photo'] : '../../images/profile.jpg';
                         $status = ($row['admin_status']) ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Not Active</span>';

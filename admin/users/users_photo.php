@@ -2,7 +2,7 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['upload'])){
-		$id = $_POST['id'];
+		$id = strip_tags($_POST['id']);
 		$filename = $_FILES['photo']['name'];
 		if(!empty($filename)){
             $ext = pathinfo($filename, PATHINFO_EXTENSION);

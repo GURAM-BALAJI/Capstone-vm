@@ -1,7 +1,7 @@
 <?php
 include 'includes/session.php';
 if (isset($_GET['token'])) {
-  $token = $_GET['token'];
+  $token = strip_tags($_GET['token']);
     $conn = $pdo->open();
     $stmt = $conn->prepare("SELECT *,COUNT(*) AS numrows FROM users WHERE user_token=:token12");
     $stmt->execute(['token12' => $token]);

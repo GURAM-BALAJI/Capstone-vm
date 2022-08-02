@@ -2,8 +2,8 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['edit'])){
-		$id = $_POST['id'];
-		$slogan_sentance = $_POST['slogan_sentance'];
+		$id = strip_tags($_POST['id']);
+		$slogan_sentance = strip_tags($_POST['slogan_sentance']);
 		try{
 			$stmt = $conn->prepare("UPDATE slogan SET slogan_sentance=:slogan_sentance WHERE slogan_id=:id");
 			$stmt->execute(['slogan_sentance'=>$slogan_sentance, 'id'=>$id]);

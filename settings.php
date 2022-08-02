@@ -98,7 +98,7 @@ include 'includes/header.php';
     }
     ?>
     <?php
-    if (isset($_SESSION['vm_id'])) { ?>
+    if (isset($_SESSION['vm_user'])) { ?>
         <section class="content">
             <div class="modal-content">
                 <div class="modal-body">
@@ -111,8 +111,8 @@ include 'includes/header.php';
                         <?php
                         $conn = $pdo->open();
                         try {
-                            $stmt = $conn->prepare("SELECT * FROM message WHERE message_id=3");
-                            $stmt->execute();
+                            $stmt = $conn->prepare("SELECT * FROM message WHERE message_id=:message_id");
+                            $stmt->execute(['message_id'=>3]);
                         ?>
                             <button onclick="window.open('whatsapp://send?text=<?php foreach ($stmt as $row) echo $row['message']; ?>')" style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i class="fa fa-share-alt" style="padding: 0.7rem;" aria-hidden="true"></i><br />Share </button>
                         <?php } catch (PDOException $e) {
@@ -159,21 +159,25 @@ include 'includes/header.php';
         </a>
 
 
-        <a href="cart.php" class="nav__link ">
-            <?php
-            if (isset($_SESSION['vm_id'])) {
-                $user_id = $_SESSION['vm_id'];
-                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=$user_id");
-                $stmt->execute();
-                $i = 0;
-                foreach ($stmt as $row)
-                    $i++;
-            ?>
-                <b style="color:red;"><?php if ($i != 0) echo $i; ?></b>
-            <?php } ?>
+        <a href="cart.php" class="nav__link">
+        <?php
+         $i = 0;
+        if (isset($_SESSION['vm_id'])) {
+            $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
+            $stmt->execute(['user_id' => $_SESSION['vm_id']]);
+            foreach ($stmt as $row)
+                $i++;
+        ?>
+           
+        <?php } ?>
+        <div class="container_cart">
             <i class="material-icons nav__icon">shopping_cart</i>
-            <span class="nav__text">Cart</span>
-        </a>
+             <?php if ($i != 0){?>
+            <span class="badge_cart"><?php echo $i; ?></span>
+            <?php }?>
+        </div>
+        <span class="nav__text">Cart</span>
+    </a>
 
         <a href="settings.php" class="nav__link nav__link--active">
             <i class="material-icons nav__icon">settings</i>

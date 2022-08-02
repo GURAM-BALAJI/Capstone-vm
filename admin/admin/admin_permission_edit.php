@@ -2,7 +2,7 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['update'])) {
-        $id = $_POST['id'];
+        $id = strip_tags($_POST['id']);
         if(isset($_POST['users_view']))
             $users_view =1;
         else

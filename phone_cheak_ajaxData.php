@@ -4,11 +4,11 @@ include 'includes/session.php';
 
 if(isset($_POST["phone"]) && !empty($_POST["phone"]))
 {
-    $phone=$_POST["phone"];
+    $phone=strip_tags($_POST["phone"]);
 
 $conn = $pdo->open();
-$stmt = $conn->prepare("SELECT * FROM users WHERE user_phone=:phone AND user_delete='0'");
-    $stmt->execute(['phone'=>$phone]);
+$stmt = $conn->prepare("SELECT * FROM users WHERE user_phone=:phone AND user_delete=:user_delete");
+    $stmt->execute(['phone'=>$phone,'user_delete'=>0]);
  $data=$stmt->fetchAll();
  if(!empty($data))
  {
@@ -27,4 +27,3 @@ $stmt = $conn->prepare("SELECT * FROM users WHERE user_phone=:phone AND user_del
  }
   $pdo->close();
 }
-?>

@@ -3,11 +3,11 @@
 
 
 	if(isset($_POST['save'])){
-		$curr_password = $_POST['curr_password'];
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		$name = $_POST['name'];
-		$photo = $_FILES['photo']['name'];
+		$curr_password = strip_tags($_POST['curr_password']);
+		$email = strip_tags($_POST['email']);
+		$password = strip_tags($_POST['password']);
+		$name = strip_tags($_POST['name']);
+		$photo = strip_tags($_FILES['photo']['name']);
 		if(password_verify($curr_password, $admin['admin_password'])){
 			if(!empty($photo)){
 				move_uploaded_file($_FILES['photo']['tmp_name'], '../../images/'.$photo);
@@ -34,7 +34,7 @@
 
 			try{
 				date_default_timezone_set('Asia/Kolkata');
-		$today = date('d-m-Y h:i:s a');
+		$today = date('Y-m-d h:i:s a');
 				$stmt = $conn->prepare("UPDATE admin SET admin_email=:email, admin_password=:password, admin_name=:name, admin_photo=:photo,admin_updated_date=:admin_updated_date WHERE admin_id=:id");
 				$stmt->execute(['email'=>$email, 'password'=>$password, 'name'=>$name, 'photo'=>$filename,'admin_updated_date'=>$today, 'id'=>$admin['admin_id']]);
 

@@ -4,7 +4,7 @@
 	$conn = $pdo->open();
 
 	$output = array('error'=>false);
-	$id = $_POST['id'];
+	$id = strip_tags($_POST['id']);
 
 	if(isset($_SESSION['vm_user'])){
 		try{

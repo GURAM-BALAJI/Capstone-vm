@@ -1,31 +1,25 @@
 <?php
-	include '../includes/session.php';
+include '../includes/session.php';
 
-	if(isset($_POST['delete'])){
-		$id = $_POST['id'];
-		
-		$conn = $pdo->open();
+if (isset($_POST['delete'])) {
+	$id = strip_tags($_POST['id']);
 
-		try{
-			date_default_timezone_set('Asia/Kolkata');
-			$today = date('Y-m-d h:i:s a');
-			$stmt = $conn->prepare("UPDATE admin set admin_delete='1',admin_updated_date=:admin_updated_date WHERE admin_id=:id");
-			$stmt->execute(['admin_updated_date'=>$today,'id'=>$id]);
+	$conn = $pdo->open();
 
-			$_SESSION['success'] = 'admin deleted successfully';
-		}
-		catch(PDOException $e){
-			$_SESSION['error'] = $e->getMessage();
-		}
+	try {
+		date_default_timezone_set('Asia/Kolkata');
+		$today = date('Y-m-d h:i:s a');
+		$stmt = $conn->prepare("UPDATE admin set admin_delete=:admin_delete,admin_updated_date=:admin_updated_date WHERE admin_id=:id");
+		$stmt->execute(['admin_delete' => 1, 'admin_updated_date' => $today, 'id' => $id]);
 
-		$pdo->close();
-	}
-	else{
-		$_SESSION['error'] = 'Select admin to delete first';
+		$_SESSION['success'] = 'admin deleted successfully';
+	} catch (PDOException $e) {
+		$_SESSION['error'] = $e->getMessage();
 	}
 
-	header('location: admin.php');
-	
-?>
+	$pdo->close();
+} else {
+	$_SESSION['error'] = 'Select admin to delete first';
+}
 
-
+header('location: admin.php');

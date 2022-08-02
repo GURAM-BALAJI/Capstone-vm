@@ -33,7 +33,7 @@ history list
 2-cancel.
 3-time out.
 -->
-<?php if (isset($_SESSION['vm_id'])) { ?>
+<?php if (isset($_SESSION['vm_user'])) { ?>
     <div class="modal fade" id="history">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -47,14 +47,15 @@ history list
                         <?php
                         $id = $_SESSION['vm_id'];
                         $conn = $pdo->open();
-                        $stmt = $conn->prepare("SELECT * FROM orders WHERE orders_user_id = $id ORDER BY orders_date DESC");
-                        $stmt->execute();
+                        $stmt = $conn->prepare("SELECT * FROM orders WHERE orders_user_id = :id ORDER BY orders_date DESC");
+                        $stmt->execute(['id' => $id]);
                         foreach ($stmt as $row) {
                         ?>
                             <table>
                                 <tr style="background-color: lightblue;">
                                     <th colspan="2">ORDER ID : <?php echo $row['orders_id']; ?></th>
-                                    <th colspan="2">ORDER DATE : <?php echo $row['orders_date']; ?></th>
+                                    <th colspan="2" >Remaining Time :<b style="color:#d24026;"> <?php date_default_timezone_set('Asia/Kolkata');
+                                                                    echo gmdate("i:s",(strtotime($row['orders_date']) + 900) - strtotime(date('Y-m-d h:i:s'))); ?></b></th>
                                 </tr>
                                 <tr>
                                     <th>NAME</th>
@@ -73,8 +74,8 @@ history list
                                 ?>
                                     <tr>
                                         <td><?php
-                                            $stmt_display = $conn->prepare("SELECT items_name FROM display_items left join items on items_id=display_id WHERE display_id='$item'");
-                                            $stmt_display->execute();
+                                            $stmt_display = $conn->prepare("SELECT items_name FROM display_items left join items on items_id=display_id WHERE display_id=:item");
+                                            $stmt_display->execute(['item' => $item]);
                                             foreach ($stmt_display as $row_display)
                                                 echo $row_display['items_name']; ?></td>
                                         <td><?php echo $orders_qty[$count]; ?></td>
@@ -90,18 +91,15 @@ history list
                                     <th><?php echo $total; ?></th>
                                 </tr>
                                 <tr>
-                                    <th colspan="2">
-                                        <center><a href="./cancel_order.php"><button class="btn btn-secondary">Cancel</button></a></center>
-                                    </th>
-                                    <th colspan="2">
+                                    <th colspan="4">
                                         <center><a href="./vend_now.php"><button class="vend_btn">Vend Now</button></a></center>
                                     </th>
                                 </tr>
                             </table>
                             <hr><?php
                             }
-                            $stmt = $conn->prepare("SELECT * FROM history WHERE history_user_id = $id ORDER BY history_date DESC LIMIT 7");
-                            $stmt->execute();
+                            $stmt = $conn->prepare("SELECT * FROM history WHERE history_user_id = :id ORDER BY history_date DESC LIMIT 7");
+                            $stmt->execute(['id' => $id]);
                             foreach ($stmt as $row) {
                                 ?>
                             <table>
@@ -126,8 +124,8 @@ history list
                                 ?>
                                     <tr>
                                         <td><?php
-                                            $stmt_display = $conn->prepare("SELECT items_name FROM display_items left join items on items_id=display_id WHERE display_id='$item'");
-                                            $stmt_display->execute();
+                                            $stmt_display = $conn->prepare("SELECT items_name FROM display_items left join items on items_id=display_id WHERE display_id=:item");
+                                            $stmt_display->execute(['item' => $item]);
                                             foreach ($stmt_display as $row_display)
                                                 echo $row_display['items_name']; ?></td>
                                         <td><?php echo $history_qty[$count]; ?></td>

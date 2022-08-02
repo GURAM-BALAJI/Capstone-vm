@@ -2,14 +2,14 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['delete'])){
-		$id = $_POST['id'];
+		$id = strip_tags($_POST['id']);
 		date_default_timezone_set('Asia/Kolkata');
-		$today = date('d-m-Y h:i:s a');
+		$today = date('Y-m-d h:i:s a');
 		$conn = $pdo->open();
 
 		try{
-			$stmt = $conn->prepare("UPDATE items set items_delete='1',items_updated_date=:items_updated_date WHERE items_id=:id");
-			$stmt->execute(['id'=>$id, 'items_updated_date'=>$today]);
+			$stmt = $conn->prepare("UPDATE items set items_delete=:items_delete,items_updated_date=:items_updated_date WHERE items_id=:id");
+			$stmt->execute(['items_delete'=>1,'id'=>$id, 'items_updated_date'=>$today]);
 
 			$_SESSION['success'] = 'Items deleted successfully';
 		}

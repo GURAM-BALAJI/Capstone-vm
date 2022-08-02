@@ -2,11 +2,11 @@
 include '../includes/session.php';
 
 if (isset($_POST['add'])) {
-	$name = $_POST['name'];
-	$email = $_POST['email'];
-	$password = $_POST['password'];
-	$address = $_POST['address'];
-	$contact = $_POST['contact'];
+	$name = strip_tags($_POST['name']);
+	$email = strip_tags($_POST['email']);
+	$password = strip_tags($_POST['password']);
+	$address = strip_tags($_POST['address']);
+	$contact = strip_tags($_POST['contact']);
 
 	$conn = $pdo->open();
 
@@ -17,7 +17,7 @@ if (isset($_POST['add'])) {
 		$_SESSION['error'] = 'Email already taken';
 	} else {
 		date_default_timezone_set('Asia/Kolkata');
-		$today = date('d-m-Y h:i:s a');
+		$today = date('Y-m-d h:i:s a');
 		$password = password_hash($password, PASSWORD_DEFAULT);
 		$filename = $_FILES['photo']['name'];
 		if (!empty($filename)) {

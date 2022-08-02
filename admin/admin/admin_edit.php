@@ -2,13 +2,13 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['edit'])){
-		$id = $_POST['id'];
-		$name = $_POST['name'];
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		$contact = $_POST['contact'];
+		$id = strip_tags($_POST['id']);
+		$name = strip_tags($_POST['name']);
+		$email = strip_tags($_POST['email']);
+		$password = strip_tags($_POST['password']);
+		$contact = strip_tags($_POST['contact']);
 		date_default_timezone_set('Asia/Kolkata');
-		$today = date('d-m-Y h:i:s a');
+		$today = date('Y-m-d h:i:s a');
 		$conn = $pdo->open();
 		$stmt = $conn->prepare("SELECT * FROM admin WHERE admin_id=:id");
 		$stmt->execute(['id'=>$id]);

@@ -3,7 +3,7 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['add'])){
-		$slogan_sentance = $_POST['slogan_sentance'];
+		$slogan_sentance = strip_tags($_POST['slogan_sentance']);
 		$conn = $pdo->open();
 		
 			try{

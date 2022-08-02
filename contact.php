@@ -3,10 +3,10 @@
 if (isset($_POST['submit'])) {
   include './includes/req_start.php';
 if ($req_per == 1) {
-  $name = $_POST['name'];
-  $email = $_POST['email'];
-  $phone = $_POST['phone'];
-  $subject = $_POST['subject'];
+  $name = strip_tags($_POST['name']);
+  $email = strip_tags($_POST['email']);
+  $phone = strip_tags($_POST['phone']);
+  $subject = strip_tags($_POST['subject']);
   date_default_timezone_set('Asia/Kolkata');
 		$today = date('Y-m-d h:i:s a');
   $conn = $pdo->open();
@@ -130,10 +130,24 @@ VALUES ('$name', '$phone', '$email', '$subject','$today')";
       <i class="material-icons nav__icon">account_balance_wallet</i>
       <span class="nav__text">Wallet</span>
     </a>
-
-    <a href="profile.php" class="nav__link ">
-      <i class="material-icons nav__icon">person</i>
-      <span class="nav__text">Profile</span>
+    <a href="cart.php" class="nav__link">
+        <?php
+         $i = 0;
+        if (isset($_SESSION['vm_id'])) {
+          $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
+          $stmt->execute(['user_id' => $_SESSION['vm_id']]);
+            foreach ($stmt as $row)
+                $i++;
+        ?>
+           
+        <?php } ?>
+        <div class="container_cart">
+            <i class="material-icons nav__icon">shopping_cart</i>
+             <?php if ($i != 0){?>
+            <span class="badge_cart"><?php echo $i; ?></span>
+            <?php }?>
+        </div>
+        <span class="nav__text">Cart</span>
     </a>
 
     <a href="settings.php" class="nav__link nav__link--active">

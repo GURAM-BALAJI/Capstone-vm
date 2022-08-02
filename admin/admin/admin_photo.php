@@ -2,8 +2,8 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['upload'])){
-		$id = $_POST['id'];
-		$filename = $_FILES['photo']['name'];
+		$id = strip_tags($_POST['id']);
+		$filename = strip_tags($_FILES['photo']['name']);
 		if(!empty($filename)){
             $ext = pathinfo($filename, PATHINFO_EXTENSION);
                 $filename=date('Y-m-d').'_'.time().'.'.$ext;

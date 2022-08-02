@@ -3,9 +3,9 @@ include 'includes/session.php';
 include './includes/req_start.php';
 if ($req_per == 1) {
 if (isset($_POST['pay'])) {
-    $phone = $_POST['phone'];
-    $amount = $_POST['amount'];
-    $curr_password = $_POST['password'];
+    $phone = strip_tags($_POST['phone']);
+    $amount = strip_tags($_POST['amount']);
+    $curr_password = strip_tags($_POST['password']);
     $users_id = $_SESSION['vm_id'];
     if (password_verify($curr_password, $user['user_password'])) {
         $conn = $pdo->open();

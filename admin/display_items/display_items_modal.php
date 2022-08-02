@@ -42,8 +42,8 @@
                             <select class="form-control" id="items_id" name="items_id" required>
                                 <option value="">Select Items</option>
                                 <?php
-                                $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_delete='0'");
-                                $stmt1->execute();
+                                $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_delete=:items_delete");
+                                $stmt1->execute(['items_delete'=>0]);
                                 foreach ($stmt1 as $row1)
                                     echo "<option value='" . $row1['items_id'] . "'>" . $row1['items_name'] . " (" . $row1['items_cost'] . " .Rs)</option>";
                                 ?>

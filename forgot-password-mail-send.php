@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 include 'includes/session.php';
 
 if (isset($_POST['email'])) {
-	$_SESSION['email'] = $email = $_POST['email'];
+	$_SESSION['email'] = $email = strip_tags($_POST['email']);
 	$conn = $pdo->open();
 
 	$stmt = $conn->prepare("SELECT *, COUNT(*) AS numrows FROM users WHERE user_email=:email");

@@ -51,7 +51,7 @@
                         <?php
                         date_default_timezone_set('Asia/Kolkata');
                         if (isset($_POST['submit'])){
-                          $today = strtotime($_POST['date']);
+                          $today = strtotime(strip_tags($_POST['date']));
                           $day=date('d',$today);
                           $month=date('m',$today);
                           $year=date('Y',$today);
@@ -67,8 +67,9 @@
                           // 2 - pay to friend
                           // 3 - refunded
                           // 4 - recharged
-                          $stmt = $conn->prepare("SELECT * FROM transaction WHERE day(transaction_date)=$day AND month(transaction_date)=$month AND year(transaction_date)=$year  AND transaction_type='4' ORDER BY transaction_id DESC");
-                          $stmt->execute();
+                          $stmt = $conn->prepare("SELECT * FROM transaction WHERE day(transaction_date)=:day AND month(transaction_date)=:month AND year(transaction_date)=:year AND transaction_type=:transaction_type ORDER BY transaction_id DESC");
+                          $stmt->execute(['day' => $day, 'month' => $month, 'year' => $year, 'transaction_type' => 4]);
+                          
                           foreach ($stmt as $row) {
                             echo "<tr>";
                             echo "<td>" . $slno++ . "</td>";

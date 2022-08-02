@@ -2,9 +2,9 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['save'])){
-		$message= $_POST['message'];
-		$win = $_POST['win'];
-		$share = $_POST['share'];
+		$message= strip_tags($_POST['message']);
+		$win = strip_tags($_POST['win']);
+		$share = strip_tags($_POST['share']);
 
 		$conn = $pdo->open();
 		try{

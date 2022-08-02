@@ -127,18 +127,13 @@ include 'includes/header.php';
   }
   ?>
   <?php
-  if (isset($_SESSION['vm_id'])) {
-    $id = $_SESSION['vm_id'];
-    $conn = $pdo->open();
-    $stmt = $conn->prepare("SELECT user_amount,user_id FROM users WHERE user_delete = '0' AND user_id = $id ");
-    $stmt->execute();
-    foreach ($stmt as $row) { ?>
+  if (isset($_SESSION['vm_user'])) { ?>
       <section class="content">
         <div class="modal-content" style="background-color:rgba(235, 224, 232, 1);box-shadow:1px 1px 8px #000000;">
           <div class="amount-box text-center">
             <img src="./images/wallet.png" alt="wallet">
             <p style="font-size:large;">Total Balance</p>
-            <p class="amount" style="<?php if ($row['user_amount'] <= 0) echo "color:red;"; ?>">&#8377;<?php echo $row['user_amount']; ?></p>
+            <p class="amount" style="<?php if ($user['user_amount'] <= 0) echo "color:red;"; ?>">&#8377;<?php echo $user['user_amount']; ?></p>
             <a href="recharge_form.php">
               <button type="button" style="width: 30%;height:35px;border:1.5px solid black;border-radius: 20px !important;margin:5% 2% 5% auto;color:#001a35;background-color:snow;  box-shadow: 2px 1px 4px #000000; " class="btn-sm">Add Money</button></a>
             <button type="button" style="width: 30%;height:35px;border:1.5px solid black;border-radius: 20px !important;margin:5% auto 5% 2%;color:#001a35;background-color:snow;  box-shadow: 2px 1px 4px #000000; " class="btn-sm pay ">PAY FRIEND</button>
@@ -154,8 +149,8 @@ include 'includes/header.php';
         if (isset($_SESSION['vm_id'])) {
           $id = $_SESSION['vm_id'];
           $conn = $pdo->open();
-          $stmt = $conn->prepare("SELECT * FROM transaction WHERE transaction_user_id = $id ORDER BY transaction_id DESC LIMIT 7");
-          $stmt->execute();
+          $stmt = $conn->prepare("SELECT * FROM transaction WHERE transaction_user_id = :id ORDER BY transaction_id DESC LIMIT 7");
+          $stmt->execute(['id' => $id]);
           foreach ($stmt as $row) { ?>
             <?php if ($row['transaction_amount'] < 0) {
               $color = "red";
@@ -187,7 +182,7 @@ include 'includes/header.php';
         } ?>
         </center>
       </section>
-    <?php }
+    <?php 
   } else { ?>
     <center style="margin-top:20rem;">
       <?php
@@ -224,20 +219,23 @@ include 'includes/header.php';
       <span class="nav__text">Wallet</span>
     </a>
 
-    <a href="cart.php" class="nav__link ">
-      <?php
-      if (isset($_SESSION['vm_id'])) {
-        $user_id = $_SESSION['vm_id'];
-        $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=$user_id");
-        $stmt->execute();
-        $i = 0;
-        foreach ($stmt as $row)
-          $i++;
-      ?>
-        <b style="color:red;"><?php if ($i != 0) echo $i; ?></b>
-      <?php } ?>
-      <i class="material-icons nav__icon">shopping_cart</i>
-      <span class="nav__text">Cart</span>
+    <a href="cart.php" class="nav__link">
+        <?php
+         $i = 0;
+        if (isset($_SESSION['vm_id'])) {
+          $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
+          $stmt->execute(['user_id' => $_SESSION['vm_id']]);
+            foreach ($stmt as $row)
+                $i++;
+        ?>
+        <?php } ?>
+        <div class="container_cart">
+            <i class="material-icons nav__icon">shopping_cart</i>
+             <?php if ($i != 0 ){?>
+            <span class="badge_cart"><?php echo $i; ?></span>
+            <?php }?>
+        </div>
+        <span class="nav__text">Cart</span>
     </a>
 
     <a href="settings.php" class="nav__link">

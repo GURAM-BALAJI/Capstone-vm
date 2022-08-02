@@ -3,12 +3,12 @@ include 'includes/session.php';
 include './includes/req_start.php';
 if ($req_per == 1) {
 	if (isset($_POST['edit'])) {
-		$curr_password = $_POST['curr_password'];
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		$name = $_POST['name'];
-		$phone = $_POST['contact'];
-		$photo = $_FILES['photo']['name'];
+		$curr_password = strip_tags($_POST['curr_password']);
+		$email = strip_tags($_POST['email']);
+		$password = strip_tags($_POST['password']);
+		$name = strip_tags($_POST['name']);
+		$phone = strip_tags($_POST['contact']);
+		$photo = strip_tags($_FILES['photo']['name']);
 		if (password_verify($curr_password, $user['user_password'])) {
 			$stmt = $conn->prepare("SELECT COUNT(*) AS numrows FROM users WHERE (user_email=:email || user_phone=:phone) AND user_id!=:id");
 			$stmt->execute(['email' => $email, 'phone' => $phone, 'id' => $user['user_id']]);
@@ -40,7 +40,7 @@ if ($req_per == 1) {
 
 				try {
 					date_default_timezone_set('Asia/Kolkata');
-					$today = date('d-m-Y h:i:s a');
+					$today = date('Y-m-d h:i:s a');
 					$stmt = $conn->prepare("UPDATE users SET user_email=:email, user_password=:password, name=:name, user_photo=:photo,  user_phone=:phone, user_updated_date=:user_updated_date WHERE user_id=:id");
 					$stmt->execute(['email' => $email, 'password' => $password, 'name' => $name, 'photo' => $filename, 'phone' => $phone, 'user_updated_date' => $today, 'id' => $user['user_id']]);
 

@@ -2,11 +2,11 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['upload'])){
-		$id = $_POST['id'];
+		$id = strip_tags($_POST['id']);
 		$filename = $_FILES['photo']['name'];
 		if(!empty($filename)){
 			date_default_timezone_set('Asia/Kolkata');
-			$today = date('d-m-Y h:i:s a');
+			$today = date('Y-m-d h:i:s a');
             $ext = pathinfo($filename, PATHINFO_EXTENSION);
                 $filename=date('Y-m-d').'_'.time().'.'.$ext;
 			move_uploaded_file($_FILES['photo']['tmp_name'], '../../items_images/'.$filename);

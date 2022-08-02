@@ -2,15 +2,15 @@
 include '../includes/session.php';
 
 if (isset($_POST['add'])) {
-	$name = $_POST['name'];
-	$email = $_POST['email'];
-	$password = $_POST['password'];
-	$address = $_POST['address'];
-	$contact = $_POST['contact'];
-	$amount = $_POST['amount'];
-	$by = $admin['admin_id'];
+	$name = strip_tags($_POST['name']);
+	$email = strip_tags($_POST['email']);
+	$password = strip_tags($_POST['password']);
+	$address = strip_tags($_POST['address']);
+	$contact = strip_tags($_POST['contact']);
+	$amount = strip_tags($_POST['amount']);
+	$by = strip_tags($admin['admin_id']);
 	date_default_timezone_set('Asia/Kolkata');
-	$today = date('d-m-Y h:i:s a');
+	$today = date('Y-m-d h:i:s a');
 	$date = date('Y-m-d');
 	$conn = $pdo->open();
 

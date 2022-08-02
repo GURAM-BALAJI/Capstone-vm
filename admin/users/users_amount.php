@@ -2,10 +2,10 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['add'])){
-		$id = $_POST['id'];
-		$add_amount = $_POST['add_amount'];
+		$id = strip_tags($_POST['id']);
+		$add_amount = strip_tags($_POST['add_amount']);
 		date_default_timezone_set('Asia/Kolkata');
-		$today = date('d-m-Y h:i:s a');
+		$today = date('Y-m-d h:i:s a');
 		$date = date('Y-m-d');
 		$conn = $pdo->open();
 		$stmt = $conn->prepare("SELECT user_amount FROM users WHERE user_id=:id");

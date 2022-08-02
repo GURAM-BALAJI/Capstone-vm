@@ -81,8 +81,8 @@
                             $item_id = $row['display_items_id'];
                             echo  "<td>" . $row['display_spring_id'] . "</td>";
                             echo  "<td>" . $item_id . "</td>";
-                            $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_id=$item_id");
-                            $stmt1->execute();
+                            $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_id=:item_id");
+                            $stmt1->execute(['item_id'=>$item_id]);
                             foreach ($stmt1 as $row1) {
                               echo "<td>" . $row1['items_name'] . "</td>
                               <td>" . $row1['items_cost'] . "</td>";

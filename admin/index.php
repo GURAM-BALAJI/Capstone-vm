@@ -34,7 +34,7 @@ if(isset($_SESSION['vm_admin']))
         unset($_SESSION['error']);
       }
     ?>
-             <a >
+             <a style="float:right;">
                <span></span>
                <span></span>
                <span></span>
@@ -53,17 +53,7 @@ if(isset($_SESSION['vm_admin']))
                       overflow: hidden;
                       font-size: 18px;
 " >
-             </a>
-                   <a  href="../index.php" 
-                     style=" color: #ff1c1c;
-                     float:right;   
-">
-               <span></span>
-               <span></span>
-               <span></span>
-               <span></span>
-                       Close
-             </a>
+        
            </form>
          </div>
     </body>

@@ -2,7 +2,7 @@
 include 'includes/session.php';
 include './includes/req_start.php';
 if ($req_per == 1) {
-    if (isset($_SESSION['vm_id'])) {
+    if (isset($_SESSION['vm_user'])) {
         $id = $_SESSION['vm_id'];
         $conn = $pdo->open();
         $stmt = $conn->prepare("SELECT COUNT(*) AS numrows FROM orders WHERE orders_delivered=:delivered");
@@ -13,9 +13,9 @@ if ($req_per == 1) {
             header('location:vend_now.php');
             exit();
         } else {
-            $order_id = $_POST['order_id'];
-            $stmt_user_update = $conn->prepare("UPDATE orders SET orders_delivered='1' WHERE orders_user_id = '$id' AND orders_id='$order_id'");
-            $stmt_user_update->execute();
+            $order_id = strip_tags($_POST['order_id']);
+            $stmt_user_update = $conn->prepare("UPDATE orders SET orders_delivered=:orders_delivered WHERE orders_user_id = :id AND orders_id=:order_id");
+            $stmt_user_update->execute(['orders_delivered' => 1, 'id' => $id, 'order_id' => $order_id]);
 ?>
             <html>
 
@@ -979,33 +979,35 @@ orange circle
                         </div>
                     </div>
                 </div>
-              <a href="./index.php">  <div class="animation02">
-                    <div class="rhombus_box">
-                        <span class="rhombus_item_wrapper rhombus_item01_wrapper"><span class="rhombus_item"></span></span>
-                        <span class="rhombus_item_wrapper rhombus_item02_wrapper"><span class="rhombus_item"></span></span>
-                    </div>
-                    <div class="double_content">
-                        <div class="double_wrapper02 dotted02">
-                            <div class="dotted_hide">
-                                <div class="double_wrapper01 dotted01"><span class="dotted_right"></span></div>
+                <a href="./index.php">
+                    <div class="animation02">
+                        <div class="rhombus_box">
+                            <span class="rhombus_item_wrapper rhombus_item01_wrapper"><span class="rhombus_item"></span></span>
+                            <span class="rhombus_item_wrapper rhombus_item02_wrapper"><span class="rhombus_item"></span></span>
+                        </div>
+                        <div class="double_content">
+                            <div class="double_wrapper02 dotted02">
+                                <div class="dotted_hide">
+                                    <div class="double_wrapper01 dotted01"><span class="dotted_right"></span></div>
+                                </div>
+                            </div>
+                            <div class="double_wrapper02 white02">
+                                <div class="double_wrapper01 white01"></div>
+                            </div>
+                            <div class="double_wrapper02 gray02">
+                                <div class="double_wrapper01 gray01"></div>
+                            </div>
+                            <div class="double_wrapper02 orange02">
+                                <div class="double_wrapper01 orange01"></div>
                             </div>
                         </div>
-                        <div class="double_wrapper02 white02">
-                            <div class="double_wrapper01 white01"></div>
-                        </div>
-                        <div class="double_wrapper02 gray02">
-                            <div class="double_wrapper01 gray01"></div>
-                        </div>
-                        <div class="double_wrapper02 orange02">
-                            <div class="double_wrapper01 orange01"></div>
+                        <div class="name">
+                            <p>THANK YOU</p>
+                            <span class="name_circle01"></span>
+                            <span class="name_circle02"></span>
                         </div>
                     </div>
-                    <div class="name">
-                        <p>THANK YOU</p>
-                        <span class="name_circle01"></span>
-                        <span class="name_circle02"></span>
-                    </div>
-                </div></a>
+                </a>
             </body>
 
             </html>

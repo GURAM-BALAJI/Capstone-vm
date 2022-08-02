@@ -2,12 +2,12 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['add'])){
-		$spring_id = $_POST['spring_id'];
-		$items_id = $_POST['items_id'];
-		$qty = $_POST['qty'];
+		$spring_id = strip_tags($_POST['spring_id']);
+		$items_id = strip_tags($_POST['items_id']);
+		$qty = strip_tags($_POST['qty']);
 		$conn = $pdo->open();
 		date_default_timezone_set('Asia/Kolkata');
-		$today = date('d-m-Y h:i:s a');
+		$today = date('Y-m-d h:i:s a');
 		$stmt = $conn->prepare("SELECT *, COUNT(*) AS numrows FROM display_items WHERE display_spring_id=:spring_id");
 		$stmt->execute(['spring_id'=>$spring_id]);
 		$row = $stmt->fetch();

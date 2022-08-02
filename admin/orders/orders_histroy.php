@@ -50,7 +50,7 @@
                         <?php
                         date_default_timezone_set('Asia/Kolkata');
                         if (isset($_POST['submit'])){
-                          $today = strtotime($_POST['date']);
+                          $today = strtotime(strip_tags($_POST['date']));
                           $day=date('d',$today);
                           $month=date('m',$today);
                           $year=date('Y',$today);
@@ -62,8 +62,8 @@
                         $conn = $pdo->open();
                         try {
                           $slno = 1;
-                          $stmt = $conn->prepare("SELECT * FROM history WHERE day(history_date)=$day AND month(history_date)=$month AND year(history_date)=$year ORDER BY history_id DESC");
-                          $stmt->execute();
+                          $stmt = $conn->prepare("SELECT * FROM history WHERE day(history_date)=:day AND month(history_date)=:month AND year(history_date)=:year ORDER BY history_id DESC");
+                          $stmt->execute(['day' => $day, 'month' => $month, 'year' => $year]);
                           foreach ($stmt as $row) {
                             echo "<tr>";
                             echo "<td>" . $slno++ . "</td>";

@@ -5,13 +5,13 @@ use PHPMailer\PHPMailer\PHPMailer;
 include 'includes/session.php';
 
 if (isset($_POST['email'])) {
-	$_SESSION['name'] = $name = $_POST['name'];
-	$_SESSION['email'] = $email = $_POST['email'];
-	$_SESSION['contact'] = $contact = $_POST['contact'];
-	$_SESSION['password'] = $password = $_POST['password'];
-	$cpassword = $_POST['cpassword'];
+	$_SESSION['name'] = $name = strip_tags($_POST['name']);
+	$_SESSION['email'] = $email = strip_tags($_POST['email']);
+	$_SESSION['contact'] = $contact = strip_tags($_POST['contact']);
+	$_SESSION['password'] = $password = strip_tags($_POST['password']);
+	$cpassword = strip_tags($_POST['cpassword']);
 	date_default_timezone_set('Asia/Kolkata');
-	$today = date('d-m-Y h:i:s a');
+	$today = date('Y-m-d h:i:s a');
 	$conn = $pdo->open();
 
 	$stmt = $conn->prepare("SELECT COUNT(*) AS numrows FROM users WHERE user_email=:email || user_phone=:phone");

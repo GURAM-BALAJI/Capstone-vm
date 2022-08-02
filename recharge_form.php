@@ -1,6 +1,6 @@
 <?php
 include 'includes/session.php';
-if (isset($_SESSION["vm_id"])) {
+if (isset($_SESSION['vm_user'])) {
 header("Pragma: no-cache");
 header("Cache-Control: no-cache");
 header("Expires: 0");

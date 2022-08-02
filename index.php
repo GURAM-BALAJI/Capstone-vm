@@ -124,12 +124,12 @@ include 'includes/header.php';
             <div class="modal-body">
                 <table style="width: 100%;">
                     <?php
-                    $stmt = $conn->prepare("SELECT * FROM display_items WHERE display_items_qty>'0'");
-                    $stmt->execute();
+                    $stmt = $conn->prepare("SELECT * FROM display_items WHERE display_items_qty>:display_items_qty");
+                    $stmt->execute(['display_items_qty' => 0]);
                     foreach ($stmt as $row) {
                         $items_id = $row['display_items_id'];
-                        $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_id=$items_id");
-                        $stmt1->execute();
+                        $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_id=:items_id");
+                        $stmt1->execute(['items_id' => $items_id]);
                         foreach ($stmt1 as $row1) {
                     ?>
                             <form method="POST" action="add_cart.php">
@@ -174,20 +174,20 @@ include 'includes/header.php';
                 </table>
             </div>
         </div>
-        <?php if (!isset($_SESSION['vm_id'])) { ?>
+        <?php if (!isset($_SESSION['vm_user'])) { ?>
             <center style="margin-top:4rem;">
-            <?php
-            $conn = $pdo->open();
-            try {
-                $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
-                $stmt->execute(); ?>
-                <h4 style="color:red;font-size:30px;font-family: cursive;text-transform: capitalize;"><?php
-                                        foreach ($stmt as $row)
-                                            echo $row['slogan_sentance']; ?></h4>
-            <?php } catch (PDOException $e) {
-                $_SESSION['error'] = $e->getMessage();
-            }
-            $pdo->close(); ?>
+                <?php
+                $conn = $pdo->open();
+                try {
+                    $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
+                    $stmt->execute(); ?>
+                    <h4 style="color:red;font-size:30px;font-family: cursive;text-transform: capitalize;"><?php
+                                                                                                            foreach ($stmt as $row)
+                                                                                                                echo $row['slogan_sentance']; ?></h4>
+                <?php } catch (PDOException $e) {
+                    $_SESSION['error'] = $e->getMessage();
+                }
+                $pdo->close(); ?>
                 <a href="login.php">
                     <button style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
                         LOGIN</button>
@@ -208,19 +208,23 @@ include 'includes/header.php';
             <i class="material-icons nav__icon">account_balance_wallet</i>
             <span class="nav__text">Wallet</span>
         </a>
-        <a href="cart.php" class="nav__link ">
+        <a href="cart.php" class="nav__link">
             <?php
+            $i = 0;
             if (isset($_SESSION['vm_id'])) {
-                $user_id = $_SESSION['vm_id'];
-                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=$user_id");
-                $stmt->execute();
-                $i = 0;
+                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
+                $stmt->execute(['user_id' => $_SESSION['vm_id']]);
                 foreach ($stmt as $row)
                     $i++;
             ?>
-                <b style="color:red;"><?php if ($i != 0) echo $i; ?></b>
+
             <?php } ?>
-            <i class="material-icons nav__icon">shopping_cart</i>
+            <div class="container_cart">
+                <i class="material-icons nav__icon">shopping_cart</i>
+                <?php if ($i != 0) { ?>
+                    <span class="badge_cart"><?php echo $i; ?></span>
+                <?php } ?>
+            </div>
             <span class="nav__text">Cart</span>
         </a>
 

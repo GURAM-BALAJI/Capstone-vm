@@ -67,8 +67,8 @@
                     $conn = $pdo->open();
                     try{
                       $now = date('Y-m-d');
-                      $stmt = $conn->prepare("SELECT * FROM contact WHERE contact_view=0");
-                      $stmt->execute();
+                      $stmt = $conn->prepare("SELECT * FROM contact WHERE contact_view=:contact_view");
+                      $stmt->execute(['contact_view'=>0]);
                       foreach($stmt as $row){
                           
                         echo "

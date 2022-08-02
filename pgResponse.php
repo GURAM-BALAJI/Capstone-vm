@@ -312,10 +312,10 @@ include 'includes/session.php';
 
 	$isValidChecksum = verifychecksum_e($paramList, PAYTM_MERCHANT_KEY, $paytmChecksum); //will return TRUE or FALSE string.
 	if ($isValidChecksum == "TRUE") {
-		$ORDERID = $_POST['ORDERID'];
-		$status = $_POST['STATUS'];
+		$ORDERID = strip_tags($_POST['ORDERID']);
+		$status = strip_tags($_POST['STATUS']);
 		$conn = $pdo->open();
-		if (isset($_SESSION["vm_id"])) {
+		if (isset($_SESSION["vm_id"]) && isset($_SESSION['vm_user'])) {
 			$vm_id = $_SESSION["vm_id"];
 		} else {
 			$stmt = $conn->prepare("SELECT transaction_user_id FROM transaction WHERE transaction_order=:id");
@@ -326,14 +326,14 @@ include 'includes/session.php';
 		}
 		include './includes/req_start.php';
 		if ($req_per == 1) {
-			$date = $_POST['TXNDATE'];
+			$date = strip_tags($_POST['TXNDATE']);
 			$stmt = $conn->prepare("UPDATE transaction SET transaction_status=:transaction_status,transaction_date=:transaction_date WHERE transaction_order=:id");
 			$stmt->execute(['transaction_status' => $status, 'transaction_date' => $date, 'id' => $ORDERID]);
 		}
 		if ($_POST["STATUS"] == "TXN_SUCCESS") {
-			$TXNAMOUNT = $_POST['TXNAMOUNT'];
+			$TXNAMOUNT = strip_tags($_POST['TXNAMOUNT']);
 			
-			$mode = $_POST['PAYMENTMODE'];
+			$mode = strip_tags($_POST['PAYMENTMODE']);
 			if ($req_per == 1) {
 				$stmt = $conn->prepare("SELECT user_amount FROM users WHERE user_id=:id");
 				$stmt->execute(['id' => $vm_id]);

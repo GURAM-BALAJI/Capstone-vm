@@ -96,7 +96,7 @@
         ?>
 
         <?php
-        if (isset($_SESSION['vm_id'])) { ?>
+        if (isset($_SESSION['vm_user'])) { ?>
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-body">
@@ -178,20 +178,24 @@
         </a>
 
         <a href="cart.php" class="nav__link">
-          <?php
-          if (isset($_SESSION['vm_id'])) {
-            $user_id = $_SESSION['vm_id'];
-            $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=$user_id");
-            $stmt->execute();
-            $i = 0;
+        <?php
+         $i = 0;
+        if (isset($_SESSION['vm_id'])) {
+          $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
+          $stmt->execute(['user_id' => $_SESSION['vm_id']]);
             foreach ($stmt as $row)
-              $i++;
-          ?>
-            <b style="color:red;"><?php if ($i != 0) echo $i; ?></b>
-          <?php } ?>
-          <i class="material-icons nav__icon">shopping_cart</i>
-          <span class="nav__text">Cart</span>
-        </a>
+                $i++;
+        ?>
+           
+        <?php } ?>
+        <div class="container_cart">
+            <i class="material-icons nav__icon">shopping_cart</i>
+             <?php if ($i != 0){?>
+            <span class="badge_cart"><?php echo $i; ?></span>
+            <?php }?>
+        </div>
+        <span class="nav__text">Cart</span>
+    </a>
 
         <a href="settings.php" class="nav__link nav__link--active">
           <i class="material-icons nav__icon">settings</i>
