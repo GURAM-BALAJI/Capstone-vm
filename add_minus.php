@@ -41,6 +41,7 @@ if ($req_per == 1) {
         $stmt = $conn->prepare("DELETE FROM cart WHERE cart_id=:id");
         $stmt->execute(['id' => $id]);
         $_SESSION['error'] = "Item deleted.";
+        $pdo->close();
     }
 }
 header('location: cart.php');

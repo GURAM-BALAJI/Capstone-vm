@@ -72,9 +72,11 @@ if (isset($_POST['email'])) {
 				unset($_SESSION['contact']);
 				unset($_SESSION['password']);
 				$_SESSION['mailAuth'] = 'true';
+				$pdo->close();
 				header('location: mailAuth.php');
 				exit();
 			} catch (PDOException $e) {
+				$pdo->close();
 				$_SESSION['error'] = $e->getMessage();
 				header('location: sign_up.php');
 			}

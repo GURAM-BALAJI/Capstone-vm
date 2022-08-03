@@ -2,6 +2,7 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['edit'])){
+		$conn = $pdo->open();
 		$id = strip_tags($_POST['id']);
 		$qty = strip_tags($_POST['edit_qty']);
 		date_default_timezone_set('Asia/Kolkata');

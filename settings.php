@@ -112,13 +112,12 @@ include 'includes/header.php';
                         $conn = $pdo->open();
                         try {
                             $stmt = $conn->prepare("SELECT * FROM message WHERE message_id=:message_id");
-                            $stmt->execute(['message_id'=>3]);
+                            $stmt->execute(['message_id' => 3]);
                         ?>
                             <button onclick="window.open('whatsapp://send?text=<?php foreach ($stmt as $row) echo $row['message']; ?>')" style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i class="fa fa-share-alt" style="padding: 0.7rem;" aria-hidden="true"></i><br />Share </button>
                         <?php } catch (PDOException $e) {
                             $_SESSION['error'] = $e->getMessage();
-                        }
-                        $pdo->close();  ?>
+                        }  ?>
                         <a href="our_team/html.html"><button style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i class="fa fa-users" style="padding: 0.7rem;" aria-hidden="true"></i><br />Team</button></a>
                         <a href="logout.php"><button style="border-radius:3rem;width:85%;margin:2%;height:7rem;color:white;font-size:x-large;margin-bottom:2rem;background-color:red;"><i class="fa fa-sign-out" aria-hidden="true"></i> LOG OUT</button></a>
                     </center>
@@ -160,24 +159,25 @@ include 'includes/header.php';
 
 
         <a href="cart.php" class="nav__link">
-        <?php
-         $i = 0;
-        if (isset($_SESSION['vm_id'])) {
-            $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
-            $stmt->execute(['user_id' => $_SESSION['vm_id']]);
-            foreach ($stmt as $row)
-                $i++;
-        ?>
-           
-        <?php } ?>
-        <div class="container_cart">
-            <i class="material-icons nav__icon">shopping_cart</i>
-             <?php if ($i != 0){?>
-            <span class="badge_cart"><?php echo $i; ?></span>
-            <?php }?>
-        </div>
-        <span class="nav__text">Cart</span>
-    </a>
+            <?php
+            $i = 0;
+            if (isset($_SESSION['vm_id'])) {
+                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
+                $stmt->execute(['user_id' => $_SESSION['vm_id']]);
+                foreach ($stmt as $row)
+                    $i++;
+            ?>
+
+            <?php $pdo->close();
+            } ?>
+            <div class="container_cart">
+                <i class="material-icons nav__icon">shopping_cart</i>
+                <?php if ($i != 0) { ?>
+                    <span class="badge_cart"><?php echo $i; ?></span>
+                <?php } ?>
+            </div>
+            <span class="nav__text">Cart</span>
+        </a>
 
         <a href="settings.php" class="nav__link nav__link--active">
             <i class="material-icons nav__icon">settings</i>

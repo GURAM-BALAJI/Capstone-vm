@@ -181,13 +181,14 @@
         <?php
          $i = 0;
         if (isset($_SESSION['vm_id'])) {
+          $conn = $pdo->open();
           $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
           $stmt->execute(['user_id' => $_SESSION['vm_id']]);
             foreach ($stmt as $row)
                 $i++;
         ?>
            
-        <?php } ?>
+        <?php $pdo->close(); } ?>
         <div class="container_cart">
             <i class="material-icons nav__icon">shopping_cart</i>
              <?php if ($i != 0){?>

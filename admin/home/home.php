@@ -45,10 +45,11 @@ include '../includes/header.php'; ?>
         }
         ?>
         <?php if ($admin['users_view']) {
-            $stmt1 = $conn->prepare("SELECT * from logs");
-                  $stmt1->execute();
-                  $row = $stmt1->fetch();
-                  ?>
+          $conn = $pdo->open();
+          $stmt1 = $conn->prepare("SELECT * from logs");
+          $stmt1->execute();
+          $row = $stmt1->fetch();
+        ?>
           <!-- /.row -->
           <div class="row">
             <div class="col-lg-3 col-xs-6">
@@ -72,8 +73,8 @@ include '../includes/header.php'; ?>
               <!-- small box -->
               <div class="small-box bg-aqua">
                 <div class="inner">
-                <?php
-                  echo "<h6>Active Admin's: " . htmlentities($row['logs_active_admin']-$row['logs_inactive_admin']) . "</h6>";
+                  <?php
+                  echo "<h6>Active Admin's: " . htmlentities($row['logs_active_admin'] - $row['logs_inactive_admin']) . "</h6>";
                   echo "<h6>In-Active Admin's:" . htmlentities($row['logs_inactive_admin']) . "</h6>";
                   echo "<h6>Total Admin's:" . htmlentities($row['logs_active_admin']) . "</h6>";
                   ?>
@@ -91,7 +92,7 @@ include '../includes/header.php'; ?>
               <div class="small-box bg-yellow">
                 <div class="inner">
                   <?php
-                  echo "<h6>Active User's: " . htmlentities($row['logs_active_users']-$row['logs_inactive_users']) . "</h6>";
+                  echo "<h6>Active User's: " . htmlentities($row['logs_active_users'] - $row['logs_inactive_users']) . "</h6>";
                   echo "<h6>In-Active User's:" . htmlentities($row['logs_inactive_users']) . "</h6>";
                   echo "<h6>Total User's:" . htmlentities($row['logs_active_users']) . "</h6>";
                   ?>
@@ -107,7 +108,7 @@ include '../includes/header.php'; ?>
               <div class="small-box bg-gray">
                 <div class="inner">
                   <?php
-             
+
                   echo "<h3>" . $row['logs_order'] . "</h3>";
                   ?>
                   <div class="stat-panel-title text-uppercase">Total Present Orders</div>
@@ -119,7 +120,8 @@ include '../includes/header.php'; ?>
               </div>
             </div>
           </div>
-        <?php } ?>
+        <?php $pdo->close();
+        } ?>
     </div>
     <?php include '../includes/scripts.php'; ?>
 </body>

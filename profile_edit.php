@@ -3,6 +3,7 @@ include 'includes/session.php';
 include './includes/req_start.php';
 if ($req_per == 1) {
 	if (isset($_POST['edit'])) {
+		$conn = $pdo->open();
 		$curr_password = strip_tags($_POST['curr_password']);
 		$email = strip_tags($_POST['email']);
 		$password = strip_tags($_POST['password']);
@@ -36,8 +37,6 @@ if ($req_per == 1) {
 					$password = password_hash($password, PASSWORD_DEFAULT);
 				}
 
-				$conn = $pdo->open();
-
 				try {
 					date_default_timezone_set('Asia/Kolkata');
 					$today = date('Y-m-d h:i:s a');
@@ -49,10 +48,10 @@ if ($req_per == 1) {
 					$_SESSION['error'] = $e->getMessage();
 				}
 			}
-			$pdo->close();
 		} else {
 			$_SESSION['error'] = 'Incorrect password';
 		}
+		$pdo->close();
 	} else {
 		$_SESSION['error'] = 'Fill up required details first';
 	}

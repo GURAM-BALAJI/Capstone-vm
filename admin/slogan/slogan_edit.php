@@ -3,6 +3,7 @@
 
 	if(isset($_POST['edit'])){
 		$id = strip_tags($_POST['id']);
+		$conn = $pdo->open();
 		$slogan_sentance = strip_tags($_POST['slogan_sentance']);
 		try{
 			$stmt = $conn->prepare("UPDATE slogan SET slogan_sentance=:slogan_sentance WHERE slogan_id=:id");
@@ -20,5 +21,3 @@
 	}
 
 	header('location: slogan.php');
-
-?>

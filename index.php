@@ -218,7 +218,8 @@ include 'includes/header.php';
                     $i++;
             ?>
 
-            <?php } ?>
+            <?php }
+            $pdo->close();  ?>
             <div class="container_cart">
                 <i class="material-icons nav__icon">shopping_cart</i>
                 <?php if ($i != 0) { ?>

@@ -251,7 +251,6 @@ include 'includes/header.php';
                 <?php if ($i == 0) {
                     echo "<center>"; ?>
                     <?php
-                    $conn = $pdo->open();
                     try {
                         $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
                         $stmt->execute(); ?>

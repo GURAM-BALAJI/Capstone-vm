@@ -2,22 +2,23 @@
 
 if (isset($_POST['submit'])) {
   include './includes/req_start.php';
-if ($req_per == 1) {
-  $name = strip_tags($_POST['name']);
-  $email = strip_tags($_POST['email']);
-  $phone = strip_tags($_POST['phone']);
-  $subject = strip_tags($_POST['subject']);
-  date_default_timezone_set('Asia/Kolkata');
-		$today = date('Y-m-d h:i:s a');
-  $conn = $pdo->open();
-  $sql = "INSERT INTO contact (contact_name, contact_phone, contact_email, contact_subject,contact_date)
+  if ($req_per == 1) {
+    $name = strip_tags($_POST['name']);
+    $email = strip_tags($_POST['email']);
+    $phone = strip_tags($_POST['phone']);
+    $subject = strip_tags($_POST['subject']);
+    date_default_timezone_set('Asia/Kolkata');
+    $today = date('Y-m-d h:i:s a');
+    $conn = $pdo->open();
+    $sql = "INSERT INTO contact (contact_name, contact_phone, contact_email, contact_subject,contact_date)
 VALUES ('$name', '$phone', '$email', '$subject','$today')";
-  if ($conn->query($sql) == TRUE) {
-    echo "<center><h2 style='color:green;'>Sent successfully</h2></center>";
-  } else {
-    echo "<center><h2 style='color:red;'>Something Went Wrong!</h2></center>";
+    if ($conn->query($sql) == TRUE) {
+      echo "<center><h2 style='color:green;'>Sent successfully</h2></center>";
+    } else {
+      echo "<center><h2 style='color:red;'>Something Went Wrong!</h2></center>";
+    }
+    $pdo->close();
   }
-}
 }
 ?>
 <html>
@@ -35,7 +36,7 @@ VALUES ('$name', '$phone', '$email', '$subject','$today')";
   <style>
     body {
       background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
-    font-family: 'Roboto', sans-serif;
+      font-family: 'Roboto', sans-serif;
       align-content: center;
     }
 
@@ -131,23 +132,23 @@ VALUES ('$name', '$phone', '$email', '$subject','$today')";
       <span class="nav__text">Wallet</span>
     </a>
     <a href="cart.php" class="nav__link">
-        <?php
-         $i = 0;
-        if (isset($_SESSION['vm_id'])) {
-          $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
-          $stmt->execute(['user_id' => $_SESSION['vm_id']]);
-            foreach ($stmt as $row)
-                $i++;
-        ?>
-           
+      <?php
+      $i = 0;
+      if (isset($_SESSION['vm_id'])) {
+        $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
+        $stmt->execute(['user_id' => $_SESSION['vm_id']]);
+        foreach ($stmt as $row)
+          $i++;
+      ?>
+
+      <?php } ?>
+      <div class="container_cart">
+        <i class="material-icons nav__icon">shopping_cart</i>
+        <?php if ($i != 0) { ?>
+          <span class="badge_cart"><?php echo $i; ?></span>
         <?php } ?>
-        <div class="container_cart">
-            <i class="material-icons nav__icon">shopping_cart</i>
-             <?php if ($i != 0){?>
-            <span class="badge_cart"><?php echo $i; ?></span>
-            <?php }?>
-        </div>
-        <span class="nav__text">Cart</span>
+      </div>
+      <span class="nav__text">Cart</span>
     </a>
 
     <a href="settings.php" class="nav__link nav__link--active">
@@ -158,4 +159,5 @@ VALUES ('$name', '$phone', '$email', '$subject','$today')";
   </nav>
 
 </body>
+
 </html>

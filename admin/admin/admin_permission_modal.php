@@ -99,7 +99,7 @@
                     <td> </td>
                     <td> </td>
                 </tr>
-                    <tr>
+                <tr>
                     <td> </td>
                     <td> Contact </td>
                     <td style="text-align: center;"> <input type="checkbox" name="contact_view" <?php if ($row['contact_view']) echo "checked"; ?>> </td>
@@ -140,7 +140,8 @@
                     <td> </td>
                 </tr>
             </table>
-        <?php } ?>
+        <?php $pdo->close();
+        } ?>
         <div class="modal-footer">
             <button type="submit" class="btn btn-success btn-flat" name="update"><i class="fa fa-check"></i> UPDATE</button>
         </div>

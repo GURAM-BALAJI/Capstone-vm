@@ -3,6 +3,7 @@
 
 	if(isset($_POST['delete'])){
 		$id = strip_tags($_POST['id']);
+		$conn = $pdo->open();
 		try{
 			$stmt = $conn->prepare("DELETE FROM slogan WHERE slogan_id=:id");
 			$stmt->execute(['id'=>$id]);

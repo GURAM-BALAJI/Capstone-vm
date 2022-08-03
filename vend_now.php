@@ -27,7 +27,7 @@ if (isset($_SESSION['vm_user'])) {
                         foreach ($stmt_display as $row_display)
                             $rem_qty = $row_display['display_items_qty'] + $update_qty[$i];
                         $stmt_display_update = $conn->prepare("UPDATE display_items SET display_items_qty=:rem_qty WHERE display_id=:dis_id");
-                        $stmt_display_update->execute(['rem_qty'=>$rem_qty,'dis_id' => $dis_id]);
+                        $stmt_display_update->execute(['rem_qty' => $rem_qty, 'dis_id' => $dis_id]);
                     }
                     $i++;
                 }
@@ -36,18 +36,20 @@ if (isset($_SESSION['vm_user'])) {
                 foreach ($stmt_user as $row_user) {
                     $balance = $row_user['user_amount'] + $cost;
                     $stmt_user_update = $conn->prepare("UPDATE users SET user_amount=:balance WHERE user_id=:id");
-                    $stmt_user_update->execute(['balance' => $balance,'id' => $id]);
+                    $stmt_user_update->execute(['balance' => $balance, 'id' => $id]);
                 }
                 $stmt = $conn->prepare("INSERT INTO transaction (transaction_user_id,transaction_send_to,transaction_amount,transaction_added_by,transaction_type,transaction_date) VALUES (:transaction_user_id,:transaction_send_to,:transaction_amount,:transaction_added_by,:transaction_type,:transaction_date)");
                 $stmt->execute(['transaction_user_id' => $id, 'transaction_send_to' => 'Refunded', 'transaction_amount' => $cost,  'transaction_added_by' => $id, 'transaction_type' => 3, 'transaction_date' => $today]);
                 $stmt_user_update = $conn->prepare("UPDATE orders SET orders_delivered=:orders_delivered WHERE orders_user_id = :id AND orders_id=:orders_id");
-                $stmt_user_update->execute(['orders_delivered' => 3,'id' => $id, 'orders_id' => $row['orders_id']]);
+                $stmt_user_update->execute(['orders_delivered' => 3, 'id' => $id, 'orders_id' => $row['orders_id']]);
                 $stmt = $conn->prepare("DELETE FROM orders WHERE orders_id=:id AND orders_user_id=:user_id");
                 $stmt->execute(['id' => $row['orders_id'], 'user_id' => $id]);
+                $pdo->close();
                 header('location:cart.php');
                 exit();
             }
         }
+        $pdo->close();
 ?>
         <!DOCTYPE html>
         <html>
@@ -316,27 +318,27 @@ if (isset($_SESSION['vm_user'])) {
 
             </form>
             <div id="myModal" class="modal">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" method="POST" action="./cancel_order.php">
-                                <center>
-                                    <h1 style="color: #d24026;text-transform:capitalize;">Are you sure, You want to cancel Order.</h1>
-                                </center>
-                                <div class="modal-footer">
-                                     <?php if (!isset($_SESSION['vm_id'])) { ?>
-                                        <a href="login.php">
-                                            <button style=" background-color: #d24026; border: none; color: white; padding: 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
-                                                LOGIN</button>
-                                        </a><?php } else { ?>
-                                        <button type="submit" style="background-color:red;border: none;border-radius: 10px;font-size:20px;padding:15px;" name="cancel"><i class="fa fa-lightbulb-o"></i> YES</button>
-                                    <?php } ?>
-                                </div>
-                            </form>
-                        </div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" method="POST" action="./cancel_order.php">
+                            <center>
+                                <h1 style="color: #d24026;text-transform:capitalize;">Are you sure, You want to cancel Order.</h1>
+                            </center>
+                            <div class="modal-footer">
+                                <?php if (!isset($_SESSION['vm_id'])) { ?>
+                                    <a href="login.php">
+                                        <button style=" background-color: #d24026; border: none; color: white; padding: 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
+                                            LOGIN</button>
+                                    </a><?php } else { ?>
+                                    <button type="submit" style="background-color:red;border: none;border-radius: 10px;font-size:20px;padding:15px;" name="cancel"><i class="fa fa-lightbulb-o"></i> YES</button>
+                                <?php } ?>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 

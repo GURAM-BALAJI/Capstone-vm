@@ -53,6 +53,7 @@
                 <form action="message_edit.php" method="post">
               <?php 
                 try{
+                  $conn = $pdo->open();
                       $stmt = $conn->prepare("SELECT * FROM message");
                       $stmt->execute();
                       foreach($stmt as $row){ if($row['message_id']==1){?>

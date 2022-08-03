@@ -154,6 +154,7 @@ history list
                             </table>
                             <hr><?php
                             }
+                            $pdo->close();
                                 ?>
 
                     </center>

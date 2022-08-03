@@ -41,5 +41,6 @@ if ($req_per == 1) {
         $stmt->execute(['orders_id' => $row['orders_id'], 'user_id' => $id]);
         $_SESSION['success'] = "Your Order Has Been Cancelled.";
     }
+    $pdo->close();
 }
 header('location:cart.php');

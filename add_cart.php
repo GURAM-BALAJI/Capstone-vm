@@ -27,6 +27,7 @@ if ($_POST['qty'] != 0) {
                 if (!isset($_POST['buy_now']))
                     $_SESSION['success'] = "Added To Cart.";
             } catch (PDOException $e) {
+                $pdo->close();
                 $_SESSION['error'] = $e->getMessage();
                 header('location: index.php');
             }

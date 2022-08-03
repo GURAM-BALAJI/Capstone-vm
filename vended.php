@@ -9,6 +9,7 @@ if ($req_per == 1) {
         $stmt->execute(['delivered' => 1]);
         $row = $stmt->fetch();
         if ($row['numrows'] > 0) {
+            $pdo->close();
             $_SESSION['error'] = 'Please wait a movement others are vending.';
             header('location:vend_now.php');
             exit();
@@ -16,6 +17,7 @@ if ($req_per == 1) {
             $order_id = strip_tags($_POST['order_id']);
             $stmt_user_update = $conn->prepare("UPDATE orders SET orders_delivered=:orders_delivered WHERE orders_user_id = :id AND orders_id=:order_id");
             $stmt_user_update->execute(['orders_delivered' => 1, 'id' => $id, 'order_id' => $order_id]);
+            $pdo->close();
 ?>
             <html>
 

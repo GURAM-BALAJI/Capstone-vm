@@ -23,6 +23,7 @@
           <a href="#">
             <i class="fa fa-phone"></i>
             <span>Contacts</span> <b style="color:RED;"> <?php
+                                                          $conn = $pdo->open();
                                                           foreach ($conn->query('SELECT COUNT(*) FROM contact WHERE contact_view=0') as $row) {
                                                             if ($row['COUNT(*)'] != 0)
                                                               echo $row['COUNT(*)'];
@@ -36,7 +37,8 @@
             <li><a href="../contact/contact_view.php"><i class="fa fa-eye"></i> Viewed Contact</a></li>
           </ul>
         </li>
-      <?php } ?>
+      <?php $pdo->close();
+      } ?>
 
 
       <li class="header">MANAGE</li>
