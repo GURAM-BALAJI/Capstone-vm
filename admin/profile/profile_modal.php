@@ -34,7 +34,7 @@
                     <label for="photo" class="col-sm-3 control-label">Photo:</label>
 
                     <div class="col-sm-9">
-                      <input type="file" id="photo" name="photo">
+                      <input type="file" id="photo" name="photo" accept="image/*">
                     </div>
                 </div>
                 <hr>

@@ -34,10 +34,6 @@ body {
     background-color: rgba(235, 224, 232, 1);
 }
 
-.nav__link--active {
-    color: rgba(254, 191, 1, 1);
-}
-
 .nav__icon {
     font-size: 18px;
 }

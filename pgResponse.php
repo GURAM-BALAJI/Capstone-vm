@@ -15,12 +15,24 @@ include 'includes/session.php';
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<style>
 		body {
-			background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
+			 background:
+    <?php if (isset($_COOKIE["theme"])) 
+        echo "linear-gradient( to right, #c6eaff 50%, #38b6ff 50%, #c6eaff 0%, #38b6ff 0%)";
+     else 
+     echo "linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%)";
+     ?>;
 			font-family: 'Roboto', sans-serif;
 			padding-top: 100px;
 			text-align: center;
 		}
-
+		.nav__link--active {
+        color:
+            <?php if (isset($_COOKIE["theme"]))
+                echo "#38b6ff";
+            else
+                echo "rgba(254, 191, 1, 1)";
+            ?>;
+    }
 		.wrapper {
 			-webkit-animation: wrapperAni 230ms ease-in 200ms forwards;
 			animation: wrapperAni 230ms ease-in 200ms forwards;

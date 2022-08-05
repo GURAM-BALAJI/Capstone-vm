@@ -34,8 +34,22 @@ Basic style
                     width: 100%;
                     height: 100%;
                     overflow: hidden;
-                    background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
+                    background:
+                        <?php if (isset($_COOKIE["theme"]))
+                            echo "linear-gradient( to right, #c6eaff 50%, #38b6ff 50%, #c6eaff 0%, #38b6ff 0%)";
+                        else
+                            echo "linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%)";
+                        ?>;
                     font-family: 'Roboto', sans-serif;
+                }
+
+                .nav__link--active {
+                    color:
+                        <?php if (isset($_COOKIE["theme"]))
+                            echo "#38b6ff";
+                        else
+                            echo "rgba(254, 191, 1, 1)";
+                        ?>;
                 }
 
                 body {
