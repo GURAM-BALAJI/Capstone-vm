@@ -13,21 +13,21 @@
                   	<label for="email" class="col-sm-3 control-label">Email</label>
 
                   	<div class="col-sm-9">
-                    	<input type="text" class="form-control" id="email" name="email" value="<?php echo $admin['admin_email']; ?>">
+                    	<input type="text" class="form-control" id="email" name="email" value="<?php echo $admin['admin_email']; ?>" autocomplete="OFF">
                   	</div>
                 </div>
                 <div class="form-group">
                     <label for="password" class="col-sm-3 control-label">Password</label>
 
                     <div class="col-sm-9"> 
-                      <input type="password" class="form-control" id="password" name="password" value="<?php echo $admin['admin_password']; ?>">
+                      <input type="password" class="form-control" id="password" name="password" value="<?php echo $admin['admin_password']; ?>" autocomplete="OFF">
                     </div>
                 </div>
                 <div class="form-group">
                   	<label for="name" class="col-sm-3 control-label">name</label>
 
                   	<div class="col-sm-9">
-                    	<input type="text" class="form-control" id="name" name="name" value="<?php echo $admin['admin_name']; ?>">
+                    	<input type="text" class="form-control" id="name" name="name" value="<?php echo $admin['admin_name']; ?>" autocomplete="OFF">
                   	</div>
                 </div>
                 <div class="form-group">

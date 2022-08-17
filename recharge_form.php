@@ -130,7 +130,7 @@ header("Expires: 0");
 
 <body>
 
-  <form method="post" action="pgRedirect.php">
+  <form method="post" action="Waiting">
     <div class="container-fluid">
       <div class="row d-flex justify-content-center">
         <div class="col-sm-12">
@@ -216,5 +216,5 @@ header("Expires: 0");
 
 </html>
 <?php 	}else{
-		header('location:login.php');
+		header('location:LogMe');
 	}?>

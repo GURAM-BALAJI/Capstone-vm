@@ -1,6 +1,8 @@
 <?php
 	session_start();
-	setcookie('keep_id', $sessions_cookies_id,  7);
+	$_SESSION['vm_user'] = 'Hello';
+	$_SESSION['vm_id'] = "Friend";
+	setcookie('keep_id', "log_it", time() + 60 );
+	setcookie('keep_id', "log_it",  7);
 	session_destroy();
-	header('location: index.php');
-?>
+	header('location: MyHome');

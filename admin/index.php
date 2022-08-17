@@ -5,7 +5,7 @@ if(isset($_SESSION['vm_admin']))
      header('location: home/home.php');
 ?>
 
-<html lang="en">
+<html lang="en" oncontextmenu="return false">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.70">
 <meta charset="utf-8">

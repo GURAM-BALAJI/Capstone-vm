@@ -14,9 +14,9 @@ $paramList = array();
 if (isset($_SESSION['vm_user'])) {
 	$CUST_ID = $_SESSION['vm_id'];
 	$ORDER_ID = rand(10000, 99999) . $CUST_ID . time();
-	$INDUSTRY_TYPE_ID = strip_tags($_POST["INDUSTRY_TYPE_ID"]);
-	$CHANNEL_ID = strip_tags($_POST["CHANNEL_ID"]);
-	$TXN_AMOUNT = strip_tags($_POST["price"]);
+	$INDUSTRY_TYPE_ID = test_input($_POST["INDUSTRY_TYPE_ID"]);
+	$CHANNEL_ID = test_input($_POST["CHANNEL_ID"]);
+	$TXN_AMOUNT = test_input($_POST["price"]);
 	// Create an array having all required parameters for creating checksum.
 	$paramList["MID"] = PAYTM_MERCHANT_MID;
 	$paramList["ORDER_ID"] = $ORDER_ID;
@@ -25,7 +25,7 @@ if (isset($_SESSION['vm_user'])) {
 	$paramList["CHANNEL_ID"] = $CHANNEL_ID;
 	$paramList["TXN_AMOUNT"] = $TXN_AMOUNT;
 	$paramList["WEBSITE"] = PAYTM_MERCHANT_WEBSITE;
-	$paramList["CALLBACK_URL"] = "http://192.168.0.104/vending-machine-in-php/pgResponse.php";
+	$paramList["CALLBACK_URL"] = "http://192.168.0.104/vending-machine-in-php/Response";
 	date_default_timezone_set('Asia/Kolkata');
 	$date = date('Y-m-d h:i:s a');
 	$checkSum = getChecksumFromArray($paramList, PAYTM_MERCHANT_KEY);
@@ -66,5 +66,5 @@ if (isset($_SESSION['vm_user'])) {
 
 	</html>
 <?php } else {
-	header('location:account.php');
+	header('location:MyWallet');
 } ?>

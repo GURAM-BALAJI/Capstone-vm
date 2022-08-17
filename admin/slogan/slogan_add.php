@@ -3,7 +3,7 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['add'])){
-		$slogan_sentance = strip_tags($_POST['slogan_sentance']);
+		$slogan_sentance = test_input($_POST['slogan_sentance']);
 		$conn = $pdo->open();
 		
 			try{
@@ -12,7 +12,7 @@
 				$_SESSION['success'] = 'slogan added successfully';
 			}
 			catch(PDOException $e){
-				$_SESSION['error'] = $e->getMessage();
+				$_SESSION['error'] = "Something Went Wrong.";
 			}
 
 		$pdo->close();

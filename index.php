@@ -3,7 +3,7 @@
 include 'includes/session.php';
 include 'includes/header.php';
 ?>
-<html lang="en">
+<html lang="en" oncontextmenu="return false">
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -146,7 +146,7 @@ include 'includes/header.php';
                         $stmt1->execute(['items_id' => $items_id]);
                         foreach ($stmt1 as $row1) {
                     ?>
-                            <form method="POST" action="add_cart.php">
+                            <form method="POST" action="AddCart">
                                 <tr>
                                     <td rowspan="3" style="padding-right:0.8rem;"> <img src="./items_images/<?php echo $row1['items_image']; ?>" height="150rem" width="150rem"> </td>
                                     <td colspan="2">
@@ -199,10 +199,10 @@ include 'includes/header.php';
                                                                                                             foreach ($stmt as $row)
                                                                                                                 echo $row['slogan_sentance']; ?></h4>
                 <?php } catch (PDOException $e) {
-                    $_SESSION['error'] = $e->getMessage();
+                    $_SESSION['error'] = "Something Went Wrong.";
                 }
                 $pdo->close(); ?>
-                <a href="login.php">
+                <a href="LogMe">
                     <button style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
                         LOGIN</button>
                 </a>
@@ -213,16 +213,16 @@ include 'includes/header.php';
     <br><br><br><br>
     <nav class="nav">
 
-        <a href="index.php" class="nav__link nav__link--active">
+        <a href="MyHome" class="nav__link nav__link--active">
             <i class="material-icons nav__icon">home</i>
             <span class="nav__text">Home</span>
         </a>
 
-        <a href="account.php" class="nav__link">
+        <a href="MyWallet" class="nav__link">
             <i class="material-icons nav__icon">account_balance_wallet</i>
             <span class="nav__text">Wallet</span>
         </a>
-        <a href="cart.php" class="nav__link">
+        <a href="MyCart" class="nav__link">
             <?php
             $i = 0;
             if (isset($_SESSION['vm_id'])) {
@@ -243,7 +243,7 @@ include 'includes/header.php';
             <span class="nav__text">Cart</span>
         </a>
 
-        <a href="settings.php" class="nav__link">
+        <a href="MySettings" class="nav__link">
             <i class="material-icons nav__icon">settings</i>
             <span class="nav__text">Settings</span>
         </a>

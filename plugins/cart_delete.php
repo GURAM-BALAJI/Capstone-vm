@@ -4,7 +4,7 @@
 	$conn = $pdo->open();
 
 	$output = array('error'=>false);
-	$id = strip_tags($_POST['id']);
+	$id = test_input($_POST['id']);
 
 	if(isset($_SESSION['vm_user'])){
 		try{
@@ -14,7 +14,7 @@
 			
 		}
 		catch(PDOException $e){
-			$output['message'] = $e->getMessage();
+			$output['message'] = "Something Went Wrong.";
 		}
 	}
 	else{

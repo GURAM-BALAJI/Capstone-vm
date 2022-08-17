@@ -68,7 +68,7 @@
                 <textarea name="share" rols="10" cols="90"><?php echo $row['message'];?></textarea>
                 <?php } ?>
                      <?php }}catch(PDOException $e){
-                      echo $e->getMessage();
+                      echo "Something Went Wrong.";
                     }
 
                     $pdo->close(); ?>

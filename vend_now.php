@@ -45,7 +45,7 @@ if (isset($_SESSION['vm_user'])) {
                 $stmt = $conn->prepare("DELETE FROM orders WHERE orders_id=:id AND orders_user_id=:user_id");
                 $stmt->execute(['id' => $row['orders_id'], 'user_id' => $id]);
                 $pdo->close();
-                header('location:cart.php');
+                header('location:MyCart');
                 exit();
             }
         }
@@ -344,7 +344,7 @@ if (isset($_SESSION['vm_user'])) {
                             </center>
                             <div class="modal-footer">
                                 <?php if (!isset($_SESSION['vm_id'])) { ?>
-                                    <a href="login.php">
+                                    <a href="LogMe">
                                         <button style=" background-color: #d24026; border: none; color: white; padding: 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
                                             LOGIN</button>
                                     </a><?php } else { ?>
@@ -511,10 +511,10 @@ if (isset($_SESSION['vm_user'])) {
         <?php include './includes/req_end.php'; ?>
 <?php    }
     if ($redirect == 0) {
-        header('location:cart.php');
+        header('location:MyCart');
         exit();
     }
 } else {
-    header('location:cart.php');
+    header('location:MyCart');
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 include 'includes/session.php';
 if (isset($_GET['token'])) {
-  $token = strip_tags($_GET['token']);
+  $token = test_input($_GET['token']);
   $conn = $pdo->open();
   $stmt = $conn->prepare("SELECT *,COUNT(*) AS numrows FROM users WHERE user_token=:token12");
   $stmt->execute(['token12' => $token]);
@@ -12,7 +12,7 @@ if (isset($_GET['token'])) {
     $_SESSION['success'] = "Your Account Is Activated. ";
 
 ?>
-    <html lang="en">
+    <html lang="en" oncontextmenu="return false">
 
     <head>
       <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +26,7 @@ if (isset($_GET['token'])) {
         <center>
           <h3 style="color:aliceblue;"><?php echo $_SESSION['success'];
                                         unset($_SESSION['success']); ?></h3>
-          <a href="./login.php" style=" text-decoration:none;">
+          <a href="./LogMe" style=" text-decoration:none;">
             <div class="user-box" style="background: #03e9f4;
   color:green;
   border-radius: 5px;

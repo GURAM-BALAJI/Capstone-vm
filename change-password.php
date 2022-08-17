@@ -2,13 +2,13 @@
 include 'includes/session.php';
 if (isset($_POST['change-password'])) {
     if (isset($_SESSION['email'])) {
-        $password = strip_tags($_POST['password']);
-        $cpassword = strip_tags($_POST['cpassword']);
+        $password = test_input($_POST['password']);
+        $cpassword = test_input($_POST['cpassword']);
         if ($password !== $cpassword) {
             $_SESSION['error'] = "Confirm password not matched!";
-            header('location: new-password.php');
+            header('location: NewPassword');
         } else {
-            $email = $_SESSION['email'];
+            $email = test_input($_SESSION['email']);
             $conn = $pdo->open();
             date_default_timezone_set('Asia/Kolkata');
             $today = date('Y-m-d h:i:s a');
@@ -17,13 +17,13 @@ if (isset($_POST['change-password'])) {
             $stmt->execute(['status' => 1, 'password' => $password, 'user_updated_date' => $today, 'email' => $email]);
             unset($_SESSION['password']);
             $_SESSION['success'] = "Your password changed. Now you can login with your new password.";
-            header('location: login.php');
+            header('location: LogMe');
             exit();
             $pdo->close();
         }
     } else {
-        header('location: index.php');
+        header('location: MyHome');
     }
 } else {
-    header('location: index.php');
+    header('location: MyHome');
 }

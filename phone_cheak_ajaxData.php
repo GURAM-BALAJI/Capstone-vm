@@ -4,7 +4,7 @@ include 'includes/session.php';
 
 if(isset($_POST["phone"]) && !empty($_POST["phone"]))
 {
-    $phone=strip_tags($_POST["phone"]);
+    $phone=test_input($_POST["phone"]);
 
 $conn = $pdo->open();
 $stmt = $conn->prepare("SELECT * FROM users WHERE user_phone=:phone AND user_delete=:user_delete");

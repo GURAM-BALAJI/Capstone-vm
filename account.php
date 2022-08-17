@@ -3,7 +3,7 @@
 include 'includes/session.php';
 include 'includes/header.php';
 ?>
-<html lang="en">
+<html lang="en" oncontextmenu="return false">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -148,7 +148,7 @@ include 'includes/header.php';
           <img src="./images/wallet.png" alt="wallet">
           <p style="font-size:large;">Total Balance</p>
           <p class="amount" style="<?php if ($user['user_amount'] <= 0) echo "color:red;"; ?>">&#8377;<?php echo $user['user_amount']; ?></p>
-          <a href="recharge_form.php">
+          <a href="Recharge">
             <button type="button" style="width: 30%;height:35px;border:1.5px solid black;border-radius: 20px !important;margin:5% 2% 5% auto;color:#001a35;background-color:snow;  box-shadow: 2px 1px 4px #000000; " class="btn-sm">Add Money</button></a>
           <button type="button" style="width: 30%;height:35px;border:1.5px solid black;border-radius: 20px !important;margin:5% auto 5% 2%;color:#001a35;background-color:snow;  box-shadow: 2px 1px 4px #000000; " class="btn-sm pay ">PAY FRIEND</button>
 
@@ -209,10 +209,10 @@ include 'includes/header.php';
                                                                                               foreach ($stmt as $row)
                                                                                                 echo $row['slogan_sentance']; ?></h4>
       <?php } catch (PDOException $e) {
-        $_SESSION['error'] = $e->getMessage();
+        $_SESSION['error'] = "Something Went Wrong.";
       }
       $pdo->close(); ?>
-      <a href="login.php">
+      <a href="LogMe">
         <button style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
           LOGIN</button>
       </a>
@@ -224,17 +224,17 @@ include 'includes/header.php';
   <nav class="nav">
 
 
-    <a href="index.php" class="nav__link ">
+    <a href="MyHome" class="nav__link ">
       <i class="material-icons nav__icon">home</i>
       <span class="nav__text">Home</span>
     </a>
 
-    <a href="account.php" class="nav__link nav__link--active">
+    <a href="MyWallet" class="nav__link nav__link--active">
       <i class="material-icons nav__icon">account_balance_wallet</i>
       <span class="nav__text">Wallet</span>
     </a>
 
-    <a href="cart.php" class="nav__link">
+    <a href="MyCart" class="nav__link">
       <?php
       $i = 0;
       if (isset($_SESSION['vm_id'])) {
@@ -253,7 +253,7 @@ include 'includes/header.php';
       <span class="nav__text">Cart</span>
     </a>
 
-    <a href="settings.php" class="nav__link">
+    <a href="MySettings" class="nav__link">
       <i class="material-icons nav__icon">settings</i>
       <span class="nav__text">Settings</span>
     </a>
@@ -267,7 +267,7 @@ include 'includes/header.php';
         if (phone) {
           $.ajax({
             type: 'POST',
-            url: 'phone_cheak_ajaxData.php',
+            url: 'PhoneCheak',
             data: 'phone=' + phone,
             success: function(html) {
               $('#phone_check').html(html);

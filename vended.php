@@ -14,7 +14,7 @@ if ($req_per == 1) {
             header('location:vend_now.php');
             exit();
         } else {
-            $order_id = strip_tags($_POST['order_id']);
+            $order_id = test_input($_POST['order_id']);
             $stmt_user_update = $conn->prepare("UPDATE orders SET orders_delivered=:orders_delivered WHERE orders_user_id = :id AND orders_id=:order_id");
             $stmt_user_update->execute(['orders_delivered' => 1, 'id' => $id, 'order_id' => $order_id]);
             $pdo->close();
@@ -995,7 +995,7 @@ orange circle
                         </div>
                     </div>
                 </div>
-                <a href="./index.php">
+                <a href="./MyHome">
                     <div class="animation02">
                         <div class="rhombus_box">
                             <span class="rhombus_item_wrapper rhombus_item01_wrapper"><span class="rhombus_item"></span></span>
@@ -1032,5 +1032,5 @@ orange circle
         }
     }
 } else {
-    header('location:index.php');
+    header('location:MyHome');
 }

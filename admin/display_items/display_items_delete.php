@@ -1,27 +1,23 @@
 <?php
-	include '../includes/session.php';
+include '../includes/session.php';
 
-	if(isset($_POST['delete'])){
-		$id = strip_tags($_POST['id']);
-		
+if (isset($_POST['delete'])) {
+	$id = test_input($_POST['id']);
+	if ($id > 0) {
 		$conn = $pdo->open();
-
-		try{
+		try {
 			$stmt = $conn->prepare("DELETE FROM display_items WHERE display_spring_id=:id");
-			$stmt->execute(['id'=>$id]);
-
+			$stmt->execute(['id' => $id]);
 			$_SESSION['success'] = 'Display items deleted successfully';
+		} catch (PDOException $e) {
+			$_SESSION['error'] = "Something Went Wrong.";
 		}
-		catch(PDOException $e){
-			$_SESSION['error'] = $e->getMessage();
-		}
-
 		$pdo->close();
+	} else {
+		$_SESSION['error'] = 'Wrong Inputs.';
 	}
-	else{
-		$_SESSION['error'] = 'Select display items to delete first';
-	}
+} else {
+	$_SESSION['error'] = 'Select display items to delete first';
+}
 
-	header('location: display_items.php');
-	
-?>
+header('location: display_items.php');

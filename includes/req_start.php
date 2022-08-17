@@ -15,11 +15,11 @@ try {
             }
         }
     }else{
-        header('location:login.php');
+        header('location:LogMe');
         exit();
     }
 } catch (PDOException $e) {
-    $_SESSION['error'] = $e->getMessage();
+    $_SESSION['error'] = "Something Went Wrong.";
 }
 
 $pdo->close();

@@ -50,7 +50,7 @@
                         <?php
                         date_default_timezone_set('Asia/Kolkata');
                         if (isset($_POST['submit'])){
-                          $today = strtotime(strip_tags($_POST['date']));
+                          $today = strtotime(test_input($_POST['date']));
                           $day=date('d',$today);
                           $month=date('m',$today);
                           $year=date('Y',$today);
@@ -80,7 +80,7 @@
                             echo "</tr>";
                           }
                         } catch (PDOException $e) {
-                          echo $e->getMessage();
+                          echo "Something Went Wrong.";
                         }
 
                         $pdo->close();

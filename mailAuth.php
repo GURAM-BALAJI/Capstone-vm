@@ -1,14 +1,14 @@
-<!doctype html>
+ <!doctype html>
 <?php
 include 'includes/session.php';
 if (isset($_SESSION['vm_user']))
-  header('location: index.php');
+  header('location: MyHome');
 if (isset($_SESSION['mailAuth']))
   unset($_SESSION['mailAuth']);
 else
-  header('location: ./sign_up.php');
+  header('location: ./JoinUs');
 ?>
-<html lang="en">
+<html lang="en" oncontextmenu="return false">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=0.70">

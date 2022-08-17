@@ -31,7 +31,7 @@
     <h2>PERMISSION</h2>
     <form class="form-horizontal" method="POST" action="admin_permission_edit.php">
         <?php
-        $id = strip_tags($_GET['id']);
+        $id = test_input($_GET['id']);
         $conn = $pdo->open();
         $stmt = $conn->prepare("SELECT * FROM admin WHERE admin_id=:id");
         $stmt->execute(['id' => $id]);

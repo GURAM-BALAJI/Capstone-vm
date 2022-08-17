@@ -15,24 +15,26 @@ include 'includes/session.php';
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<style>
 		body {
-			 background:
-    <?php if (isset($_COOKIE["theme"])) 
-        echo "linear-gradient( to right, #c6eaff 50%, #38b6ff 50%, #c6eaff 0%, #38b6ff 0%)";
-     else 
-     echo "linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%)";
-     ?>;
+			background:
+				<?php if (isset($_COOKIE["theme"]))
+					echo "linear-gradient( to right, #c6eaff 50%, #38b6ff 50%, #c6eaff 0%, #38b6ff 0%)";
+				else
+					echo "linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%)";
+				?>;
 			font-family: 'Roboto', sans-serif;
 			padding-top: 100px;
 			text-align: center;
 		}
+
 		.nav__link--active {
-        color:
-            <?php if (isset($_COOKIE["theme"]))
-                echo "#38b6ff";
-            else
-                echo "rgba(254, 191, 1, 1)";
-            ?>;
-    }
+			color:
+				<?php if (isset($_COOKIE["theme"]))
+					echo "#38b6ff";
+				else
+					echo "rgba(254, 191, 1, 1)";
+				?>;
+		}
+
 		.wrapper {
 			-webkit-animation: wrapperAni 230ms ease-in 200ms forwards;
 			animation: wrapperAni 230ms ease-in 200ms forwards;
@@ -324,8 +326,8 @@ include 'includes/session.php';
 
 	$isValidChecksum = verifychecksum_e($paramList, PAYTM_MERCHANT_KEY, $paytmChecksum); //will return TRUE or FALSE string.
 	if ($isValidChecksum == "TRUE") {
-		$ORDERID = strip_tags($_POST['ORDERID']);
-		$status = strip_tags($_POST['STATUS']);
+		$ORDERID = test_input($_POST['ORDERID']);
+		$status = test_input($_POST['STATUS']);
 		$conn = $pdo->open();
 		if (isset($_SESSION["vm_id"]) && isset($_SESSION['vm_user'])) {
 			$vm_id = $_SESSION["vm_id"];
@@ -338,21 +340,23 @@ include 'includes/session.php';
 		}
 		include './includes/req_start.php';
 		if ($req_per == 1) {
-			$date = strip_tags($_POST['TXNDATE']);
+			$date = test_input($_POST['TXNDATE']);
 			$stmt = $conn->prepare("UPDATE transaction SET transaction_status=:transaction_status,transaction_date=:transaction_date WHERE transaction_order=:id");
 			$stmt->execute(['transaction_status' => $status, 'transaction_date' => $date, 'id' => $ORDERID]);
 		}
 		if ($_POST["STATUS"] == "TXN_SUCCESS") {
-			$TXNAMOUNT = strip_tags($_POST['TXNAMOUNT']);
-			
-			$mode = strip_tags($_POST['PAYMENTMODE']);
+			$TXNAMOUNT = test_input($_POST['TXNAMOUNT']);
+
+			$mode = test_input($_POST['PAYMENTMODE']);
 			if ($req_per == 1) {
-				$stmt = $conn->prepare("SELECT user_amount FROM users WHERE user_id=:id");
-				$stmt->execute(['id' => $vm_id]);
-				$user = $stmt->fetch();
-				$total_amount = $user['user_amount'] + $TXNAMOUNT;
-				$stmt = $conn->prepare("UPDATE users SET user_amount=:user_amount WHERE user_id=:id");
-				$stmt->execute(['user_amount' => $total_amount, 'id' => $vm_id]);
+				if ($TXNAMOUNT > 0) {
+					$stmt = $conn->prepare("SELECT user_amount FROM users WHERE user_id=:id");
+					$stmt->execute(['id' => $vm_id]);
+					$user = $stmt->fetch();
+					$total_amount = $user['user_amount'] + $TXNAMOUNT;
+					$stmt = $conn->prepare("UPDATE users SET user_amount=:user_amount WHERE user_id=:id");
+					$stmt->execute(['user_amount' => $total_amount, 'id' => $vm_id]);
+				}
 			}
 
 	?> <div class="wrapper green">
@@ -364,7 +368,7 @@ include 'includes/session.php';
 				<h1>Yeah..!</h1>
 				<p>Everything works fine!</p>
 
-				<a href="./account.php"><button>Now go on</button></a>
+				<a href="./MyWallet"><button>Now go on</button></a>
 			</div>
 
 		<?php
@@ -381,7 +385,7 @@ include 'includes/session.php';
 				<h1>Whooops..!</h1>
 				<p>Something went wrong, please try again.</p>
 
-				<a href="./account.php"><button>Dismiss</button></a>
+				<a href="./MyWallet"><button>Dismiss</button></a>
 			</div>
 		<?php
 		}
@@ -396,7 +400,7 @@ include 'includes/session.php';
 			<h1>Whooops..!</h1>
 			<p>Checksum mismatched.</p>
 
-			<a href="./account.php"><button>Dismiss</button></a>
+			<a href="./MyWallet"><button>Dismiss</button></a>
 		</div>
 	<?php }
 

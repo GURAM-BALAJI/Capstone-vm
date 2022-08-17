@@ -11,7 +11,7 @@
                 <h4 class="modal-title"><b>Pay To Friend </b></h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" method="POST" action="pay_friend.php">
+                <form class="form-horizontal" method="POST" action="Pay">
                     <div class="form-group">
                         <label for="phone" class="col-sm-3 control-label">ENTER PHONE NUMBER: </label>
                         <div class="col-sm-9">
@@ -37,7 +37,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
                         <?php if (!isset($_SESSION['vm_id'])) { ?>
-                            <a href="login.php">
+                            <a href="LogMe">
                                 <button style=" background-color: #d24026; border: none; color: white; padding: 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
                                     LOGIN</button>
                             </a><?php } else { ?>

@@ -2,9 +2,9 @@
 <?php
 include 'includes/session.php'; 
 if(isset($_SESSION['vm_user']))
-        header('location: index.php');
+        header('location: MyHome');
 ?>
-<html lang="en">
+<html lang="en" oncontextmenu="return false">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.70">
 <meta charset="utf-8">
@@ -186,23 +186,23 @@ if(isset($_SESSION['vm_user']))
             </ul>
     </div >
          <div class="login-box">
-             <a  href="index.php" style=" color: #ff1c1c;float:right;text-decoration: none;font-size:x-large;">X</a>
+             <a  href="MyHome" style=" color: #ff1c1c;float:right;text-decoration: none;font-size:x-large;">X</a>
            <h2>Sign Up</h2>
-           <form action="add_user.php" method="post" onsubmit="myclick();">
+           <form action="JoinMe" method="post" onsubmit="myclick();">
              <div class="user-box">
-        <input type="text" name="name" required value="<?php if(isset($_SESSION['name'])) echo $_SESSION['name']; ?>"/>
+        <input type="text" name="name" required value="<?php if(isset($_SESSION['name'])) echo $_SESSION['name']; ?>" autocomplete="OFF" />
                <label>Full Name</label>
              </div>
                <div class="user-box">
-               <input type="email" name="email" required value="<?php if(isset($_SESSION['email'])) echo $_SESSION['email']; ?>"/>
+               <input type="email" name="email" required value="<?php if(isset($_SESSION['email'])) echo $_SESSION['email']; ?>" autocomplete="OFF" />
                <label>Email</label>
              </div>
                <div class="user-box">
-               <input type="tel" name="contact" required value="<?php if(isset($_SESSION['contact'])) echo $_SESSION['contact']; ?>"/>
+               <input type="tel" name="contact" required value="<?php if(isset($_SESSION['contact'])) echo $_SESSION['contact']; ?>" autocomplete="OFF" />
                <label>Contact</label>
              </div>
              <div class="user-box">
-               <input type="password" name="password" required value="<?php if(isset($_SESSION['password'])) echo $_SESSION['password']; ?>"/>
+               <input type="password" name="password" required value="<?php if(isset($_SESSION['password'])) echo $_SESSION['password']; ?>" autocomplete="OFF" />
                <label>Password</label>
                   <div class="user-box">
                  <input type="password" name="cpassword" required/>
@@ -239,7 +239,7 @@ if(isset($_SESSION['vm_user']))
                              font-size: 18px;"></a>
            </form><br><br><br><br><br><br>
            <center>
-           <a  href="login.php" style="color:aquamarine;text-decoration: none;">Already have an account?<b> Sign In.</b> </a>
+           <a  href="LogMe" style="color:aquamarine;text-decoration: none;">Already have an account?<b> Sign In.</b> </a>
            </center>
          </div>
         <script type="text/javascript">

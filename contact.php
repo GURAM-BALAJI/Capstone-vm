@@ -3,21 +3,48 @@
 if (isset($_POST['submit'])) {
   include './includes/req_start.php';
   if ($req_per == 1) {
-    $name = strip_tags($_POST['name']);
-    $email = strip_tags($_POST['email']);
-    $phone = strip_tags($_POST['phone']);
-    $subject = strip_tags($_POST['subject']);
-    date_default_timezone_set('Asia/Kolkata');
-    $today = date('Y-m-d h:i:s a');
-    $conn = $pdo->open();
-    $sql = "INSERT INTO contact (contact_name, contact_phone, contact_email, contact_subject,contact_date)
-VALUES ('$name', '$phone', '$email', '$subject','$today')";
-    if ($conn->query($sql) == TRUE) {
-      echo "<center><h2 style='color:green;'>Sent successfully</h2></center>";
-    } else {
-      echo "<center><h2 style='color:red;'>Something Went Wrong!</h2></center>";
+    $name = test_input($_POST['name']);
+    $email = test_input($_POST['email']);
+    $phone = test_input($_POST['phone']);
+    $subject = test_input($_POST['subject']);
+    //Sanitizing inputs.
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+      $_SESSION['error'] = "Invalid email format.";
+    if (!validateMobileNumber($phone))
+      $_SESSION['error'] = 'Invalid phone number format.';
+    if (strlen($name) > 20)
+      $_SESSION['error'] = 'Name should be less then 20 characters.';
+    if (strlen($name) < 5)
+      $_SESSION['error'] = 'Name should be more then 5 characters.';
+    if (!isset($_SESSION['error'])) {
+      date_default_timezone_set('Asia/Kolkata');
+      $today = date('Y-m-d h:i:s a');
+      $conn = $pdo->open();
+      $sql = "INSERT INTO contact (contact_name, contact_phone, contact_email, contact_subject,contact_date) VALUES ('$name', '$phone', '$email', '$subject','$today')";
+      if ($conn->query($sql) == TRUE) {
+        echo "<center><h2 style='color:green;'>Sent successfully</h2></center>";
+      } else {
+        echo "<center><h2 style='color:red;'>Something Went Wrong!</h2></center>";
+      }
+      $pdo->close();
     }
-    $pdo->close();
+  }
+}
+function validateMobileNumber($mobile)
+{
+  if (!empty($mobile)) {
+    $isMobileNmberValid = true;
+    $mobileDigitsLength = strlen($mobile);
+    if ($mobileDigitsLength < 10 || $mobileDigitsLength > 11) {
+      $isMobileNmberValid = false;
+    } else {
+      if (!preg_match("/^[+]?[1-9][0-9]{9}$/", $mobile)) {
+        $isMobileNmberValid = false;
+      }
+    }
+    return $isMobileNmberValid;
+  } else {
+    return false;
   }
 }
 ?>
@@ -107,7 +134,7 @@ VALUES ('$name', '$phone', '$email', '$subject','$today')";
   </style>
 </head>
 
-<body unload='index.php'>
+<body unload='MyHome'>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <div class="container">
     <div style="text-align:center">
@@ -135,16 +162,16 @@ VALUES ('$name', '$phone', '$email', '$subject','$today')";
   <br><br><br><br>
   <nav class="nav">
 
-    <a href="index.php" class="nav__link ">
+    <a href="MyHome" class="nav__link ">
       <i class="material-icons nav__icon">home</i>
       <span class="nav__text">Home</span>
     </a>
 
-    <a href="account.php" class="nav__link ">
+    <a href="MyWallet" class="nav__link ">
       <i class="material-icons nav__icon">account_balance_wallet</i>
       <span class="nav__text">Wallet</span>
     </a>
-    <a href="cart.php" class="nav__link">
+    <a href="MyCart" class="nav__link">
       <?php
       $i = 0;
       if (isset($_SESSION['vm_id'])) {
@@ -164,7 +191,7 @@ VALUES ('$name', '$phone', '$email', '$subject','$today')";
       <span class="nav__text">Cart</span>
     </a>
 
-    <a href="settings.php" class="nav__link nav__link--active">
+    <a href="MySettings" class="nav__link nav__link--active">
       <i class="material-icons nav__icon">settings</i>
       <span class="nav__text">Settings</span>
     </a>

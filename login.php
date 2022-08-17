@@ -2,9 +2,9 @@
 <?php
 include 'includes/session.php'; 
 if(isset($_SESSION['vm_user']))
-        header('location: index.php');
+        header('location: MyHome');
 ?>
-<html lang="en">
+<html lang="en" oncontextmenu="return false">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.70">
 <meta charset="utf-8">
@@ -186,7 +186,7 @@ if(isset($_SESSION['vm_user']))
             </ul>
     </div >
          <div class="login-box">
-             <a  href="index.php" style=" color: #ff1c1c;float:right;text-decoration: none;font-size:x-large;">X</a>
+             <a  href="MyHome" style=" color: #ff1c1c;float:right;text-decoration: none;font-size:x-large;">X</a>
  
            <h2>Sign in</h2>
            <form action="verify.php" method="post">
@@ -199,7 +199,7 @@ if(isset($_SESSION['vm_user']))
                <label>Password</label>
                </div>
              <div class="user-box">
-                 <a href="forgot-password.php" style="font-size:10px;">Forgot Password..?</a>
+                 <a href="ForgotMe" style="font-size:10px;">Forgot Password..?</a>
              </div>
                                <center>  <?php
       if(isset($_SESSION['error'])){
@@ -241,7 +241,7 @@ if(isset($_SESSION['vm_user']))
              </a>
            </form><br><br><br><br><br>
            <center>
-           <a  href="sign_up.php" 
+           <a  href="JoinUs" 
                      style="color:aquamarine;text-decoration: none;">
                       Don't have an account?<b> Sign Up.</b>
              </a>

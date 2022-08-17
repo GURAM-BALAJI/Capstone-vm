@@ -16,11 +16,11 @@ if (isset($_COOKIE['keep_id'])) {
 			}
 		} else {
 			$pdo->close();
-			header('location:logout.php');
+			header('location:Out');
 			exit();
 		}
 	} catch (PDOException $e) {
-		echo "There is some problem in connection: " . $e->getMessage();
+		echo "There is some problem in connection: " . "Something Went Wrong.";
 	}
 }
 
@@ -30,7 +30,16 @@ if (isset($_SESSION['vm_user'])) {
 		$stmt->execute(['id' => $_SESSION['vm_id']]);
 		$user = $stmt->fetch();
 	} catch (PDOException $e) {
-		echo "There is some problem in connection: " . $e->getMessage();
+		echo "There is some problem in connection: " . "Something Went Wrong.";
 	}
 }
 $pdo->close();
+
+function test_input($data)
+{
+	$data = strip_tags($data);
+	$data = trim($data);
+	$data = stripslashes($data);
+	$data = htmlspecialchars($data);
+	return $data;
+}

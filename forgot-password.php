@@ -2,9 +2,9 @@
 <?php
 include 'includes/session.php'; 
 if(isset($_SESSION['vm_user']))
-        header('location: index.php');
+        header('location: MyHome');
 ?>
-<html lang="en">
+<html lang="en" oncontextmenu="return false">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.70">
 <meta charset="utf-8">
@@ -21,6 +21,7 @@ if(isset($_SESSION['vm_user']))
              </div>
         
     <center>  <?php
+    
       if(isset($_SESSION['error'])){
         echo "
           <div class='text-center' style='color:red;'>

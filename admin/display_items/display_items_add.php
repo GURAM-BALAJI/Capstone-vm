@@ -2,9 +2,10 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['add'])){
-		$spring_id = strip_tags($_POST['spring_id']);
-		$items_id = strip_tags($_POST['items_id']);
-		$qty = strip_tags($_POST['qty']);
+		$spring_id = test_input($_POST['spring_id']);
+		$items_id = test_input($_POST['items_id']);
+		$qty = test_input($_POST['qty']);
+		if ($spring_id > 0 && $items_id > 0 && $qty >= 0) {
 		$conn = $pdo->open();
 		date_default_timezone_set('Asia/Kolkata');
 		$today = date('Y-m-d h:i:s a');
@@ -21,16 +22,19 @@
 				$_SESSION['success'] = 'Display items added successfully';
 			}
 			catch(PDOException $e){
-				$_SESSION['error'] = $e->getMessage();
+				$_SESSION['error'] = "Something Went Wrong.";
 			}
 		}
 
 		$pdo->close();
+	}else{
+		$_SESSION['error'] = 'Wrong Inputs';
+	}
 	}
 	else{
 		$_SESSION['error'] = 'Fill up display items form first';
 	}
-
+	
 	header('location: display_items.php');
 
 ?>

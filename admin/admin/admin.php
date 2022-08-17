@@ -112,7 +112,7 @@
                       }
                     }
                     catch(PDOException $e){
-                      echo $e->getMessage();
+                      echo "Something Went Wrong.";
                     }
 
                     $pdo->close();

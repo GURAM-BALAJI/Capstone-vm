@@ -2,9 +2,9 @@
 	include '../includes/session.php';
 
 	if(isset($_POST['save'])){
-		$message= strip_tags($_POST['message']);
-		$win = strip_tags($_POST['win']);
-		$share = strip_tags($_POST['share']);
+		$message= test_input($_POST['message']);
+		$win = test_input($_POST['win']);
+		$share = test_input($_POST['share']);
 
 		$conn = $pdo->open();
 		try{
@@ -18,7 +18,7 @@
 			
 		}
 		catch(PDOException $e){
-			$_SESSION['error'] = $e->getMessage();
+			$_SESSION['error'] = "Something Went Wrong.";
 		}
 		
 
