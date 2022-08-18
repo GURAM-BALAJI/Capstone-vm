@@ -10,6 +10,7 @@ if ($req_per == 1) {
 		$name = test_input($_POST['name']);
 		$phone = test_input($_POST['contact']);
 		$photo = test_input($_FILES['photo']['name']);
+		date_default_timezone_set('Asia/Kolkata');
 		//Sanitizing inputs.
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL))
 			$_SESSION['error'] = "Invalid email format.";
@@ -54,7 +55,7 @@ if ($req_per == 1) {
 						}
 
 						try {
-							date_default_timezone_set('Asia/Kolkata');
+							
 							$today = date('Y-m-d h:i:s a');
 							$stmt = $conn->prepare("UPDATE users SET user_email=:email, user_password=:password, name=:name, user_photo=:photo,  user_phone=:phone, user_updated_date=:user_updated_date WHERE user_id=:id");
 							$stmt->execute(['email' => $email, 'password' => $password, 'name' => $name, 'photo' => $filename, 'phone' => $phone, 'user_updated_date' => $today, 'id' => $user['user_id']]);
