@@ -2,7 +2,7 @@
     include 'includes/session.php';
     include 'includes/header.php';
     ?>
-    <html lang="en" oncontextmenu="return false">
+    <html lang="en">
 
     <head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">

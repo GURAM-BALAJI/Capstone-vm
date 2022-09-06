@@ -8,7 +8,7 @@ if (isset($_SESSION['mailAuth']))
 else
   header('location: ./JoinUs');
 ?>
-<html lang="en" oncontextmenu="return false">
+<html lang="en">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=0.70">

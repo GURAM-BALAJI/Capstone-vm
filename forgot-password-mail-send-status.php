@@ -5,7 +5,7 @@ if (isset($_SESSION['vm_user']))
   header('location: MyHome');
 if (isset($_SESSION['success'])) {
 ?>
-  <html lang="en" oncontextmenu="return false">
+  <html lang="en">
 
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.70">

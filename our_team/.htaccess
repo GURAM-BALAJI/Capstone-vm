@@ -1,2 +1,2 @@
 RewriteEngine On
-RewriteRule ^YourLove?$ html.html
+RewriteRule ^YourLove?$ team.php

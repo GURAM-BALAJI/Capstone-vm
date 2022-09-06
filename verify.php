@@ -1,7 +1,6 @@
 <?php
 include 'includes/session.php';
 $conn = $pdo->open();
-
 if (isset($_POST['login'])) {
 	$_SESSION['email'] = $email = test_input($_POST['email']);
 	$_SESSION['password'] = $password = test_input($_POST['password']);
@@ -20,23 +19,25 @@ if (isset($_POST['login'])) {
 							$today = date('Y-m-d h:i:s a');
 							$sessionss_cookies_id =  bin2hex(random_bytes(8)) . $row['user_id'] . time();
 							$stmt = $conn->prepare("UPDATE users SET user_attempts=:user_attempts WHERE user_id=:id");
-								$stmt->execute(['user_attempts' => 0, 'id' => $row['user_id']]);
-							$stmt = $conn->prepare("SELECT COUNT(*) AS numrows FROM sessionss WHERE sessionss_user_id = :sessionss_user_id");
-							$stmt->execute(['sessionss_user_id' => $row['user_id']]);
-							$row1 = $stmt->fetch();
-							if ($row1['numrows'] > 0) {
-								$stmt_sessions = $conn->prepare("UPDATE sessionss SET sessionss_cookies_id=:sessionss_cookies_id,sessionss_created_date=:sessionss_created_date WHERE sessionss_user_id = :user_id");
-								$stmt_sessions->execute(['sessionss_cookies_id' => $sessionss_cookies_id, 'sessionss_created_date' => $today, 'user_id' => $row['user_id']]);
-							} else {
-								$stmt_sessions = $conn->prepare("INSERT INTO sessionss (sessionss_cookies_id, sessionss_created_date, sessionss_user_id) VALUES (:sessionss_cookies_id, :sessionss_created_date, :sessionss_user_id)");
-								$stmt_sessions->execute(['sessionss_cookies_id' => $sessionss_cookies_id, 'sessionss_created_date' => $today, 'sessionss_user_id' => $row['user_id']]);
+							$stmt->execute(['user_attempts' => 0, 'id' => $row['user_id']]);
+							if ($_POST['keep_me']) {
+								$stmt = $conn->prepare("SELECT COUNT(*) AS numrows FROM sessionss WHERE sessionss_user_id = :sessionss_user_id");
+								$stmt->execute(['sessionss_user_id' => $row['user_id']]);
+								$row1 = $stmt->fetch();
+								if ($row1['numrows'] > 0) {
+									$stmt_sessions = $conn->prepare("UPDATE sessionss SET sessionss_cookies_id=:sessionss_cookies_id,sessionss_created_date=:sessionss_created_date WHERE sessionss_user_id = :user_id");
+									$stmt_sessions->execute(['sessionss_cookies_id' => $sessionss_cookies_id, 'sessionss_created_date' => $today, 'user_id' => $row['user_id']]);
+								} else {
+									$stmt_sessions = $conn->prepare("INSERT INTO sessionss (sessionss_cookies_id, sessionss_created_date, sessionss_user_id) VALUES (:sessionss_cookies_id, :sessionss_created_date, :sessionss_user_id)");
+									$stmt_sessions->execute(['sessionss_cookies_id' => $sessionss_cookies_id, 'sessionss_created_date' => $today, 'sessionss_user_id' => $row['user_id']]);
+								}
+								setcookie('keep_id', $sessionss_cookies_id, time() + 60 * 60 * 24 * 30);
 							}
-							setcookie('keep_id', $sessionss_cookies_id, time() + 60 * 60 * 24 * 30);
 							unset($_SESSION['email']);
 							unset($_SESSION['password']);
 						} else {
 							if ($row['user_attempts'] >= 3) {
-								$after=time() + (60 * pow(2, ($row['user_attempts'] - 3)));
+								$after = time() + (60 * pow(2, ($row['user_attempts'] - 3)));
 								$stmt = $conn->prepare("UPDATE users SET user_attempts=:user_attempts,user_login_time=:user_login_time WHERE user_id=:id");
 								$stmt->execute(['user_attempts' => $row['user_attempts'] + 1, 'user_login_time' => $after, 'id' => $row['user_id']]);
 								$_SESSION['error'] = 'Oops! Locked, Try Again After ' . date('h:i:s a', $after);
