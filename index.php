@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 include 'includes/session.php';
 include 'includes/header.php';
@@ -136,9 +135,13 @@ include 'includes/header.php';
     <section class="content">
         <div class="modal-content">
             <div class="modal-body">
+                <center>
+                <h3 style="color:#d24026;">Top Sold Items....</h3>
+                <hr>
+                </center>
                 <table style="width: 100%;">
                     <?php
-                    $stmt = $conn->prepare("SELECT * FROM display_items WHERE display_items_qty>:display_items_qty");
+                    $stmt = $conn->prepare("SELECT * FROM display_items left join items on items_id=display_items_id WHERE display_items_qty>:display_items_qty order by items_count DESC limit 2");
                     $stmt->execute(['display_items_qty' => 0]);
                     foreach ($stmt as $row) {
                         $items_id = $row['display_items_id'];
@@ -210,6 +213,69 @@ include 'includes/header.php';
         <?php } ?>
     </section>
 
+
+    <section class="content">
+    
+        <div class="modal-content">
+            <div class="modal-body">
+            <center>
+                <h3 style="color:#d24026;">All Items....</h3>
+                <hr>
+                </center>
+                <table style="width: 100%;">
+                    <?php
+                    $stmt = $conn->prepare("SELECT * FROM display_items WHERE display_items_qty>:display_items_qty");
+                    $stmt->execute(['display_items_qty' => 0]);
+                    foreach ($stmt as $row) {
+                        $items_id = $row['display_items_id'];
+                        $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_id=:items_id");
+                        $stmt1->execute(['items_id' => $items_id]);
+                        foreach ($stmt1 as $row1) {
+                    ?>
+                            <form method="POST" action="AddCart">
+                                <tr>
+                                    <td rowspan="3" style="padding-right:0.8rem;"> <img src="./items_images/<?php echo $row1['items_image']; ?>" height="150rem" width="150rem"> </td>
+                                    <td colspan="2">
+                                        <?php echo "<h2 style='text-transform: uppercase;'>" . $row1['items_name'] . "</h2>"; ?>
+                                    </td>
+                                <tr>
+                                    <td>
+                                        <?php echo "<b style='font-size:2rem;'> &#8377;" . $row1['items_cost'] . "</b>"; ?>
+                                    </td>
+                                    <td>
+                                        <select name="qty" class="form-control" style="float: right;">
+                                            <?php
+                                            $qty = $row['display_items_qty'];
+                                            for ($i = 1; $i <= $qty; $i++)
+                                                if ($i == 1)
+                                                    echo "<option value='$i'>$i Item</option>";
+                                                else
+                                                    echo "<option value='$i'>$i Items</option>";
+                                            ?>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="padding-top: 0.5rem;">
+                                        <input type="hidden" name="id" value="<?php echo $row['display_spring_id']; ?>">
+                                        <button name='add_cart' class='btn btn-warning btn' style="font-size:0.9rem"><i class='fa fa-cart-plust'></i>Add To Cart</button>
+                                        <button name='buy_now' style='float:right;font-size:0.9rem' class='btn btn-success btn'>Buy
+                                            Now</button>
+                                    </td>
+                                </tr>
+                            </form>
+                        <?php } ?>
+                        <tr>
+                            <td colspan="3">
+                                <hr>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </table>
+            </div>
+        </div>
+    </section>
+  
     <br><br><br><br>
     <nav class="nav">
 

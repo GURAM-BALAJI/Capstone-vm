@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <form class="form-horizontal" method="POST" action="Buy">
                     <center>
-                        <h1 style="color: #d24026;">Are you sure, You want to buy.</h1>
+                        <h1 style="color: #d24026;">Are you sure, You want to Buy.</h1>
                     </center>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> NO</button>
@@ -94,7 +94,7 @@ history list
                                     </tr>
                                     <tr>
                                         <th colspan="4">
-                                            <center><a href="./vend_now.php"><button class="vend_btn">Vend Now</button></a></center>
+                                            <center><a href="./vend_now.php"><button class="vend_btn">BUY NOW</button></a></center>
                                         </th>
                                     </tr>
                                 </table>

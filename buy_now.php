@@ -7,12 +7,7 @@ if ($req_per == 1) {
     //Sanitizing inputs.
     if ($id > 0) {
         $conn = $pdo->open();
-        $stmt = $conn->prepare("SELECT COUNT(*) AS numrows FROM orders WHERE orders_user_id=:id");
-        $stmt->execute(['id' => $id]);
-        $row = $stmt->fetch();
-        if ($row['numrows'] > 0) {
-            $_SESSION['error'] = 'You have already placed order. To see go to orders history.';
-        } else {
+      
             $flag = 0;
             $stmt_semopher = $conn->prepare("SELECT * FROM semopher WHERE semopher_id=:semopher");
             $stmt_semopher->execute(['semopher' => 1]);
@@ -33,10 +28,12 @@ if ($req_per == 1) {
                         if ($flag == 1) {
                             $qty_array = $row_check['cart_qty'];
                             $item_array = $row_check['display_id'];
+                            $sitem_array = $row_check['display_spring_id'];
                             $cost_array = $row_check['items_cost'];
                         } else {
                             $qty_array .= ',' . $row_check['cart_qty'];
                             $item_array .= ',' . $row_check['display_id'];
+                            $sitem_array .= ',' .$row_check['display_spring_id'];
                             $cost_array .= ',' . $row_check['items_cost'];
                         }
                         $total += $row_check['cart_qty'] * $row_check['items_cost'];
@@ -55,9 +52,9 @@ if ($req_per == 1) {
                     foreach ($stmt_user as $row_user)
                         if ($row_user['user_amount'] >= $total) {
                             $redirect = 1;
-
                             $update_qty = explode(',', $qty_array);
                             $update_items = explode(',', $item_array);
+                            
                             $i = 0;
                             foreach ($update_items as $dis_id) {
                                 if (!empty($dis_id)) {
@@ -83,8 +80,8 @@ if ($req_per == 1) {
                                 return $randomString;
                             }
                             $orders_id = getName(15);
-                            $stmt = $conn->prepare("INSERT INTO orders (orders_id,orders_qty,orders_cost,orders_items,orders_user_id,orders_date) VALUES (:orders_id,:orders_qty,:orders_cost,:orders_items,:orders_user_id,:orders_date)");
-                            $stmt->execute(['orders_id' => $orders_id, 'orders_qty' => $qty_array, 'orders_cost' => $cost_array, 'orders_items' => $item_array, 'orders_user_id' => $id, 'orders_date' => $today]);
+                            $stmt = $conn->prepare("INSERT INTO orders (orders_id,orders_qty,orders_cost,orders_items,orders_user_id,orders_date, orders_spring_id) VALUES (:orders_id,:orders_qty,:orders_cost,:orders_items,:orders_user_id,:orders_date, :orders_spring_id)");
+                            $stmt->execute(['orders_id' => $orders_id, 'orders_qty' => $qty_array, 'orders_cost' => $cost_array, 'orders_items' => $item_array, 'orders_user_id' => $id, 'orders_date' => $today, 'orders_spring_id'=>$sitem_array]);
                             $stmt = $conn->prepare("DELETE FROM cart WHERE cart_user_id=:id");
                             $stmt->execute(['id' => $id]);
                             $balance = $row_user['user_amount'] - $total;
@@ -98,7 +95,7 @@ if ($req_per == 1) {
                     $stmt_semopher->execute(['semopher' => 0, 'semopher_id' => 1]);
                 }
             }
-        }
+        
     } else {
         $_SESSION['error'] = 'Wrong Inputs.';
     }
