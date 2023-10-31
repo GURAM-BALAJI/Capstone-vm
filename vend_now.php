@@ -4,7 +4,8 @@ include './includes/req_start.php';
 
 // Function to encrypt data using AES-256-CBC
 function encryptData($data, $secret_key) {
-    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+    //$iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+    $iv ="1234";
     $encrypted = openssl_encrypt($data, 'aes-256-cbc', $secret_key, 0, $iv);
     return base64_encode($encrypted . '::' . $iv);
 }
