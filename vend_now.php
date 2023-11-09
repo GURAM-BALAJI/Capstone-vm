@@ -40,7 +40,7 @@ if (isset($_SESSION['vm_user'])) {
     }
     
     // Display the QR code with the data
-    $qr_code_data = urlencode($qr_data);
+    $qr_code_data = urlencode($encrypted_data);
     $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=$qr_code_data&model=2";
     ?>
     <!DOCTYPE html>
