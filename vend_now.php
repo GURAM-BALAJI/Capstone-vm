@@ -2,13 +2,6 @@
 include 'includes/session.php';
 include './includes/req_start.php';
 
-// Function to encrypt data using AES-256-CBC
-function encryptData($data, $secret_key) {
-    //$iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
-    $iv ="1234";
-    $encrypted = openssl_encrypt($data, 'aes-256-cbc', $secret_key, 0, $iv);
-    return base64_encode($encrypted . '::' . $iv);
-}
 
 if (isset($_SESSION['vm_user'])) {
     $id = $_SESSION['vm_id'];
@@ -17,8 +10,6 @@ if (isset($_SESSION['vm_user'])) {
     $stmt->execute(['id' => $id]);
     $redirect = 0;
 
-    // Replace 'your_secret_key' with your actual secret key
-    $secret_key = '1234';
 
     foreach ($stmt as $row) {
         $redirect = 1;
@@ -27,23 +18,34 @@ if (isset($_SESSION['vm_user'])) {
         $remaining_time = (strtotime($row['orders_date']) + 900) - strtotime($today);
 
         $data = [
-            'orderid' => $row['orders_id'],
-            'orderspring' => $row['orders_spring_id'],
-            'orders_qty' => $row['orders_qty'],
-            'orders_date' => $row['orders_date']
+            'i' => $row['orders_id'],
+            's' => $row['orders_spring_id'],
+            'q' => $row['orders_qty'],
+            'd' => $row['orders_date'],
+            't' => $remaining_time, // Add the remaining time to the QR code data
         ];
         
         $jsonData = json_encode($data);
        
-        $qr_data = encryptData($jsonData, $secret_key);
+        $cipher = "aes-128-cbc";
+
+        //Generate a 256-bit encryption key
+        $encryption_key = "1234123412341234";
+        
+        $iv = "1234123412341234";
+        
+        //Data to encrypt
+        $encrypted_data = openssl_encrypt($jsonData, $cipher, $encryption_key, 0, $iv);
 
     }
-
-    // Rest of your code...
+    
+    // Display the QR code with the data
+    $qr_code_data = urlencode($qr_data);
+    $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=$qr_code_data&model=2";
     ?>
     <!DOCTYPE html>
     <html>
-    <head>
+    <head>  
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
@@ -60,8 +62,8 @@ if (isset($_SESSION['vm_user'])) {
                         <form method="post" action="vended.php">
                             <input type="hidden" name="order_id" value="<?php echo $row['orders_id']; ?>">
                             <div class="form-group text-center">
-                                <!-- Adjust the chs parameter to increase QR code size (e.g., chs=300x300) -->
-                                <img class="img-fluid" src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=<?php echo urlencode($qr_data); ?>" alt="QR Code">
+                                <!-- QR code from QR Server API -->
+                                <img class="img-fluid" src="<?php echo $qr_url; ?>" alt="QR Code">
                             </div>
                             <p class="text-warning ">
                                 <span style="color:red;">*</span> After scanning the QR Code, your order will be vended.
@@ -83,10 +85,12 @@ if (isset($_SESSION['vm_user'])) {
     <?php
 
     if ($redirect == 0) {
+        error_log("No redirect");
         header('location: MyCart');
         exit();
     }
 } else {
+    error_log("Session error");
     header('location: MyCart');
 }
 include './includes/req_end.php';

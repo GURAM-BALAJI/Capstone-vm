@@ -80,6 +80,9 @@
       <?php }
       if ($admin['message_view']) { ?>
         <li><a href="../message/message.php"><i class="fa fa-comment"></i> <span>Message</span></a></li>
+      <?php  }
+      if ($admin['admin_view']) { ?>
+        <li><a href="../Adminqr/admin_qr.php"><i class="fa fa-qrcode"></i> <span>QR Code</span></a></li>
       <?php } ?>
     </ul>
   </section>
