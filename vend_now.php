@@ -6,9 +6,18 @@ include './includes/req_start.php';
 if (isset($_SESSION['vm_user'])) {
     $id = $_SESSION['vm_id'];
     $conn = $pdo->open();
-    $stmt = $conn->prepare("SELECT * FROM orders WHERE orders_user_id = :id LIMIT 1");
+    $order_id = isset($_GET['order_id']) ? $_GET['order_id'] : null;
+    if ($order_id !== null) {
+        $stmt = $conn->prepare("SELECT * FROM orders WHERE orders_user_id = :id AND orders_id = :order_id");
+        $stmt->execute(['id' => $id, 'order_id' => $order_id]);
+        // ...
+    } else {
+        // Handle the case where order_id is not provided
+        $stmt = $conn->prepare("SELECT * FROM orders WHERE orders_user_id = :id ORDER BY orders_id DESC LIMIT 1");
     $stmt->execute(['id' => $id]);
     $redirect = 0;
+    }
+    
 
 
     foreach ($stmt as $row) {
@@ -17,16 +26,13 @@ if (isset($_SESSION['vm_user'])) {
         $today = date('Y-m-d h:i:s');
         $remaining_time = (strtotime($row['orders_date']) + 900) - strtotime($today);
 
-        $data = [
-            'O' => $row['orders_id'],
-            'I' => $row['orders_spring_id'],
-            'Q' => $row['orders_qty'],
-            
-           
-        ];
+        $data = [implode(', ', [
+            'O:' . implode('/', explode(',', $row['orders_id'])),
+            'I:' . implode('/', explode(',', $row['orders_spring_id'])),
+            'Q:' . implode('/', explode(',', $row['orders_qty'])),
+        ])];
         
-        $jsonData = json_encode($data);
-       
+        $dataString = implode(', ', $data);
         $cipher = "aes-128-cbc";
 
         //Generate a 256-bit encryption key
@@ -35,7 +41,7 @@ if (isset($_SESSION['vm_user'])) {
         $iv = "1234123412341234";
         
         //Data to encrypt
-        $encrypted_data = openssl_encrypt($jsonData, $cipher, $encryption_key, 0, $iv);
+        $encrypted_data = openssl_encrypt($dataString, $cipher, $encryption_key, 0, $iv);
 
     }
     

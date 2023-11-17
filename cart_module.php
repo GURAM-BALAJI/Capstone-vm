@@ -94,7 +94,7 @@ history list
                                     </tr>
                                     <tr>
                                         <th colspan="4">
-                                            <center><a href="./vend_now.php"><button class="vend_btn">BUY NOW</button></a></center>
+                                            <center><a href="./vend_now.php?order_id=<?php echo $row['orders_id']; ?>"><button class="vend_btn">BUY NOW</button></a></center>
                                         </th>
                                     </tr>
                                 </table>
