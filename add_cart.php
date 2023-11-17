@@ -6,7 +6,8 @@ if ($req_per == 1) {
         $cart_spring_id = test_input($_POST['id']);
         $cart_qty = test_input($_POST['qty']);
         $cart_user_id = $_SESSION['vm_id'];
-       //Sanitizing inputs.
+        $display_machine_id = isset($_COOKIE['theme']) ? $_COOKIE['theme'] : 1;
+        //Sanitizing inputs.
         if ($cart_spring_id > 0 && $cart_qty > 0 && $cart_user_id > 0) {
             $conn = $pdo->open();
             $stmt_check = $conn->prepare("SELECT COUNT(*) AS numrows FROM display_items WHERE display_spring_id=:cart_spring_id && display_items_qty>=:display_items_qty");
@@ -23,8 +24,8 @@ if ($req_per == 1) {
                     try {
                         date_default_timezone_set('Asia/Kolkata');
                         $today = date('Y-m-d h:i:s a');
-                        $stmt = $conn->prepare("INSERT INTO cart (cart_spring_id, cart_qty, cart_user_id,cart_added_date) VALUES (:cart_spring_id, :cart_qty, :cart_user_id, :cart_added_date)");
-                        $stmt->execute(['cart_spring_id' => $cart_spring_id, 'cart_qty' => $cart_qty, 'cart_user_id' => $cart_user_id, 'cart_added_date' => $today]);
+                        $stmt = $conn->prepare("INSERT INTO cart (cart_spring_id, cart_qty, cart_user_id,cart_added_date,cart_machine_id) VALUES (:cart_spring_id, :cart_qty, :cart_user_id, :cart_added_date,:cart_machine_id)");
+                        $stmt->execute(['cart_spring_id' => $cart_spring_id, 'cart_qty' => $cart_qty, 'cart_user_id' => $cart_user_id, 'cart_added_date' => $today, 'cart_machine_id' => $display_machine_id]);
                         if (!isset($_POST['buy_now']))
                             $_SESSION['success'] = "Added To Cart.";
                     } catch (PDOException $e) {

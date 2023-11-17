@@ -58,6 +58,7 @@
                   <div class="box-body">
                     <table id="example1" class="table table-bordered">
                       <thead>
+                      <th>Machine Id</th>
                         <th>Spring Id</th>
                         <th>Iteam Id</th>
                         <th>Name</th>
@@ -78,6 +79,7 @@
                           $stmt->execute();
                           foreach ($stmt as $row) {
                             $item_id = $row['display_items_id'];
+                            echo "<td>" . $row['display_machine_id'] . "</td>";
                             echo  "<td>" . $row['display_spring_id'] . "</td>";
                             echo  "<td>" . $item_id . "</td>";
                             $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_id=:item_id");

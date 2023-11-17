@@ -96,66 +96,7 @@ include 'includes/header.php';
         background-color: #932e3e;
     }
 
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-        border: 2px solid #fff;
-        border-radius: 25px;
-    }
-
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(254, 191, 1, 1);
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: #fff;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-    input:checked+.slider {
-        background-color: #38b6ff;
-    }
-
-    input:focus+.slider {
-        box-shadow: 0 0 1px #000;
-    }
-
-    input:checked+.slider:before {
-        -webkit-transform: translateX(26px);
-        -ms-transform: translateX(26px);
-        transform: translateX(26px);
-    }
-
-    .slider.round {
-        border-radius: 34px;
-    }
-
-    .slider.round:before {
-        border-radius: 50%;
-    }
+    
 </style>
 
 <body>
@@ -197,14 +138,7 @@ include 'includes/header.php';
                     <center>
                         <img style="margin-top:2rem;width:12rem;height:12rem;border:1px solid black;box-shadow:1px 2px 8px #000000;" src="<?php echo (!empty($user['user_photo'])) ? 'images/' . $user['user_photo'] : 'images/profile.jpg'; ?>" class="img-circle" alt="User Image">
                         <h1 style="text-transform:uppercase;font-size: 5rem;"><?php echo $user['name']; ?></h1>
-                        <hr style="margin-bottom:2rem;">
-                        <b style="font-size:x-large;float:left;margin-left:10%;">Theme</b>
-                        <label class="switch" style="float: right;margin-right:10%;">
-                            <input type="checkbox" id="toggleTheme" <?php if (isset($_COOKIE["theme"])) {
-                                                                        echo "checked";
-                                                                    } ?>>
-                            <span class="slider round"></span>
-                        </label>
+                     
                         <hr style="margin-bottom:2rem;">
                         <a href="MyProfile"><button style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i class="fa fa-user" style="padding: 0.7rem;" aria-hidden="true"></i><br />Profile</button></a>
                         <a href="MyContact"><button style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i class="fa fa-commenting" style="padding: 0.7rem;" aria-hidden="true"></i><br />Contact</button></a>
@@ -263,8 +197,9 @@ include 'includes/header.php';
             <?php
             $i = 0;
             if (isset($_SESSION['vm_id'])) {
-                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
-                $stmt->execute(['user_id' => $_SESSION['vm_id']]);
+                $display_machine_id = isset($_COOKIE['theme']) ? $_COOKIE['theme'] : 1;
+                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id AND cart_machine_id=:machine_id");
+            $stmt->execute(['user_id' => $_SESSION['vm_id'], 'machine_id' =>$display_machine_id]);
                 foreach ($stmt as $row)
                     $i++;
             ?>
@@ -288,19 +223,7 @@ include 'includes/header.php';
     </nav>
     <!-- partial -->
 </body>
-<script>
-    $("#toggleTheme").on('change', function() {
-        if ($(this).is(':checked')) {
-            $(this).attr('value', 'true');
-            document.cookie = "theme=color; Max-Age=" + 365 * 24 * 60 * 60;
-        } else {
-            $(this).attr('value', 'false');
-            document.cookie = 'theme=; Max-Age=0';
-        }
-        location.reload();
-    });
-  
-</script>
+
 <?php include './includes/req_end.php'; ?>
 
 </html>

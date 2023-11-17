@@ -20,8 +20,9 @@ if ($req_per == 1) {
             }
             if ($lock == 0) {
                 $total = 0;
-                $stmt_check = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id left join items on items_id=display_items_id WHERE cart_user_id=:cart_user_id");
-                $stmt_check->execute(['cart_user_id' => $id]);
+                $display_machine_id= isset($_COOKIE['theme']) ? $_COOKIE['theme'] : 1;
+                $stmt_check = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id left join items on items_id=display_items_id WHERE cart_user_id=:cart_user_id AND cart_machine_id=:display_machine_id");
+                $stmt_check->execute(['cart_user_id' => $id, 'display_machine_id'=>$display_machine_id]);
                 foreach ($stmt_check as $row_check) {
                     $flag++;
                     if ($row_check['display_items_qty'] >= $row_check['cart_qty']) {
@@ -71,8 +72,8 @@ if ($req_per == 1) {
                             $today = date('Y-m-d h:i:s a');
                             $stmt = $conn->prepare("INSERT INTO orders (orders_qty,orders_cost,orders_items,orders_user_id,orders_date, orders_spring_id) VALUES (:orders_qty,:orders_cost,:orders_items,:orders_user_id,:orders_date, :orders_spring_id)");
                             $stmt->execute([ 'orders_qty' => $qty_array, 'orders_cost' => $cost_array, 'orders_items' => $item_array, 'orders_user_id' => $id, 'orders_date' => $today, 'orders_spring_id'=>$sitem_array]);
-                            $stmt = $conn->prepare("DELETE FROM cart WHERE cart_user_id=:id");
-                            $stmt->execute(['id' => $id]);
+                            $stmt = $conn->prepare("DELETE FROM cart WHERE cart_user_id=:id AND cart_machine_id=:display_machine_id");
+                            $stmt->execute(['id' => $id,'display_machine_id'=>$display_machine_id]);
                             $balance = $row_user['user_amount'] - $total;
                             $stmt_user_update = $conn->prepare("UPDATE users SET user_amount=$balance WHERE user_id=$id");
                             $stmt_user_update->execute();

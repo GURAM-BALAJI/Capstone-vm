@@ -180,8 +180,9 @@ include 'includes/header.php';
             <div class="modal-body">
                 <table style="width: 100%;">
                     <?php
-                    $stmt = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id WHERE cart_user_id=:user_id");
-                    $stmt->execute(['user_id' => $user_id]);
+                    $display_machine_id= isset($_COOKIE['theme']) ? $_COOKIE['theme'] : 1;
+                    $stmt = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id WHERE cart_user_id=:user_id AND  display_machine_id=:display_machine_id");
+                    $stmt->execute(['user_id' => $user_id, 'display_machine_id'=>$display_machine_id]);
                     foreach ($stmt as $row111) {
                         $id = $row111['cart_id'];
                         $qty = $row111['display_items_qty'];
@@ -194,8 +195,8 @@ include 'includes/header.php';
                         }
                     }
                     $total = $i = 0;
-                    $stmt = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id WHERE cart_user_id=:user_id");
-                    $stmt->execute(['user_id' => $user_id]);
+                    $stmt = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id WHERE cart_user_id=:user_id AND  display_machine_id=:display_machine_id");
+                    $stmt->execute(['user_id' => $user_id, 'display_machine_id'=>$display_machine_id]);
                     foreach ($stmt as $row11) {
                         $i = 1;
                         $items_id = $row11['display_items_id'];
@@ -320,8 +321,8 @@ include 'includes/header.php';
         <?php
         $i = 0;
         if (isset($_SESSION['vm_id'])) {
-            $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
-            $stmt->execute(['user_id' => $_SESSION['vm_id']]);
+            $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id AND cart_machine_id=:machine_id");
+            $stmt->execute(['user_id' => $_SESSION['vm_id'], 'machine_id' =>$display_machine_id]);
             foreach ($stmt as $row)
                 $i++;
         ?>

@@ -3,6 +3,7 @@
 
 	if(isset($_POST['add'])){
 		$spring_id = test_input($_POST['spring_id']);
+		$machine_id = test_input($_POST['machine_id']);
 		$items_id = test_input($_POST['items_id']);
 		$qty = test_input($_POST['qty']);
 		if ($spring_id > 0 && $items_id > 0 && $qty >= 0) {
@@ -17,8 +18,8 @@
 		}
 		else{
 			try{
-				$stmt = $conn->prepare("INSERT INTO display_items (display_spring_id,display_items_id,display_items_qty,display_items_add_date,display_items_updated_date) VALUES (:spring_id, :items_id, :qty,:display_items_add_date,:display_items_updated_date)");
-				$stmt->execute(['spring_id'=>$spring_id, 'items_id'=>$items_id, 'qty'=>$qty,'display_items_add_date'=>$today,'display_items_updated_date'=>$today]);
+				$stmt = $conn->prepare("INSERT INTO display_items (display_spring_id,display_items_id,display_items_qty,display_items_add_date,display_items_updated_date,display_machine_id) VALUES (:spring_id, :items_id, :qty,:display_items_add_date,:display_items_updated_date,:machine_id)");
+				$stmt->execute(['spring_id'=>$spring_id, 'items_id'=>$items_id, 'qty'=>$qty,'display_items_add_date'=>$today,'display_items_updated_date'=>$today, 'machine_id'=>$machine_id]);
 				$_SESSION['success'] = 'Display items added successfully';
 			}
 			catch(PDOException $e){

@@ -5,10 +5,20 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><b>Add New Display_items</b></h4>
+                <h4 class="modal-title"><b>Add New Display Items</b></h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" method="POST" action="display_items_add.php">
+                <div class="form-group">
+                        <label for="machine_id" class="col-sm-3 control-label">Machine No</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="machine_id" name="machine_id" required>
+                                <option value="">Select Machine</option>
+                                <option value="1">1 Machine</option>
+                                <option value="2">2 Machine</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="spring_id" class="col-sm-3 control-label">Spring Id</label>
                         <div class="col-sm-9">
@@ -50,6 +60,7 @@
                             </select>
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <label for="qty" class="col-sm-3 control-label">Item QTY Present</label>
                         <div class="col-sm-9">
