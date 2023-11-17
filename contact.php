@@ -139,7 +139,7 @@ function validateMobileNumber($mobile)
   <div class="container">
     <div style="text-align:center">
       <h2><u>Contact Us:</u></h2>
-      <p style="color:#6a0000" ;>Here we are to help you, leave us a message</p>
+      <p style="color:#6a0000" ;>Any feedback, Leave us a Message</p>
     </div>
     <div class="row">
       <div class="column">
