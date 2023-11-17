@@ -16,24 +16,8 @@
         <h1 style="color: aqua;"><b>Our Team</b></h1>
 
         <div class="row">
-            <?php $input = shuffle(array(0, 1, 2, 3));
            
-            ?>
-            <div class="col-md-3 col-sm-6">
-                <div class="our-team">
-                    <div class="pic">
-                        <img src="image.jpg">
-                    </div>
-                    <h3 class="title">BHARATH B REDDY.</h3>
-                    <span class="post">Web Developer</span>
-                    <ul class="social">
-                        <li><a href="#" class="fa fa-facebook"></a></li>
-                        <li><a href="https://twitter.com/BharatR57805349?t=AFvackFqJgSFhRQKT2GPtw&s=09" class="fa fa-twitter"></a></li>
-                        <li><a href="https://mail.google.com/mail/u/br.reddy231@gmail.com/#inbox?compose=new" class="fa fa-google-plus"></a></li>
-                        <li><a href="https://www.linkedin.com/in/bharat-reddy-49468618b" class="fa fa-linkedin"></a></li>
-                    </ul>
-                </div>
-            </div>
+
             <div class="col-md-3 col-sm-6">
                 <div class="our-team">
                     <div class="pic">
@@ -54,7 +38,7 @@
                     <div class="pic">
                         <img src="image3.jpg">
                     </div>
-                    <h3 class="title">PRADEEP R S.</h3>
+                    <h3 class="title">Roopashree.</h3>
                     <span class="post">Web Designer</span>
                     <ul class="social">
                         <li><a href="#" class="fa fa-facebook"></a></li>
@@ -73,7 +57,7 @@
 
 
                     </div>
-                    <h3 class="title">SAI GANESH B.</h3>
+                    <h3 class="title">Rachana.</h3>
                     <span class="post">Full Stack</span>
                     <ul class="social">
                         <li><a href="https://www.facebook.com/saiganesh.saiganesh.7359447" class="fa fa-facebook"></a></li>

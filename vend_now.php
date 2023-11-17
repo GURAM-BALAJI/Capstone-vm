@@ -18,11 +18,11 @@ if (isset($_SESSION['vm_user'])) {
         $remaining_time = (strtotime($row['orders_date']) + 900) - strtotime($today);
 
         $data = [
-            'i' => $row['orders_id'],
-            's' => $row['orders_spring_id'],
-            'q' => $row['orders_qty'],
-            'd' => $row['orders_date'],
-            't' => $remaining_time, // Add the remaining time to the QR code data
+            'O' => $row['orders_id'],
+            'I' => $row['orders_spring_id'],
+            'Q' => $row['orders_qty'],
+            
+           
         ];
         
         $jsonData = json_encode($data);

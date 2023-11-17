@@ -49,7 +49,7 @@ if (isset($_POST['email'])) {
 					$mail->isSMTP();
 					$mail->Host = "smtp.hostinger.com";
 					$mail->SMTPAuth = true;
-					$mail->Username = "support@streaminginvitation.com"; //enter you email address
+					$mail->Username = "vm@immunityspot.com"; //enter you email address
 					$mail->Password = 'SI@7softsolution'; //enter you email password
 					$mail->Port = 587;
 					$mail->SMTPOptions = array(
@@ -60,7 +60,7 @@ if (isset($_POST['email'])) {
 						)
 					);
 
-					$mail->setFrom('support@streaminginvitation.com', 'Vending Machine');
+					$mail->setFrom('vm@immunityspot.com', 'Vending Machine');
 
 					//Recipients
 					$mail->addAddress($email);

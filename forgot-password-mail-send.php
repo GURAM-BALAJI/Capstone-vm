@@ -27,7 +27,7 @@ if (isset($_POST['email'])) {
 				$mail->isSMTP();
 				$mail->Host = "smtp.hostinger.com";
 				$mail->SMTPAuth = true;
-				$mail->Username = "support@streaminginvitation.com"; //enter you email address
+				$mail->Username = "vm@immunityspot.com"; //enter you email address
 				$mail->Password = "SI@7softsolution"; //enter you email password
 				$mail->Port = 587;
 				$mail->SMTPOptions = array(
@@ -38,7 +38,7 @@ if (isset($_POST['email'])) {
 					)
 				);
 
-				$mail->setFrom('support@streaminginvitation.com', 'Reset Password mail');
+				$mail->setFrom('vm@immunityspot.com', 'Reset Password mail');
 
 				//Recipients
 				$mail->addAddress($email);

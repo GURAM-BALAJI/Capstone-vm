@@ -292,7 +292,7 @@ include 'includes/header.php';
     $("#toggleTheme").on('change', function() {
         if ($(this).is(':checked')) {
             $(this).attr('value', 'true');
-            document.cookie = "theme=pradeep_color; Max-Age=" + 365 * 24 * 60 * 60;
+            document.cookie = "theme=color; Max-Age=" + 365 * 24 * 60 * 60;
         } else {
             $(this).attr('value', 'false');
             document.cookie = 'theme=; Max-Age=0';

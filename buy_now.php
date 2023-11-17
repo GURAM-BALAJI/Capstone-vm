@@ -69,26 +69,15 @@ if ($req_per == 1) {
                             }
                             date_default_timezone_set('Asia/Kolkata');
                             $today = date('Y-m-d h:i:s a');
-                            function getName($n)
-                            {
-                                $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                                $randomString = '';
-                                for ($i = 0; $i < $n; $i++) {
-                                    $index = rand(0, strlen($characters) - 1);
-                                    $randomString .= $characters[$index];
-                                }
-                                return $randomString;
-                            }
-                            $orders_id = getName(15);
-                            $stmt = $conn->prepare("INSERT INTO orders (orders_id,orders_qty,orders_cost,orders_items,orders_user_id,orders_date, orders_spring_id) VALUES (:orders_id,:orders_qty,:orders_cost,:orders_items,:orders_user_id,:orders_date, :orders_spring_id)");
-                            $stmt->execute(['orders_id' => $orders_id, 'orders_qty' => $qty_array, 'orders_cost' => $cost_array, 'orders_items' => $item_array, 'orders_user_id' => $id, 'orders_date' => $today, 'orders_spring_id'=>$sitem_array]);
+                            $stmt = $conn->prepare("INSERT INTO orders (orders_qty,orders_cost,orders_items,orders_user_id,orders_date, orders_spring_id) VALUES (:orders_qty,:orders_cost,:orders_items,:orders_user_id,:orders_date, :orders_spring_id)");
+                            $stmt->execute([ 'orders_qty' => $qty_array, 'orders_cost' => $cost_array, 'orders_items' => $item_array, 'orders_user_id' => $id, 'orders_date' => $today, 'orders_spring_id'=>$sitem_array]);
                             $stmt = $conn->prepare("DELETE FROM cart WHERE cart_user_id=:id");
                             $stmt->execute(['id' => $id]);
                             $balance = $row_user['user_amount'] - $total;
                             $stmt_user_update = $conn->prepare("UPDATE users SET user_amount=$balance WHERE user_id=$id");
                             $stmt_user_update->execute();
-                            $stmt = $conn->prepare("INSERT INTO transaction (transaction_order,transaction_user_id,transaction_send_to,transaction_amount,transaction_added_by,transaction_type,transaction_date) VALUES (:transaction_order,:transaction_user_id,:transaction_send_to,:transaction_amount,:transaction_added_by,:transaction_type,:transaction_date)");
-                            $stmt->execute(['transaction_order' => $orders_id, 'transaction_user_id' => $id, 'transaction_send_to' => 'Ordered', 'transaction_amount' => -$total,  'transaction_added_by' => $id, 'transaction_type' => 1, 'transaction_date' => $today]);
+                            $stmt = $conn->prepare("INSERT INTO transaction (transaction_user_id,transaction_send_to,transaction_amount,transaction_added_by,transaction_type,transaction_date) VALUES (:transaction_user_id,:transaction_send_to,:transaction_amount,:transaction_added_by,:transaction_type,:transaction_date)");
+                            $stmt->execute([ 'transaction_user_id' => $id, 'transaction_send_to' => 'Ordered', 'transaction_amount' => -$total,  'transaction_added_by' => $id, 'transaction_type' => 1, 'transaction_date' => $today]);
                         } else
                             $_SESSION['error'] = 'Insufficient Balance.';
                     $stmt_semopher = $conn->prepare("UPDATE semopher SET semopher_value=:semopher WHERE semopher_id=:semopher_id");
