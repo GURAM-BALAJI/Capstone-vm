@@ -3,7 +3,7 @@
 <?php if ($admin['admin_view']) {
 
 
-?>
+    ?>
 
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -64,32 +64,36 @@
                                                 foreach ($stmt as $row) {
                                                     $QrData = $row['qr_code'];
                                                 } ?>
-                                                <input type="text" class="form-control" name="QrData" value="<?php echo $QrData; ?>">
+                                                <input type="text" class="form-control" name="QrData"
+                                                    value="<?php echo $QrData; ?>">
 
                                             </div>
                                             <div class="col-sm-4">
-                                                <input class="form-control-static" name="QRSubmit" type="submit" value="Submit">
+                                                <input class="form-control-static" name="QRSubmit" type="submit"
+                                                    value="Submit">
                                             </div>
                                         </div>
                                     </form>
                                     <div class="box-body">
                                         <?php
-                                     $cipher = "aes-128-cbc";
+                                        $cipher = "aes-128-cbc";
 
-                                     //Generate a 256-bit encryption key
-                                     $encryption_key = "1234123412341234";
-                                     
-                                     $iv = "1234123412341234";
-                                     
-                                     //Data to encrypt
-                                     $encrypted_data = openssl_encrypt($QrData, $cipher, $encryption_key, 0, $iv);
-                                     
+                                        //Generate a 256-bit encryption key
+                                        $encryption_key = "1234123412341234";
+
+                                        $iv = "1234123412341234";
+
+                                        //Data to encrypt
+                                        $encrypted_data = openssl_encrypt($QrData, $cipher, $encryption_key, 0, $iv);
+
                                         ?>
 
-<div class="form-group text-center">
-                                <!-- Adjust the chs parameter to increase QR code size (e.g., chs=300x300) -->
-                                <img class="img-fluid" src="https://chart.googleapis.com/chart?chs=350x350&cht=qr&chl=<?php echo urlencode($encrypted_data); ?>" alt="QR Code">
-                            </div>
+                                        <div class="form-group text-center">
+                                            <!-- Adjust the chs parameter to increase QR code size (e.g., chs=300x300) -->
+                                            <img class="img-fluid"
+                                                src="https://chart.googleapis.com/chart?chs=350x350&cht=qr&chl=<?php echo urlencode($encrypted_data); ?>"
+                                                alt="QR Code">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

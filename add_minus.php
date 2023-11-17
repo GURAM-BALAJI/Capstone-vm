@@ -17,15 +17,18 @@ if ($req_per == 1) {
                             if (isset($_POST['add']))
                                 $qty = $qty + 1;
                             else
-                if ($qty > 1)
-                                $qty = $qty - 1;
+                                if ($qty > 1)
+                                    $qty = $qty - 1;
                         } else {
                             if (isset($_POST['add'])) {
                                 $qty = $row['display_items_qty'];
-                                $_SESSION['error'] = "Stock Is Limited.";
+                                $stmtsri = $conn->prepare("SELECT items_name FROM items WHERE items_id=:id");
+                                $stmtsri->execute(['id' => $row['display_items_id']]);
+                                foreach ($stmtsri as $rowsri)
+                                    $_SESSION['error'] = $rowsri['items_name']."'s Stock Is Limited.";
                             } else
-                if ($qty > 1)
-                                $qty = $qty - 1;
+                                if ($qty > 1)
+                                    $qty = $qty - 1;
                         }
                         $stmt = $conn->prepare("UPDATE cart SET cart_qty=:qty WHERE cart_id=:id");
                         $stmt->execute(['qty' => $qty, 'id' => $id]);
