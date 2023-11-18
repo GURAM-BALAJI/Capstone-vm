@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 17, 2022 at 07:11 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Nov 18, 2023 at 06:56 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -66,14 +66,16 @@ CREATE TABLE `admin` (
   `slogan_create` tinyint(1) NOT NULL,
   `slogan_edit` tinyint(1) NOT NULL,
   `slogan_del` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`admin_id`, `admin_email`, `admin_password`, `admin_name`, `admin_phone`, `admin_photo`, `admin_dob`, `admin_status`, `users_view`, `users_create`, `users_edit`, `users_del`, `admin_view`, `admin_create`, `admin_edit`, `admin_del`, `items_view`, `items_create`, `items_edit`, `items_del`, `users_special`, `admin_special`, `contact_view`, `contact_edit`, `message_view`, `admin_delete`, `admin_added_date`, `admin_updated_date`, `display_items_view`, `display_items_edit`, `display_items_create`, `display_items_del`, `history_view`, `orders_view`, `slogan_view`, `slogan_create`, `slogan_edit`, `slogan_del`) VALUES
-(1, 'admin@admin.com', '$2y$10$Sz/BnYaiAvH4gd/AQNDNLuYiu5Iwk7/a0eb3neXy.iF.mfyMMBIMC', 'Elons', 9696969696, 'happy-birthday-g500f90242_640.jpg', '2020-11-10', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, '2021-01-04', '2022-08-17 01:21:10 ', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+(1, 'admin@admin.com', '$2y$10$yZFyBC/3udbhyWJQ8LebC.zwCaUWe6Wgf6J07C/fPXWgM5oaD8aR6', 'Elons', 9696969696, 'happy-birthday-g500f90242_640.jpg', '2020-11-10', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, '2021-01-04', '2022-08-17 01:21:10 ', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(100000, 'pradeeprs@gmail.com', '$2y$10$ipf8fePZGxWhMIxQOpStI.jwqLdCSiyAbesr7ZEAXyLv4DNGcMfIS', 'Pradeep', 7619321936, '', '0000-00-00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, '2023-10-05 05:27:01 ', '2023-10-05 05:31:23 ', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(100001, 'sandhya@gmail.com', '$2y$10$ipf8fePZGxWhMIxQOpStI.jwqLdCSiyAbesr7ZEAXyLv4DNGcMfIS', 'sandhya', 9876543210, '', '0000-00-00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, '2023-10-05 05:28:30 ', '2023-10-05 05:31:15 ', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 --
 -- Triggers `admin`
@@ -102,6 +104,24 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `adminqrcode`
+--
+
+CREATE TABLE `adminqrcode` (
+  `qr_code` varchar(300) NOT NULL,
+  `qr_code_machine` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `adminqrcode`
+--
+
+INSERT INTO `adminqrcode` (`qr_code`, `qr_code_machine`) VALUES
+('admin', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `cart`
 --
 
@@ -110,15 +130,16 @@ CREATE TABLE `cart` (
   `cart_spring_id` int(11) NOT NULL,
   `cart_qty` int(11) NOT NULL,
   `cart_user_id` bigint(20) NOT NULL,
-  `cart_added_date` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `cart_added_date` varchar(20) NOT NULL,
+  `cart_machine_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `cart`
 --
 
-INSERT INTO `cart` (`cart_id`, `cart_spring_id`, `cart_qty`, `cart_user_id`, `cart_added_date`) VALUES
-(100043, 2, 1, 131, '2022-08-17 07:40:01 ');
+INSERT INTO `cart` (`cart_id`, `cart_spring_id`, `cart_qty`, `cart_user_id`, `cart_added_date`, `cart_machine_id`) VALUES
+(100175, 2, 1, 131, '2023-11-18 11:11:59 ', 1);
 
 -- --------------------------------------------------------
 
@@ -134,7 +155,7 @@ CREATE TABLE `contact` (
   `contact_subject` varchar(2000) NOT NULL,
   `contact_view` tinyint(1) NOT NULL,
   `contact_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `contact`
@@ -143,7 +164,8 @@ CREATE TABLE `contact` (
 INSERT INTO `contact` (`contact_id`, `contact_name`, `contact_email`, `contact_phone`, `contact_subject`, `contact_view`, `contact_date`) VALUES
 (32, 'Pradeep RS', 'pradeeprs176@gmail.com', '07619321936', 'dffgxcz', 1, '2022-07-27 00:00:00'),
 (33, 'Pradeep RS', 'pradeeprs176@gmail.com', '07619321936', 'sadds', 1, '2022-07-26 00:00:00'),
-(34, 'Wedding Photography', 'admin@admin.com', '23424242424', 'gedsfdsg', 1, '2022-07-27 11:24:53');
+(34, 'Wedding Photography', 'admin@admin.com', '23424242424', 'gedsfdsg', 1, '2022-07-27 11:24:53'),
+(100000, 'roopashree', 'sroopashree28@gmail.com', '9880559606', 'hii', 0, '2023-11-09 04:13:17');
 
 -- --------------------------------------------------------
 
@@ -157,17 +179,33 @@ CREATE TABLE `display_items` (
   `display_items_add_date` varchar(20) NOT NULL,
   `display_items_updated_date` varchar(20) NOT NULL,
   `display_spring_id` bigint(20) NOT NULL,
-  `display_items_qty` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `display_items_qty` bigint(20) NOT NULL,
+  `display_machine_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `display_items`
 --
 
-INSERT INTO `display_items` (`display_id`, `display_items_id`, `display_items_add_date`, `display_items_updated_date`, `display_spring_id`, `display_items_qty`) VALUES
-(3, 3, '25-07-2022 09:31:37 ', '2022-08-17 01:27:44 ', 4, 9),
-(4, 2, '27-07-2022 11:37:42 ', '2022-08-17 01:26:25 ', 2, 5),
-(100000, 2, '2022-08-17 01:27:53 ', '2022-08-17 01:27:53 ', 3, 7);
+INSERT INTO `display_items` (`display_id`, `display_items_id`, `display_items_add_date`, `display_items_updated_date`, `display_spring_id`, `display_items_qty`, `display_machine_id`) VALUES
+(3, 3, '25-07-2022 09:31:37 ', '2023-10-31 03:31:00 ', 4, 3, 2),
+(4, 2, '27-07-2022 11:37:42 ', '2023-10-31 03:30:55 ', 2, 5, 1),
+(100001, 100001, '2023-10-14 11:04:50 ', '2023-10-31 03:31:06 ', 5, 6, 1);
+
+--
+-- Triggers `display_items`
+--
+DELIMITER $$
+CREATE TRIGGER `update_items_count` BEFORE UPDATE ON `display_items` FOR EACH ROW BEGIN
+  IF NEW.display_items_qty < OLD.display_items_qty AND NEW.display_items_id = OLD.display_items_id THEN
+    -- Decrease the items_count in the items table
+    UPDATE items
+    SET items_count = items_count + (OLD.display_items_qty - NEW.display_items_qty)
+    WHERE items_id = NEW.display_items_id;
+  END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -183,29 +221,17 @@ CREATE TABLE `history` (
   `history_date` datetime NOT NULL,
   `history_delivered` int(11) NOT NULL DEFAULT 0,
   `history_user_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `history`
 --
 
 INSERT INTO `history` (`history_id`, `history_qty`, `history_cost`, `history_item`, `history_date`, `history_delivered`, `history_user_id`) VALUES
-('53aP5sziI0SCTJP', '1,1', '50,30', '3,4', '2022-07-31 04:15:19', 2, 131),
-('93KUAPnxYJhawFu', '1', '50', '3', '2022-08-02 10:44:31', 2, 131),
-('ccFb205xntrgPa1', '1', '30', '4', '2022-07-31 08:23:32', 1, 131),
-('cTIhJoddGRVyeCC', '1', '50', '3', '2022-07-31 08:13:02', 3, 131),
-('FMM1w6VpjUsKNtf', '1', '30', '4', '2022-07-31 08:21:57', 2, 131),
-('GjHkR0ozJyfd9ck', '1', '50', '3', '2022-07-31 04:14:41', 2, 131),
-('Hr9SYyG8PxcvvPA', '4', '30', '4', '2022-07-31 08:16:04', 3, 131),
-('I66f4pLV4d7fx2I', '1', '50', '3', '2022-08-02 09:56:43', 2, 131),
-('IjmvMqelcUrodhr', '3', '30', '4', '2022-07-31 08:17:12', 1, 131),
-('iZfLERSfnBFp1UC', '1', '50', '3', '2022-07-31 04:11:21', 2, 131),
-('MSn2BkPMJf8ohnD', '1', '50', '3', '2022-07-31 01:40:15', 3, 131),
-('ONIeCzCEaEAUW7Q', '1', '50', '3', '2022-07-31 03:47:51', 1, 131),
-('QEiunXAeSfOauZ8', '1', '30', '4', '2022-07-31 04:21:32', 2, 131),
-('Tql3HOadwKgK9yU', '1', '50', '3', '2022-08-03 01:51:51', 2, 131),
-('Up5ibHfBSRnMMjb', '2', '50', '3', '2022-08-03 01:52:08', 3, 131),
-('WNSPJyBl3q8TQb2', '1', '50', '3', '2022-08-02 10:52:48', 2, 131);
+('1', '1', '30', '4', '2023-11-17 03:45:27', 1, 131),
+('2', '1', '20', '100001', '2023-11-17 03:45:49', 1, 131),
+('3', '1', '30', '4', '2023-11-17 03:46:44', 1, 131),
+('4', '1,6', '50,30', '3,4', '2023-11-17 04:33:47', 1, 131);
 
 -- --------------------------------------------------------
 
@@ -220,17 +246,20 @@ CREATE TABLE `items` (
   `items_cost` bigint(20) NOT NULL,
   `items_delete` tinyint(1) NOT NULL,
   `items_add_date` varchar(20) NOT NULL,
-  `items_updated_date` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `items_updated_date` varchar(20) NOT NULL,
+  `items_count` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `items`
 --
 
-INSERT INTO `items` (`items_id`, `items_name`, `items_image`, `items_cost`, `items_delete`, `items_add_date`, `items_updated_date`) VALUES
-(1, 'brike', '2022-03-02_1646238597.jpg', 20, 1, '2022-03-02 21:59:57', ''),
-(2, 'Green Lays', '2022-08-17_1660679892.jpg', 30, 0, '2022-03-02 22:08:54', '2022-08-17 01:28:12 '),
-(3, 'Butter Biscuits', '2022-07-25_1658765093.jpeg', 50, 0, '25-07-2022 09:28:32 ', '2022-08-17 01:28:03 ');
+INSERT INTO `items` (`items_id`, `items_name`, `items_image`, `items_cost`, `items_delete`, `items_add_date`, `items_updated_date`, `items_count`) VALUES
+(1, 'brike', '2022-03-02_1646238597.jpg', 20, 1, '2022-03-02 21:59:57', '', 0),
+(2, 'Green Lays', '2023-10-14_1697304972.jpg', 30, 0, '2022-03-02 22:08:54', '2023-10-14 11:06:12 ', 54),
+(3, 'Butter Biscuits', '2022-07-25_1658765093.jpeg', 50, 0, '25-07-2022 09:28:32 ', '2022-08-17 01:28:03 ', 46),
+(4, 'lays', '', 10, 1, '2023-10-05 05:46:06 ', '2023-10-14 11:02:33 ', 0),
+(100001, 'Dairy Milk', '2023-10-14_1697304773.jpg', 20, 0, '2023-10-14 11:02:53 ', '2023-10-14 11:02:53 ', 29);
 
 -- --------------------------------------------------------
 
@@ -246,14 +275,14 @@ CREATE TABLE `logs` (
   `logs_active_admin` int(11) NOT NULL,
   `logs_inactive_admin` int(11) NOT NULL,
   `logs_amount` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `logs`
 --
 
 INSERT INTO `logs` (`logs_id`, `logs_order`, `logs_active_users`, `logs_inactive_users`, `logs_active_admin`, `logs_inactive_admin`, `logs_amount`) VALUES
-(1, 0, 3, -1, 1, 0, 10890);
+(1, 64, -837, -2, 3, 0, 6110);
 
 -- --------------------------------------------------------
 
@@ -264,7 +293,7 @@ INSERT INTO `logs` (`logs_id`, `logs_order`, `logs_active_users`, `logs_inactive
 CREATE TABLE `message` (
   `message_id` int(20) NOT NULL,
   `message` varchar(1000) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `message`
@@ -282,14 +311,27 @@ INSERT INTO `message` (`message_id`, `message`) VALUES
 --
 
 CREATE TABLE `orders` (
-  `orders_id` varchar(25) NOT NULL,
+  `orders_id` int(11) NOT NULL,
   `orders_qty` varchar(100) NOT NULL,
   `orders_cost` varchar(100) NOT NULL,
   `orders_items` varchar(100) NOT NULL,
+  `orders_spring_id` varchar(100) NOT NULL,
   `orders_user_id` bigint(20) NOT NULL,
   `orders_date` datetime NOT NULL,
   `orders_delivered` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`orders_id`, `orders_qty`, `orders_cost`, `orders_items`, `orders_spring_id`, `orders_user_id`, `orders_date`, `orders_delivered`) VALUES
+(5, '2,1', '50,20', '3,100001', '4,5', 131, '2023-11-17 11:49:48', 0),
+(6, '1', '50', '3', '4', 131, '2023-11-18 03:14:59', 0),
+(7, '1,1', '30,20', '4,100001', '2,5', 131, '2023-11-18 03:19:24', 0),
+(8, '1', '50', '3', '4', 131, '2023-11-18 03:20:17', 0),
+(9, '1', '30', '4', '2', 131, '2023-11-18 11:09:38', 0),
+(10, '1', '50', '3', '4', 131, '2023-11-18 11:12:06', 0);
 
 --
 -- Triggers `orders`
@@ -310,13 +352,24 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `qr_counter`
+--
+
+CREATE TABLE `qr_counter` (
+  `id` int(11) NOT NULL,
+  `last_qr_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `semopher`
 --
 
 CREATE TABLE `semopher` (
   `semopher_id` int(11) NOT NULL,
   `semopher_value` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `semopher`
@@ -336,16 +389,17 @@ CREATE TABLE `sessionss` (
   `sessionss_user_id` bigint(20) NOT NULL,
   `sessionss_cookies_id` varchar(40) NOT NULL,
   `sessionss_created_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `sessionss`
 --
 
 INSERT INTO `sessionss` (`sessionss_id`, `sessionss_user_id`, `sessionss_cookies_id`, `sessionss_created_date`) VALUES
-(1, 131, 'a844307b2ea0a05b1311660744203', '2022-08-17 07:20:03'),
+(1, 131, '03581d2d71171c051311660844107', '2022-08-18 11:05:07'),
 (2, 100000, '6ed86dba70f5b8b51000001660750414', '2022-08-17 09:03:34'),
-(3, 132, 'b555e7d40694f6b11321660749714', '2022-08-17 08:51:54');
+(3, 132, 'b555e7d40694f6b11321660749714', '2022-08-17 08:51:54'),
+(4, 100001, '3346ad0dc3fcedff1000011698648244', '2023-10-30 12:14:04');
 
 -- --------------------------------------------------------
 
@@ -356,7 +410,7 @@ INSERT INTO `sessionss` (`sessionss_id`, `sessionss_user_id`, `sessionss_cookies
 CREATE TABLE `slogan` (
   `slogan_id` int(11) NOT NULL,
   `slogan_sentance` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `slogan`
@@ -402,7 +456,7 @@ CREATE TABLE `transaction` (
   `transaction_added_by` bigint(20) NOT NULL,
   `transaction_type` int(11) NOT NULL,
   `transaction_status` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `transaction`
@@ -514,7 +568,98 @@ INSERT INTO `transaction` (`transaction_id`, `transaction_user_id`, `transaction
 (100053, 132, '9035376766', '-500', '', '2022-08-17 08:52:19', 132, 2, ''),
 (100054, 100000, '9876543210', '500', '', '2022-08-17 08:52:19', 132, 2, ''),
 (100055, 132, '9035376766', '-100', '', '2022-08-17 08:58:48', 132, 2, ''),
-(100056, 100000, '9876543210', '100', '', '2022-08-17 08:58:48', 132, 2, '');
+(100056, 100000, '9876543210', '100', '', '2022-08-17 08:58:48', 132, 2, ''),
+(100057, 100001, 'Added Manually', '100000', '', '2023-10-05 01:03:39', 1, 4, ''),
+(100058, 100001, 'Recharged', '100', '589341000011696506295', '2023-10-05 05:14:55', 100001, 4, 'TXN_INIT'),
+(100059, 100002, 'Added Manually', '100000', '', '2023-10-05 05:29:42', 1, 4, ''),
+(100060, 100001, 'Ordered', '-110', 'unaJjUPSjVvVLME', '2023-10-05 05:50:08', 100001, 1, ''),
+(100061, 100001, 'Refunded', '110', '', '2023-10-05 06:21:05', 100001, 3, ''),
+(100062, 100001, 'Ordered', '-30', '3hGawX5QjJgNtU7', '2023-10-05 06:21:10', 100001, 1, ''),
+(100063, 100001, 'Refunded', '30', '', '2023-10-05 06:21:51', 100001, 3, ''),
+(100064, 100001, 'Ordered', '-30', 'olAYNyWbR8gw9MX', '2023-10-05 06:22:57', 100001, 1, ''),
+(100065, 100001, 'Refunded', '30', '', '2023-10-05 06:23:24', 100001, 3, ''),
+(100066, 100001, 'Ordered', '-30', 'XXz3bcDM2kU3PX2', '2023-10-05 06:23:41', 100001, 1, ''),
+(100067, 100001, 'Refunded', '30', '', '2023-10-05 06:26:17', 100001, 3, ''),
+(100068, 100001, 'Ordered', '-30', 'yVn5ldPkElNi5aA', '2023-10-05 06:32:36', 100001, 1, ''),
+(100069, 100001, 'Refunded', '30', '', '2023-10-05 06:33:29', 100001, 3, ''),
+(100070, 100001, 'Ordered', '-30', '2FVekqZt4PHW0kt', '2023-10-05 06:33:52', 100001, 1, ''),
+(100071, 100002, 'Ordered', '-30', '4HMQQ4uXG911CFl', '2023-10-05 07:02:16', 100002, 1, ''),
+(100072, 100001, 'Ordered', '-30', 'MpCIrYV1XeGbWex', '2023-10-05 07:26:51', 100001, 1, ''),
+(100073, 100001, 'Refunded', '30', '', '2023-10-05 07:45:42', 100001, 3, ''),
+(100074, 100001, 'Ordered', '-30', '2GCD9zSqU4zktWi', '2023-10-05 07:46:55', 100001, 1, ''),
+(100075, 100001, 'Ordered', '-30', '1tHcpmBgDpgaKSB', '2023-10-05 07:57:50', 100001, 1, ''),
+(100076, 100001, 'Ordered', '-30', 'zt3uTRS03PSeBaG', '2023-10-05 08:00:15', 100001, 1, ''),
+(100077, 100001, 'Ordered', '-110', 'OuzIv3hy2sGWunX', '2023-10-10 12:17:16', 100001, 1, ''),
+(100078, 100001, 'Ordered', '-80', 'jPt1Ayddl1hLgE0', '2023-10-11 02:18:43', 100001, 1, ''),
+(100079, 100001, 'Ordered', '-130', 'amtK8rDkRJqWn0p', '2023-10-11 02:58:44', 100001, 1, ''),
+(100080, 100001, 'Recharged', '100', '498341000011697021811', '2023-10-11 04:26:51', 100001, 4, 'TXN_INIT'),
+(100081, 100001, 'Ordered', '-30', '3s7pcVXkSPSJrye', '2023-10-11 06:11:42', 100001, 1, ''),
+(100082, 100001, 'Ordered', '-30', 'nsSHKSG4pzxozEc', '2023-10-11 06:13:49', 100001, 1, ''),
+(100083, 100001, 'Ordered', '-30', 'JhdnBHqyCKQBMuD', '2023-10-12 12:40:32', 100001, 1, ''),
+(100084, 100001, 'Ordered', '-30', 'DoLbeXSy70BfFMA', '2023-10-12 12:41:09', 100001, 1, ''),
+(100085, 100001, 'Ordered', '-50', '4UKq7qLmiK0YnJy', '2023-10-12 02:03:41', 100001, 1, ''),
+(100086, 100001, 'Ordered', '-180', '9p9UqgJPs3mKlyI', '2023-10-12 02:10:12', 100001, 1, ''),
+(100087, 100001, 'Ordered', '-80', 'cj0d7F0qaQsRVBJ', '2023-10-14 11:08:33', 100001, 1, ''),
+(100088, 100001, 'Ordered', '-30', '1DJbwYfKLyn9BI2', '2023-10-30 12:14:14', 100001, 1, ''),
+(100089, 100001, 'Ordered', '-20', '08VvCCoX6YSyWHQ', '2023-10-30 12:20:37', 100001, 1, ''),
+(100090, 100001, 'Ordered', '-280', 'PYba8kRikhMI6Go', '2023-10-30 12:53:13', 100001, 1, ''),
+(100091, 100001, 'Ordered', '-120', 'eHTYWrRq6pkrdWt', '2023-10-30 12:55:25', 100001, 1, ''),
+(100092, 100001, 'Ordered', '-430', 'sLmEgqDAaLFwggC', '2023-10-30 12:56:25', 100001, 1, ''),
+(100093, 100001, 'Ordered', '-50', 'XRIvBXMO6pZdzGd', '2023-10-31 11:24:31', 100001, 1, ''),
+(100094, 100001, 'Ordered', '-50', 'rrOfTEsgoWywGKU', '2023-10-31 12:16:33', 100001, 1, ''),
+(100095, 100001, 'Ordered', '-50', 'w9CKPb97XaHa8fS', '2023-10-31 12:29:02', 100001, 1, ''),
+(100096, 100001, 'Ordered', '-50', 'cGHV2OFZzqmabcI', '2023-10-31 02:47:22', 100001, 1, ''),
+(100097, 100001, 'Ordered', '-30', 'AFYbvkOfHSCX8C0', '2023-10-31 03:31:15', 100001, 1, ''),
+(100098, 100001, 'Ordered', '-30', 'jXEb8kAKVtM3TcT', '2023-11-02 10:38:43', 100001, 1, ''),
+(100099, 100001, 'Ordered', '-50', 'od2F7cDgeuZnVUM', '2023-11-02 11:30:21', 100001, 1, ''),
+(100100, 100001, 'Ordered', '-30', 'V3YpTJjn6rTLgqL', '2023-11-02 11:31:30', 100001, 1, ''),
+(100101, 100001, 'Ordered', '-30', 'Y5rH8vVRi0hejlK', '2023-11-02 11:32:33', 100001, 1, ''),
+(100102, 100001, 'Ordered', '-30', 'tZPyc4RE1gYo6yj', '2023-11-02 11:34:23', 100001, 1, ''),
+(100103, 100001, 'Ordered', '-50', 'H7f5EJRceJ4M8zn', '2023-11-02 11:36:30', 100001, 1, ''),
+(100104, 100001, 'Ordered', '-20', 'v1Bwcih4OGpmduC', '2023-11-02 11:37:28', 100001, 1, ''),
+(100105, 100001, 'Ordered', '-70', 'sM98e18euuE0QLp', '2023-11-03 08:25:28', 100001, 1, ''),
+(100106, 100001, 'Refunded', '20', '', '2023-11-03 08:28:54', 100001, 3, ''),
+(100107, 100001, 'Refunded', '30', '', '2023-11-03 08:28:58', 100001, 3, ''),
+(100108, 100001, 'Ordered', '-30', 'qcLH78R2LjiuOee', '2023-11-09 03:19:49', 100001, 1, ''),
+(100109, 100001, 'Ordered', '-130', '7p2zFn84lTywOYt', '2023-11-09 03:24:48', 100001, 1, ''),
+(100110, 100001, 'Ordered', '-30', 'EyB7LirQ7xZE1uj', '2023-11-09 03:28:21', 100001, 1, ''),
+(100111, 100001, 'Ordered', '-20', 'YoDgQPARpLKG8G6', '2023-11-09 03:30:38', 100001, 1, ''),
+(100112, 100001, 'Ordered', '-30', 'CcIbWugbEWynEIg', '2023-11-09 03:32:57', 100001, 1, ''),
+(100113, 100001, 'Ordered', '-50', 'lCCm8nOQbudWKm3', '2023-11-09 03:33:57', 100001, 1, ''),
+(100114, 100001, 'Ordered', '-30', 'ioolHoX315mdHmr', '2023-11-09 03:39:30', 100001, 1, ''),
+(100115, 131, 'Ordered', '-50', '', '2023-11-17 11:29:47', 131, 1, ''),
+(100116, 131, 'Ordered', '-30', '', '2023-11-17 11:32:02', 131, 1, ''),
+(100117, 131, 'Ordered', '-100', '', '2023-11-17 11:39:50', 131, 1, ''),
+(100118, 131, 'Ordered', '-20', '', '2023-11-17 12:19:47', 131, 1, ''),
+(100119, 131, 'Ordered', '-50', '', '2023-11-17 12:32:43', 131, 1, ''),
+(100120, 131, 'Ordered', '-20', '', '2023-11-17 12:39:44', 131, 1, ''),
+(100121, 131, 'Ordered', '-50', '', '2023-11-17 12:43:05', 131, 1, ''),
+(100122, 131, 'Ordered', '-90', '', '2023-11-17 12:45:19', 131, 1, ''),
+(100123, 131, 'Ordered', '-40', '', '2023-11-17 12:50:29', 131, 1, ''),
+(100124, 131, 'Ordered', '-120', '', '2023-11-17 12:54:37', 131, 1, ''),
+(100125, 131, 'Ordered', '-110', '', '2023-11-17 12:57:04', 131, 1, ''),
+(100126, 131, 'Ordered', '-80', '', '2023-11-17 12:58:06', 131, 1, ''),
+(100127, 131, 'Ordered', '-80', '', '2023-11-17 01:13:15', 131, 1, ''),
+(100128, 131, 'Ordered', '-80', '', '2023-11-17 01:14:41', 131, 1, ''),
+(100129, 131, 'Ordered', '-50', '', '2023-11-17 01:19:24', 131, 1, ''),
+(100130, 131, 'Ordered', '-80', '', '2023-11-17 01:38:46', 131, 1, ''),
+(100131, 131, 'Ordered', '-60', '', '2023-11-17 02:47:46', 131, 1, ''),
+(100132, 131, 'Ordered', '-70', '', '2023-11-17 02:51:05', 131, 1, ''),
+(100133, 131, 'Ordered', '-80', '', '2023-11-17 03:23:51', 131, 1, ''),
+(100134, 131, 'Ordered', '-70', '', '2023-11-17 03:26:38', 131, 1, ''),
+(100135, 131, 'Ordered', '-20', '', '2023-11-17 03:30:50', 131, 1, ''),
+(100136, 131, 'Ordered', '-20', '', '2023-11-17 03:32:09', 131, 1, ''),
+(100137, 131, 'Ordered', '-130', '', '2023-11-17 03:40:00', 131, 1, ''),
+(100138, 131, 'Ordered', '-30', '', '2023-11-17 03:45:27', 131, 1, ''),
+(100139, 131, 'Ordered', '-20', '', '2023-11-17 03:45:49', 131, 1, ''),
+(100140, 131, 'Ordered', '-30', '', '2023-11-17 03:46:44', 131, 1, ''),
+(100141, 131, 'Ordered', '-230', '', '2023-11-17 04:33:47', 131, 1, ''),
+(100142, 131, 'Ordered', '-120', '', '2023-11-17 11:49:48', 131, 1, ''),
+(100143, 131, 'Ordered', '-50', '', '2023-11-18 03:14:59', 131, 1, ''),
+(100144, 131, 'Ordered', '-50', '', '2023-11-18 03:19:24', 131, 1, ''),
+(100145, 131, 'Ordered', '-50', '', '2023-11-18 03:20:17', 131, 1, ''),
+(100146, 131, 'Ordered', '-30', '', '2023-11-18 11:09:38', 131, 1, ''),
+(100147, 131, 'Ordered', '-50', '', '2023-11-18 11:12:06', 131, 1, '');
 
 -- --------------------------------------------------------
 
@@ -536,18 +681,22 @@ CREATE TABLE `users` (
   `user_amount` bigint(20) NOT NULL,
   `updated_by_id` bigint(20) NOT NULL,
   `user_token` varchar(255) NOT NULL,
-  `user_semaphore` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `user_semaphore` tinyint(1) NOT NULL DEFAULT 0,
+  `user_attempts` int(11) NOT NULL,
+  `user_login_time` varchar(15) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `user_email`, `user_password`, `name`, `user_phone`, `user_status`, `user_photo`, `user_delete`, `user_added_date`, `user_updated_date`, `user_amount`, `updated_by_id`, `user_token`, `user_semaphore`) VALUES
-(131, 'Balaji@gmail.com', '$2y$10$Sz/BnYaiAvH4gd/AQNDNLuYiu5Iwk7/a0eb3neXy.iF.mfyMMBIMC', 'Balaji', '9108667341', 1, '', 0, '2022-08-17 01:23:34 ', '2022-08-17 07:38:15 ', 9880, 1, '0', 0),
-(132, 'srinivasvk77@gmail.com', '$2y$10$/ZmEF2fQz0JS5PihVlQC5OMsFNrajmEKZdW161jsqcA3OlZUfBBf2', 'srinivas', '9876543210', 1, '132_2022-08-17_1660749819.jpg', 0, '2022-08-17 01:25:55 ', '2022-08-17 08:53:39 ', 410, 1, '420f09387d2bd22b06d2d189928f04', 0),
-(134, 'pppp@gmail.com', '$2y$10$Xr/7cZHgoU/GePK5.WcNSeyO0mK7Shdvu0aBR6KHNDDQXtsLlx47O', 'Pradeep RS', '8660901237', 0, '', 1, '27-07-2022 04:00:51 ', '27-07-2022 04:00:51 ', 43, 0, '', 0),
-(100000, 'darlingbalaji55@gmail.com', '$2y$10$/ZmEF2fQz0JS5PihVlQC5OMsFNrajmEKZdW161jsqcA3OlZUfBBf2', 'balaji', '9035376766', 1, '', 0, '2022-08-17 08:41:59 ', '2022-08-17 08:41:59 ', 600, 0, '0', 0);
+INSERT INTO `users` (`user_id`, `user_email`, `user_password`, `name`, `user_phone`, `user_status`, `user_photo`, `user_delete`, `user_added_date`, `user_updated_date`, `user_amount`, `updated_by_id`, `user_token`, `user_semaphore`, `user_attempts`, `user_login_time`) VALUES
+(131, 'Balaji@gmail.com', '$2y$10$yZFyBC/3udbhyWJQ8LebC.zwCaUWe6Wgf6J07C/fPXWgM5oaD8aR6', 'Balaji', '9108667341', 1, '', 1, '2022-08-17 01:23:34 ', '2022-08-17 07:38:15 ', 7720, 1, '0', 0, 0, '1660844483'),
+(132, 'srinivasvk77@gmail.com', '$2y$10$/ZmEF2fQz0JS5PihVlQC5OMsFNrajmEKZdW161jsqcA3OlZUfBBf2', 'srinivas', '9876543210', 1, '132_2022-08-17_1660749819.jpg', 1, '2022-08-17 01:25:55 ', '2022-08-17 08:53:39 ', 410, 1, '420f09387d2bd22b06d2d189928f04', 0, 0, '0'),
+(134, 'pppp@gmail.com', '$2y$10$Xr/7cZHgoU/GePK5.WcNSeyO0mK7Shdvu0aBR6KHNDDQXtsLlx47O', 'Pradeep RS', '8660901237', 0, '', 1, '27-07-2022 04:00:51 ', '27-07-2022 04:00:51 ', 43, 0, '', 0, 0, '0'),
+(100000, 'darlingbalaji55@gmail.com', '$2y$10$/ZmEF2fQz0JS5PihVlQC5OMsFNrajmEKZdW161jsqcA3OlZUfBBf2', 'balaji', '9035376766', 1, '', 1, '2022-08-17 08:41:59 ', '2022-08-17 08:41:59 ', 600, 0, '0', 0, 0, '0'),
+(100001, 'pradeeprs@gmail.com', '$2y$10$ipf8fePZGxWhMIxQOpStI.jwqLdCSiyAbesr7ZEAXyLv4DNGcMfIS', 'pradeep', '7619321936', 1, '', 0, '2023-10-05 05:46:59 ', '2023-10-05 05:46:59 ', 97410, 0, '', 0, 0, '1696508287'),
+(100002, 'sandhya@gmail.com', '$2y$10$AUmHjQMvrBtX/euNJdYfD.SqyzsXi9T0MjpdEAoG1P/Fk6kwZW2Wy', 'sandhya', '1234567891', 1, '', 0, '2023-10-05 05:29:42 ', '2023-10-05 05:29:42 ', 99970, 0, '', 0, 0, '0');
 
 --
 -- Triggers `users`
@@ -633,6 +782,12 @@ ALTER TABLE `orders`
   ADD KEY `order_user_id` (`orders_user_id`);
 
 --
+-- Indexes for table `qr_counter`
+--
+ALTER TABLE `qr_counter`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sessionss`
 --
 ALTER TABLE `sessionss`
@@ -666,31 +821,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000;
+  MODIFY `admin_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100002;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100048;
+  MODIFY `cart_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100177;
 
 --
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `contact_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000;
+  MODIFY `contact_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100001;
 
 --
 -- AUTO_INCREMENT for table `display_items`
 --
 ALTER TABLE `display_items`
-  MODIFY `display_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100001;
+  MODIFY `display_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100002;
 
 --
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `items_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000;
+  MODIFY `items_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100002;
 
 --
 -- AUTO_INCREMENT for table `message`
@@ -699,10 +854,22 @@ ALTER TABLE `message`
   MODIFY `message_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `orders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `qr_counter`
+--
+ALTER TABLE `qr_counter`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `sessionss`
 --
 ALTER TABLE `sessionss`
-  MODIFY `sessionss_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `sessionss_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `slogan`
@@ -714,13 +881,13 @@ ALTER TABLE `slogan`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transaction_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100057;
+  MODIFY `transaction_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100148;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100001;
+  MODIFY `user_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100003;
 
 --
 -- Constraints for dumped tables

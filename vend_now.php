@@ -27,7 +27,7 @@ if (isset($_SESSION['vm_user'])) {
         $remaining_time = (strtotime($row['orders_date']) + 900) - strtotime($today);
 
         $data = [
-            implode(', ', [
+            implode(',', [
                 'O:' . implode('/', explode(',', $row['orders_id'])),
                 'I:' . implode('/', explode(',', $row['orders_spring_id'])),
                 'Q:' . implode('/', explode(',', $row['orders_qty'])),
@@ -37,10 +37,10 @@ if (isset($_SESSION['vm_user'])) {
         $dataString = implode(', ', $data);
         $cipher = "aes-128-cbc";
 
-        //Generate a 256-bit encryption key
-        $encryption_key = "1234123412341234";
 
-        $iv = "1234123412341234";
+        $encryption_key = isset($_COOKIE['theme']) ? "2345234523452345" : "1234123412341234";
+
+        $iv = isset($_COOKIE['theme']) ? "2345234523452345" : "1234123412341234";
 
         //Data to encrypt
         $encrypted_data = openssl_encrypt($dataString, $cipher, $encryption_key, 0, $iv);
@@ -82,7 +82,7 @@ if (isset($_SESSION['vm_user'])) {
                                 }
                             </style>
                             <div class="bharth">
-                            <p class="heading mb-0 text-center aap" style="color:">
+                                <p class="heading mb-0 text-center aap" style="color:">
                                     Scan the QR Code to Vend Now
                                 </p>
                                 <p class="heading mb-0 text-center aap" style="color:">
