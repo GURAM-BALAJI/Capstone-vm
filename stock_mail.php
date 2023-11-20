@@ -1,45 +1,47 @@
 <?php
+include 'includes/session.php';
 use PHPMailer\PHPMailer\PHPMailer;
 
 require_once "PHPMailer/PHPMailer.php";
 require_once "PHPMailer/SMTP.php";
 require_once "PHPMailer/Exception.php";
 
-
-
 // Assuming you have retrieved the email address from somewhere
 $email = 'Srinivasvk77@gmail.com';
+
 // Check if stock_mail is equal to 1
-$stmt = $conn->prepare("SELECT * FROM mailalert WHERE stock_mail = 1 LIMIT 1");
-$stmt = $conn->prepare("SELECT items.display_items_qty, display_items.items_name
-                        FROM items
-                        RIGHT JOIN display_items ON items.items_id = display_items.display_items_id
-                        WHERE display_items.display_items_qty <= 2");
-$stmt->execute();
+$stmt1 = $conn->prepare("SELECT * FROM mailalert WHERE stock_mail = 1 LIMIT 1");
+$stmt1->execute();
+$stock_mail = $stmt1->fetch(PDO::FETCH_ASSOC);
+$stmt1->closeCursor(); // Close the cursor to allow for the next query
 
-// Bind the result variables
-$stmt->bind_result($display_items_qty, $items_name);
+if ($stock_mail) {
+    // Fetch data for the email body
+    $stmt2 = $conn->prepare("SELECT  display_items.display_items_qty, items.items_name
+                            FROM items
+                            RIGHT JOIN display_items ON items.items_id = display_items.display_items_id
+                            WHERE display_items.display_items_qty <= 2");
+    $stmt2->execute();
+    $result = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+    $stmt2->closeCursor(); // Close the cursor
 
-// Create a table to format the data
-$table = "<table border='1'>
-           <tr>
-               <th>Display Items Qty</th>
-               <th>Items Name</th>
-           </tr>";
-
-// Fetch and display each row
-while ($stmt->fetch()) {
-    $table .= "<tr>
-                   <td>{$display_items_qty}</td>
-                   <td>{$items_name}</td>
+    // Create a table to format the data
+    $table = "<table border='1'>
+               <tr>
+                   <th>Display Items Qty</th>
+                   <th>Items Name</th>
                </tr>";
-}
 
-$table .= "</table>";
-$stmt->execute();
-$row = $stmt->fetch();
+    // Fetch and display each row
+    foreach ($result as $row) {
+        $table .= "<tr>
+                       <td>{$row['display_items_qty']}</td>
+                       <td>{$row['items_name']}</td>
+                   </tr>";
+    }
 
-if ($row) {
+    $table .= "</table>";
+
     // Your logic for sending the email
     $message = "<center><h1 style=color:red;>Stock getting Low. Fill up fast</h1> <br> .$table. </br></center>";
 
@@ -71,11 +73,10 @@ if ($row) {
 
     if ($mail->send()) {
         // Update stock_mail to 0 after sending the email
-        $stmt = $conn->prepare("UPDATE mailalert SET stock_mail = 0 WHERE stock_mail = 1");
-        $stmt->execute();
+        $stmt3 = $conn->prepare("UPDATE mailalert SET stock_mail = 0 WHERE stock_mail = 1");
+        $stmt3->execute();
     } else {
         $_SESSION['error'] = "Mail can't be sent. Please check your email.";
     }
 }
-
 ?>
