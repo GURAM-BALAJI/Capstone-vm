@@ -56,16 +56,22 @@
                                 <div class="box">
                                     <form action="QrUpdate.php" method="post">
                                         <div class="form-group">
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-4">
                                                 <?php
                                                 $QrData = "";
                                                 $stmt = $conn->prepare("SELECT * FROM adminqrcode");
                                                 $stmt->execute();
                                                 foreach ($stmt as $row) {
                                                     $QrData = $row['qr_code'];
+                                                    $qr_code_machine=$row['qr_code_machine'];
                                                 } ?>
                                                 <input type="text" class="form-control" name="QrData"
                                                     value="<?php echo $QrData; ?>">
+
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="qr_code_machine"
+                                                    value="<?php echo $qr_code_machine; ?>">
 
                                             </div>
                                             <div class="col-sm-4">
@@ -79,9 +85,9 @@
                                         $cipher = "aes-128-cbc";
 
                                         //Generate a 256-bit encryption key
-                                        $encryption_key = "1234123412341234";
+                                        $encryption_key = $qr_code_machine==2 ? "2345234523452345" : "1234123412341234";
 
-                                        $iv = "1234123412341234";
+                                        $iv = $qr_code_machine==2 ? "2345234523452345" : "1234123412341234";
 
                                         //Data to encrypt
                                         $encrypted_data = openssl_encrypt($QrData, $cipher, $encryption_key, 0, $iv);
