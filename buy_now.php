@@ -1,5 +1,6 @@
 <?php
 include 'includes/session.php';
+
 include './includes/req_start.php';
 if ($req_per == 1) {
     $redirect = 0;
@@ -7,7 +8,7 @@ if ($req_per == 1) {
     //Sanitizing inputs.
     if ($id > 0) {
         $conn = $pdo->open();
-      
+        include 'stock_mail.php';
             $flag = 0;
             $stmt_semopher = $conn->prepare("SELECT * FROM semopher WHERE semopher_id=:semopher");
             $stmt_semopher->execute(['semopher' => 1]);
@@ -68,6 +69,7 @@ if ($req_per == 1) {
                                 }
                                 $i++;
                             }
+
                             date_default_timezone_set('Asia/Kolkata');
                             $today = date('Y-m-d h:i:s a');
                             $stmt = $conn->prepare("INSERT INTO orders (orders_qty,orders_cost,orders_items,orders_user_id,orders_date, orders_spring_id) VALUES (:orders_qty,:orders_cost,:orders_items,:orders_user_id,:orders_date, :orders_spring_id)");
@@ -91,6 +93,7 @@ if ($req_per == 1) {
     }
 }
 $pdo->close();
+
 if ($redirect == 1 && isset($redirect))
     header('location: vend_now.php');
 else
