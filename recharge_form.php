@@ -129,8 +129,7 @@ header("Expires: 0");
 </head>
 
 <body>
-
-  <form method="post" action="Waiting">
+<form method="post" action="razorpay-php/pay.php">
     <div class="container-fluid">
       <div class="row d-flex justify-content-center">
         <div class="col-sm-12">
@@ -154,13 +153,11 @@ header("Expires: 0");
             <input type="submit" class="btn btn-primary" id="pay" value="Proceed To Add +100">
             <input type="hidden" name="INDUSTRY_TYPE_ID" value="Retail">
             <input type="hidden" name="CHANNEL_ID" value="WEB">
-
           </div>
         </div>
       </div>
     </div>
     </div>
-
   </form>
 
 
@@ -211,6 +208,8 @@ header("Expires: 0");
     document.getElementById('pay').value = "Proceed To Add + " + document.getElementById('price').value;
   }
 </script>
+
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
