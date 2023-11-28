@@ -167,14 +167,15 @@ if ($req_per == 1) {
                         $stmt->execute(['transaction_user_id' => $id, 'transaction_send_to' => 'Ordered', 'transaction_amount' => -$total,  'transaction_added_by' => $id, 'transaction_type' => 1, 'transaction_date' => $today]);
                     } else
                         $_SESSION['error'] = 'Insufficient Balance.';
-                $stmt_semopher = $conn->prepare("UPDATE semopher SET semopher_value=:semopher WHERE semopher_id=:semopher_id");
-                $stmt_semopher->execute(['semopher' => 0, 'semopher_id' => 1]);
+                
             }
         }
     } else {
         $_SESSION['error'] = 'Wrong Inputs.';
     }
 }
+$stmt_semopher = $conn->prepare("UPDATE semopher SET semopher_value=:semopher WHERE semopher_id=:semopher_id");
+                $stmt_semopher->execute(['semopher' => 0, 'semopher_id' => 1]);
 $pdo->close();
 
 if ($redirect == 1 && isset($redirect))
