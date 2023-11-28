@@ -248,7 +248,7 @@ include 'includes/header.php';
                     if ($i == 1) { ?>
                         <tr>
                             <th colspan='2'>
-                                <center>TOTAL:</center>
+                                <center>TOTAL AMOUNT:</center>
                             </th>
                             <th>
                                 <center>&#8377;<?php echo $total; ?></center>

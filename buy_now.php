@@ -36,12 +36,12 @@ if ($req_per == 1) {
                 if ($row_check['display_items_qty'] >= $row_check['cart_qty']) {
                     if ($flag == 1) {
                         $qty_array = $row_check['cart_qty'];
-                        $item_array = $row_check['display_id'];
+                        $item_array = $row_check['display_items_id'];
                         $sitem_array = $row_check['display_spring_id'];
                         $cost_array = $row_check['items_cost'];
                     } else {
                         $qty_array .= ',' . $row_check['cart_qty'];
-                        $item_array .= ',' . $row_check['display_id'];
+                        $item_array .= ',' . $row_check['display_items_id'];
                         $sitem_array .= ',' . $row_check['display_spring_id'];
                         $cost_array .= ',' . $row_check['items_cost'];
                     }
@@ -75,7 +75,6 @@ if ($req_per == 1) {
                                 $stmt_display_update = $conn->prepare("UPDATE display_items SET display_items_qty=:rem_qty WHERE display_id= :dis_id");
                                 $stmt_display_update->execute(['rem_qty' => $rem_qty, 'dis_id' => $dis_id]);
                             }
-
                             $i++;
                         }
 

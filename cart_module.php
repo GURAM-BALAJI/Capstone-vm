@@ -85,7 +85,7 @@ history list
                                         <tr>
                                             <td>
                                                 <?php
-                                                $stmt_display = $conn->prepare("SELECT items_name FROM display_items left join items on items_id=display_id WHERE display_id=:item");
+                                                $stmt_display = $conn->prepare("SELECT items_name FROM display_items left join items on items_id=display_items_id WHERE display_items_id=:item");
                                                 $stmt_display->execute(['item' => $item]);
                                                 foreach ($stmt_display as $row_display)
                                                     echo $row_display['items_name']; ?>

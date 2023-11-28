@@ -251,7 +251,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="contact" class="col-sm-3 control-label">Contact Info</label>
+                    <label for="contact" class="col-sm-3 control-label">Contact</label>
 
                     <div class="col-sm-9">
                       <input type="tel" class="form-control" id="contact" name="contact" value="<?php echo $user['user_phone']; ?>" autocomplete="OFF">
