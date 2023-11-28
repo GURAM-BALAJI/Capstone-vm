@@ -31,18 +31,22 @@
                             ?>
                             <select class="form-control" id="spring_id" name="spring_id" required>
                                 <option value="">Select Spring Id</option>
-                                <?php
-                                for ($j = 1; $j < 21; $j++) {
-                                    $flag = 0;
-                                    for ($k = 0; $k < $i; $k++)
-                                        if ($j == $arry[$k])
-                                            $flag = 1;
-                                    if ($flag == 0)
-                                        echo "<option value='$j'>$j</option>";
-                                    else
-                                        echo "<option disabled value=''>$j</option>";
-                                }
-                                ?>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
                             </select>
                         </div>
                     </div>

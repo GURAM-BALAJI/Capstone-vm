@@ -38,7 +38,7 @@ if (isset($_POST['email'])) {
 				try {
 					$stmt = $conn->prepare("INSERT INTO users (user_email, user_password, name, user_phone,  user_token, user_added_date, user_updated_date) VALUES (:email, :password, :name, :contact, :user_token, :user_added_date, :user_updated_date)");
 					$stmt->execute(['email' => $email, 'password' => $password, 'name' => $name, 'contact' => $contact,  'user_token' => $token, 'user_added_date' => $today, 'user_updated_date' => $today]);
-					$message =  "<center><h1> Click the  below link or Button to activate account </h1><a href='http://localhost/vending-machine-in-php/VerifyMail?token=$token'>
+					$message =  "<center><h1> Click the  below link or Button to activate account </h1><a href='http://immunityspot.com/VM/VerifyMail?token=$token'>
 				<button style='background-color: #4CAF50;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;' >Active Now</button></a>
 				<br><br><br><hr>If you has not sent please ignore this mail.<h2>7softsolution.com</h2></center>";
 					require_once "PHPMailer/PHPMailer.php";

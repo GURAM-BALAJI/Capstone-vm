@@ -16,7 +16,7 @@ if (isset($_POST['email'])) {
 				$token = bin2hex(random_bytes(15));
 				$stmt = $conn->prepare("UPDATE users SET user_token=:token WHERE user_email=:email");
 				$stmt->execute(['token' => $token, 'email' => $email]);
-				$message = "<center><h1>To reset your password click bellow link/button to change </h1><a href='http://localhost/vending-machine-in-php/NewPassword?token=$token'>
+				$message = "<center><h1>To reset your password click bellow link/button to change </h1><a href='http://immunityspot.com/VM/NewPassword?token=$token'>
 			<button style='background-color: #4CAF50;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;' >Change Now</button></a>
 			<br><br><br><hr>If you has not sent please ignore this mail.<h2>7softsolution.com</h2></center>";
 				require_once "PHPMailer/PHPMailer.php";

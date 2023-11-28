@@ -20,14 +20,10 @@ if ($req_per == 1) {
             $pdo->close();
 ?>
             <html>
-
             <head>
-
             </head>
             <style>
-                /*=================
-Basic style
-==================*/
+           
                 html,
                 body {
                     position: relative;
@@ -68,9 +64,6 @@ Basic style
                     margin: 0;
                 }
 
-                /*===================
-animation01
-====================*/
                 .animation01 {
                     position: absolute;
                     width: 100%;
