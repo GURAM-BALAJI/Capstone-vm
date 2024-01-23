@@ -3,12 +3,12 @@ include '../includes/session.php';
 $conn = $pdo->open();
 
 if (isset($_POST['login'])) {
-	$email = test_input($_POST['email']);
+	$contact = test_input($_POST['phone']);
 	$password = test_input($_POST['password']);
-	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+	if ($contact){
 		try {
-			$stmt = $conn->prepare("SELECT *, COUNT(*) AS numrows FROM admin WHERE admin_email = :email");
-			$stmt->execute(['email' => $email]);
+			$stmt = $conn->prepare("SELECT *, COUNT(*) AS numrows FROM admin WHERE admin_phone = :contact");
+			$stmt->execute(['contact' => $contact]);
 			$row = $stmt->fetch();
 			if ($row['numrows'] > 0) {
 				if ($row['admin_status']) {
@@ -28,7 +28,7 @@ if (isset($_POST['login'])) {
 			echo "There is some problem in connection: " . "Something Went Wrong.";
 		}
 	} else {
-		$_SESSION['error'] = "Invalid email format.";
+		$_SESSION['error'] = 'Invalid phone number format.';
 	}
 } else {
 	$_SESSION['error'] = 'Input login credentails first';

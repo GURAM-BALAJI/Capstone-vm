@@ -167,10 +167,10 @@ function validateMobileNumber($mobile)
       <span class="nav__text">Home</span>
     </a>
 
-    <a href="MyWallet" class="nav__link ">
-      <i class="material-icons nav__icon">account_balance_wallet</i>
-      <span class="nav__text">Wallet</span>
-    </a>
+    <a href="MyProfile" class="nav__link">
+            <i class="material-icons nav__icon">person</i>
+            <span class="nav__text">Profile</span>
+        </a>
     <a href="MyCart" class="nav__link">
       <?php
       $i = 0;

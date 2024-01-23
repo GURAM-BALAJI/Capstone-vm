@@ -159,6 +159,86 @@ include 'includes/header.php';
     .column123 {
         text-align: center;
     }
+
+    .outer-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    .inner-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -1%;
+        /* Adjusted margin to account for padding */
+    }
+
+    .kitchen {
+        flex: 0 0 calc(25% - 2%);
+        background-color: #fff;
+        /* Four kitchens per row */
+        box-sizing: border-box;
+        padding: 10px;
+        /* Adjusted padding to account for margin */
+        border: 2px solid #ccc;
+        /* Border for each kitchen */
+        margin: 1%;
+        /* Added margin for space between kitchens */
+        border-radius: 8px;
+        position: relative;
+        /* Added relative positioning */
+    }
+
+    /* Adjust styles based on your design preferences */
+    .kitchen img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 10px;
+        /* Box shadow for each image */
+        box-shadow: 0px 10px 10px rgba(183, 178, 178, 0.945);
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .kitchen h2 {
+        margin-top: 10px;
+        font-size: 18px;
+    }
+
+    @media (max-width: 500px) {
+        .inner-container {
+            margin: 0.7%;
+            /* Remove negative margin on smaller screens */
+        }
+
+        .kitchen {
+            flex: 0 0 48%;
+            /* One kitchen per row on smaller screens */
+            margin: 1%;
+            /* Adjusted margin for space between kitchens in mobile view */
+
+        }
+
+        /* Adjust styles for images in smaller screens if needed */
+        .kitchen img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            /* Box shadow for each image */
+            box-shadow: 0px 10px 10px rgba(183, 178, 178, 0.945);
+        }
+
+    }
+
+    h2:hover {
+        color: orange;
+    }
 </style>
 
 <body>
@@ -166,11 +246,37 @@ include 'includes/header.php';
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <center>
         <div style="background-color: #333;">
-            <img src="logo.jpg" width="100%" height="70px">
+            <img src="logo.png" width="100%" height="70px">
         </div>
 
 
-        <div style="background-color: #001a35;color: #89E6C4;">ITEMS</div>
+        <div style="background-color: #001a35;color: #89E6C4;">
+            <?php if (isset($_GET['meal_type'])) {
+                switch ($_GET['meal_type']) {
+                    case 1:
+                        echo 'BREAKFAST MENU';
+                        break;
+                    case 2:
+                        echo 'LUNCH MENU';
+                        break;
+                    case 3:
+                        echo 'DINNER MENU';
+                        break;
+                    case 4:
+                        echo 'SINGLES MENU';
+                        break;
+                    case 5:
+                        echo 'SNACKS MENU';
+                        break;
+                    default:
+                        echo 'UNKNOWN MENU';
+                        break;
+                }
+                ;
+
+            } else
+                echo "MENU"; ?>
+        </div>
         <?php
         $conn = $pdo->open();
         $stmt = $conn->prepare("SELECT * FROM message");
@@ -210,181 +316,109 @@ include 'includes/header.php';
         }
         ?>
     </center>
+
     <section class="content">
-        <div class="modal-content">
-            <div class="modal-body">
-                <center>
-                    <hr style="margin-bottom:2rem;">
-                    <div class="container123456">
-                        <div class="column123">
-                            <span style="color: #333;font-size:18px;font-weight:bold;">Machine 1</span>
-                        </div>
-
-                        <div class="column123">
-                            <label class="switch">
-                                <input type="checkbox" id="toggleTheme" <?php if (isset($_COOKIE["theme"])) {
-                                    echo "checked";
-                                } ?>>
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-
-                        <div class="column">
-                            <span style="color: #333;font-size:18px;font-weight:bold;">Machine 2</span>
-                        </div>
+        <?php if (!isset($_GET['meal_type'])) { ?>
+            <div class="outer-container">
+                <div class="inner-container">
+                    <div class="kitchen">
+                        <a href="MyHome?meal_type=1">
+                            <img src="menu_img/Breakfast.jpg" alt="Kitchen 1">
+                            <center>
+                                <h2>Breakfast</h2>
+                            </center>
+                        </a>
                     </div>
-                    <hr style="margin-bottom:2rem;">
-
-                    <h3 style="color:#d24026;">Top Sold Items....</h3>
-                    <hr>
-                </center>
-                <table style="width: 100%;">
+                    <div class="kitchen">
+                        <a href="MyHome?meal_type=2">
+                            <img src="menu_img/Lunch.jpeg" alt="Kitchen 2">
+                            <center>
+                                <h2>Lunch</h2>
+                            </center>
+                        </a>
+                    </div>
+                    <div class="kitchen">
+                        <a href="MyHome?meal_type=3">
+                            <img src="menu_img/Dinner.jpeg" alt="Kitchen 3">
+                            <center>
+                                <h2>Dinner</h2>
+                            </center>
+                        </a>
+                    </div>
+                    <div class="kitchen">
+                        <a href="MyHome?meal_type=4">
+                            <img src="menu_img/Singles.jpg" alt="Kitchen 4">
+                            <center>
+                                <h2>Singles</h2>
+                            </center>
+                        </a>
+                    </div>
+                    <div class="kitchen">
+                        <a href="MyHome?meal_type=5">
+                            <img src="menu_img/Snacks.jpg" alt="Kitchen 5">
+                            <center>
+                                <h2>Snacks</h2>
+                            </center>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php } else { ?>
+            <div class="modal-content" style="background-color:rgba(255, 255, 255)">
+                <div class="modal-body">
                     <?php
-                    $display_machine_id= isset($_COOKIE['theme']) ? $_COOKIE['theme'] : 1;
-                    $stmt = $conn->prepare("SELECT * FROM display_items left join items on items_id=display_items_id WHERE display_items_qty>:display_items_qty AND display_machine_id=:display_machine_id order by items_count DESC limit 2");
-                    $stmt->execute(['display_items_qty' => 0, 'display_machine_id'=>$display_machine_id]);
-                    foreach ($stmt as $row) {
-                        $items_id = $row['display_items_id'];
-                        $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_id=:items_id");
-                        $stmt1->execute(['items_id' => $items_id]);
-                        foreach ($stmt1 as $row1) {
-                            ?>
+                    $item_meal_type = $_GET['meal_type'];
+                    $stmt1 = $conn->prepare("SELECT item_chef_id, admin_name, items_id, items_name, item_status, items_image, items_cost
+                    FROM items left join admin on item_chef_id=admin_id
+                    WHERE item_status = :item_status AND item_meal_type=:item_meal_type
+                    ORDER BY item_chef_id, items_id
+                    ");
+                    $stmt1->execute(['item_status' => 1, 'item_meal_type' => $item_meal_type]);
+                    $CID = 0;
+                    foreach ($stmt1 as $row1) {
+                        if ($CID != $row1['item_chef_id']) { ?>
+                            </table>
+                            <table style="width: 100%;">
+                                <h3
+                                    style="background-color:gold; padding:2px 5px 2px 5px; border-radius: 8px; text-align: center;  ">
+                                    <?php echo $row1['admin_name']; ?>
+                                </h3>
+                            <?php }
+                        ?>
+
                             <form method="POST" action="AddCart">
                                 <tr>
-                                    <td rowspan="3" style="padding-right:0.8rem;"> <img
-                                            src="./items_images/<?php echo $row1['items_image']; ?>" height="150rem"
-                                            width="150rem"> </td>
+                                    <td rowspan="2" style="width:35%">
+                                        <img style="border-radius:1.5rem"
+                                            src="./items_images/<?php echo $row1['items_image']; ?>" height="100rem"
+                                            width="100rem">
+                                    </td>
                                     <td colspan="2">
-                                        <?php echo "<h2 style='text-transform: uppercase;'>" . $row1['items_name'] . "</h2>"; ?>
+                                        <?php echo "<span style='text-transform: capitalize;font-weight:bold; color:black'>" . $row1['items_name'] . "</span>"; ?>
                                     </td>
                                 <tr>
                                     <td>
                                         <?php echo "<b style='font-size:2rem;'> &#8377;" . $row1['items_cost'] . "</b>"; ?>
                                     </td>
-                                    <td>
-                                        <select name="qty" class="form-control" style="float: right;">
-                                            <?php
-                                            $qty = $row['display_items_qty'];
-                                            for ($i = 1; $i <= $qty; $i++)
-                                                if ($i == 1)
-                                                    echo "<option value='$i'>$i Item</option>";
-                                                else
-                                                    echo "<option value='$i'>$i Items</option>";
-                                            ?>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" style="padding-top: 0.5rem;">
-                                        <input type="hidden" name="id" value="<?php echo $row['display_spring_id']; ?>">
+                                    <td style="width:30%">
+                                        <input type="hidden" name="id" value="<?php echo $row1['items_id']; ?>">
+                                        <input type="hidden" name="return_id" value="<?php echo $item_meal_type; ?>">
                                         <button name='add_cart' class='btn btn-warning btn' style="font-size:0.9rem"><i
                                                 class='fa fa-cart-plust'></i>Add To Cart</button>
-                                        <button name='buy_now' style='float:right;font-size:0.9rem'
-                                            class='btn btn-success btn'>Buy
-                                            Now</button>
                                     </td>
                                 </tr>
+
                             </form>
-                        <?php } ?>
-                        <tr>
-                            <td colspan="3">
-                                <hr>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </table>
+
+                            <?php if ($CID != $row1['item_chef_id']) {
+                                $CID = $row1['item_chef_id'];
+                            }
+
+                    } ?>
+                    </table>
+                </div>
             </div>
-        </div>
-        <?php if (!isset($_SESSION['vm_user'])) { ?>
-            <center style="margin-top:4rem;">
-                <?php
-                $conn = $pdo->open();
-                try {
-                    $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
-                    $stmt->execute(); ?>
-                    <h4 style="color:red;font-size:30px;font-family: cursive;text-transform: capitalize;">
-                        <?php
-                        foreach ($stmt as $row)
-                            echo $row['slogan_sentance']; ?>
-                    </h4>
-                <?php } catch (PDOException $e) {
-                    $_SESSION['error'] = "Something Went Wrong.";
-                }
-                $pdo->close(); ?>
-                <a href="LogMe">
-                    <button
-                        style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
-                        LOGIN</button>
-                </a>
-            </center>
         <?php } ?>
-    </section>
-
-
-    <section class="content">
-
-        <div class="modal-content">
-            <div class="modal-body">
-                <center>
-                    <h3 style="color:#d24026;">All Items....</h3>
-                    <hr>
-                </center>
-                <table style="width: 100%;">
-                    <?php
-                    $stmt = $conn->prepare("SELECT * FROM display_items WHERE display_items_qty>:display_items_qty AND display_machine_id=:display_machine_id");
-                    $stmt->execute(['display_items_qty' => 0, 'display_machine_id'=>$display_machine_id]);
-                    foreach ($stmt as $row) {
-                        $items_id = $row['display_items_id'];
-                        $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_id=:items_id");
-                        $stmt1->execute(['items_id' => $items_id]);
-                        foreach ($stmt1 as $row1) {
-                            ?>
-                            <form method="POST" action="AddCart">
-                                <tr>
-                                    <td rowspan="3" style="padding-right:0.8rem;"> <img
-                                            src="./items_images/<?php echo $row1['items_image']; ?>" height="150rem"
-                                            width="150rem"> </td>
-                                    <td colspan="2">
-                                        <?php echo "<h2 style='text-transform: uppercase;'>" . $row1['items_name'] . "</h2>"; ?>
-                                    </td>
-                                <tr>
-                                    <td>
-                                        <?php echo "<b style='font-size:2rem;'> &#8377;" . $row1['items_cost'] . "</b>"; ?>
-                                    </td>
-                                    <td>
-                                        <select name="qty" class="form-control" style="float: right;">
-                                            <?php
-                                            $qty = $row['display_items_qty'];
-                                            for ($i = 1; $i <= $qty; $i++)
-                                                if ($i == 1)
-                                                    echo "<option value='$i'>$i Item</option>";
-                                                else
-                                                    echo "<option value='$i'>$i Items</option>";
-                                            ?>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" style="padding-top: 0.5rem;">
-                                        <input type="hidden" name="id" value="<?php echo $row['display_spring_id']; ?>">
-                                        <button name='add_cart' class='btn btn-warning btn' style="font-size:0.9rem"><i
-                                                class='fa fa-cart-plust'></i>Add To Cart</button>
-                                        <button name='buy_now' style='float:right;font-size:0.9rem'
-                                            class='btn btn-success btn'>Buy
-                                            Now</button>
-                                    </td>
-                                </tr>
-                            </form>
-                        <?php } ?>
-                        <tr>
-                            <td colspan="3">
-                                <hr>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </table>
-            </div>
-        </div>
     </section>
 
     <br><br><br><br>
@@ -395,16 +429,17 @@ include 'includes/header.php';
             <span class="nav__text">Home</span>
         </a>
 
-        <a href="MyWallet" class="nav__link">
-            <i class="material-icons nav__icon">account_balance_wallet</i>
-            <span class="nav__text">Wallet</span>
+        <a href="MyProfile" class="nav__link">
+            <i class="material-icons nav__icon">person</i>
+            <span class="nav__text">Profile</span>
         </a>
+
         <a href="MyCart" class="nav__link">
             <?php
             $i = 0;
             if (isset($_SESSION['vm_id'])) {
-                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id AND cart_machine_id=:machine_id");
-            $stmt->execute(['user_id' => $_SESSION['vm_id'], 'machine_id' =>$display_machine_id]);
+                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
+                $stmt->execute(['user_id' => $_SESSION['vm_id']]);
                 foreach ($stmt as $row)
                     $i++;
                 ?>

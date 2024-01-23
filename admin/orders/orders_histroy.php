@@ -1,6 +1,5 @@
 <?php include '../includes/session.php'; ?>
 <?php include '../includes/header.php'; ?>
-<?php if ($admin['history_view']) { ?>
 
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -97,6 +96,5 @@
 
     <?php include '../includes/scripts.php'; ?>
   </body>
-<?php } ?>
 
 </html>

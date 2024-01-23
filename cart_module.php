@@ -1,36 +1,3 @@
-<div class="modal fade" id="buy">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><b>BUY NOW....</b></h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" method="POST" action="Buy">
-                    <center>
-                        <h1 style="color: #d24026;">Are you sure, You want to Buy.</h1>
-                    </center>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
-                                class="fa fa-close"></i> NO</button>
-                        <?php if (!isset($_SESSION['vm_id'])) { ?>
-                            <a href="LogMe">
-                                <button
-                                    style=" background-color: #d24026; border: none; color: white; padding: 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
-                                    LOGIN</button>
-                            </a>
-                        <?php } else { ?>
-                            <button type="submit" class="btn btn-success btn-flat" name="buy"><i
-                                    class="fa fa-lightbulb-o"></i> YES</button>
-                        <?php } ?>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- 
 history list 
 1-vended.
@@ -85,7 +52,7 @@ history list
                                         <tr>
                                             <td>
                                                 <?php
-                                                $stmt_display = $conn->prepare("SELECT items_name FROM display_items left join items on items_id=display_items_id WHERE display_items_id=:item");
+                                                $stmt_display = $conn->prepare("SELECT items_name FROM items WHERE items_id=:item");
                                                 $stmt_display->execute(['item' => $item]);
                                                 foreach ($stmt_display as $row_display)
                                                     echo $row_display['items_name']; ?>
@@ -150,7 +117,7 @@ history list
                                         <tr>
                                             <td>
                                                 <?php
-                                                $stmt_display = $conn->prepare("SELECT items_name FROM display_items left join items on items_id=display_id WHERE display_id=:item");
+                                                $stmt_display = $conn->prepare("SELECT items_name FROM items WHERE items_id=:item");
                                                 $stmt_display->execute(['item' => $item]);
                                                 foreach ($stmt_display as $row_display)
                                                     echo $row_display['items_name']; ?>

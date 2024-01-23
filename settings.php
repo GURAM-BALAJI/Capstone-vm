@@ -19,7 +19,8 @@ include 'includes/header.php';
                 echo "linear-gradient( to right, #c6eaff 50%, #38b6ff 50%, #c6eaff 0%, #38b6ff 0%)";
             else
                 echo "linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%)";
-            ?>;
+            ?>
+        ;
         font-family: 'Roboto', sans-serif;
     }
 
@@ -29,7 +30,8 @@ include 'includes/header.php';
                 echo "#38b6ff";
             else
                 echo "rgba(254, 191, 1, 1)";
-            ?>;
+            ?>
+        ;
     }
 
     hr {
@@ -95,8 +97,6 @@ include 'includes/header.php';
     .topnav a:hover {
         background-color: #932e3e;
     }
-
-    
 </style>
 
 <body>
@@ -136,26 +136,43 @@ include 'includes/header.php';
             <div class="modal-content">
                 <div class="modal-body">
                     <center>
-                        <img style="margin-top:2rem;width:12rem;height:12rem;border:1px solid black;box-shadow:1px 2px 8px #000000;" src="<?php echo (!empty($user['user_photo'])) ? 'images/' . $user['user_photo'] : 'images/profile.jpg'; ?>" class="img-circle" alt="User Image">
-                        <h1 style="text-transform:uppercase;font-size: 5rem;"><?php echo $user['name']; ?></h1>
-                     
+                        <h1 style="text-transform:uppercase;font-size: 5rem;">
+                            <?php echo $user['name']; ?>
+                        </h1>
+
                         <hr style="margin-bottom:2rem;">
-                        <a href="MyProfile"><button style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i class="fa fa-user" style="padding: 0.7rem;" aria-hidden="true"></i><br />Profile</button></a>
-                        <a href="MyContact"><button style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i class="fa fa-commenting" style="padding: 0.7rem;" aria-hidden="true"></i><br />Contact</button></a>
+                      
+                        <a href="MyContact"><button
+                                style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i
+                                    class="fa fa-commenting" style="padding: 0.7rem;"
+                                    aria-hidden="true"></i><br />Contact</button></a>
                         <?php
                         $conn = $pdo->open();
                         try {
                             $stmt = $conn->prepare("SELECT * FROM message WHERE message_id=:message_id");
                             $stmt->execute(['message_id' => 3]);
-                        ?>
-                            <button onclick="window.open('whatsapp://send?text=<?php foreach ($stmt as $row) echo $row['message']; ?>')" style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i class="fa fa-share-alt" style="padding: 0.7rem;" aria-hidden="true"></i><br />Share </button>
+                            ?>
+                            <button
+                                onclick="window.open('whatsapp://send?text=<?php foreach ($stmt as $row)
+                                    echo $row['message']; ?>')"
+                                style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i
+                                    class="fa fa-share-alt" style="padding: 0.7rem;" aria-hidden="true"></i><br />Share
+                            </button>
                         <?php } catch (PDOException $e) {
                             $_SESSION['error'] = "Something Went Wrong.";
-                        }  ?>
-                        <a href="our_team/YourLove"><button style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i class="fa fa-users" style="padding: 0.7rem;" aria-hidden="true"></i><br />Team</button></a>
-                        <a href="Out"><button style="border-radius:3rem;width:85%;margin:2%;height:7rem;color:white;font-size:x-large;margin-bottom:2rem;background-color:red;"><i class="fa fa-sign-out" aria-hidden="true"></i> LOG OUT</button></a>
-                   <br><br><a a href="http://7softsolution.com"><b style='font-size:medium'>Design and devloped by</b><br><p style="font-size:small">www.7softsolution.com</p></a>
-                    <br></center>
+                        } ?>
+                        <a href="our_team/YourLove"><button
+                                style="border-radius:3rem;width:40%;margin:2%;height:13rem;color:#454646;font-size:3rem;box-shadow:1px 1px 8px gray;"><i
+                                    class="fa fa-users" style="padding: 0.7rem;"
+                                    aria-hidden="true"></i><br />Team</button></a>
+                        <a href="Out"><button
+                                style="border-radius:3rem;width:85%;margin:2%;height:7rem;color:white;font-size:x-large;margin-bottom:2rem;background-color:red;"><i
+                                    class="fa fa-sign-out" aria-hidden="true"></i> LOG OUT</button></a>
+                        <br><br><a><b style='font-size:medium'>Design and devloped by </b><br>
+                            <p style="font-size:small">7 Soft Solution</p>
+                        </a>
+                        <br>
+                    </center>
                 </div>
             </div>
         </section>
@@ -166,15 +183,18 @@ include 'includes/header.php';
             try {
                 $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
                 $stmt->execute(); ?>
-                <h4 style="color:red;font-size:30px;font-family: cursive;text-transform: capitalize;"><?php
-                                                                                                        foreach ($stmt as $row)
-                                                                                                            echo $row['slogan_sentance']; ?></h4>
+                <h4 style="color:red;font-size:30px;font-family: cursive;text-transform: capitalize;">
+                    <?php
+                    foreach ($stmt as $row)
+                        echo $row['slogan_sentance']; ?>
+                </h4>
             <?php } catch (PDOException $e) {
                 $_SESSION['error'] = "Something Went Wrong.";
             }
             $pdo->close(); ?>
             <a href="LogMe">
-                <button style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
+                <button
+                    style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
                     LOGIN</button>
             </a>
         </center>
@@ -187,29 +207,29 @@ include 'includes/header.php';
             <span class="nav__text">Home</span>
         </a>
 
-        <a href="MyWallet" class="nav__link ">
-            <i class="material-icons nav__icon">account_balance_wallet</i>
-            <span class="nav__text">Wallet</span>
+        <a href="MyProfile" class="nav__link">
+            <i class="material-icons nav__icon">person</i>
+            <span class="nav__text">Profile</span>
         </a>
-
 
         <a href="MyCart" class="nav__link">
             <?php
             $i = 0;
             if (isset($_SESSION['vm_id'])) {
-                $display_machine_id = isset($_COOKIE['theme']) ? $_COOKIE['theme'] : 1;
-                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id AND cart_machine_id=:machine_id");
-            $stmt->execute(['user_id' => $_SESSION['vm_id'], 'machine_id' =>$display_machine_id]);
+                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
+                $stmt->execute(['user_id' => $_SESSION['vm_id']]);
                 foreach ($stmt as $row)
                     $i++;
-            ?>
+                ?>
 
-            <?php $pdo->close();
+                <?php $pdo->close();
             } ?>
             <div class="container_cart">
                 <i class="material-icons nav__icon">shopping_cart</i>
                 <?php if ($i != 0) { ?>
-                    <span class="badge_cart"><?php echo $i; ?></span>
+                    <span class="badge_cart">
+                        <?php echo $i; ?>
+                    </span>
                 <?php } ?>
             </div>
             <span class="nav__text">Cart</span>

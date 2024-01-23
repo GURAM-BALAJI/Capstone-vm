@@ -19,17 +19,18 @@ include 'includes/header.php';
                 echo "linear-gradient( to right, #c6eaff 50%, #38b6ff 50%, #c6eaff 0%, #38b6ff 0%)";
             else
                 echo "linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%)";
-            ?>;
+            ?>
+        ;
         font-family: 'Roboto', sans-serif;
     }
-
     .nav__link--active {
         color:
             <?php if (isset($_COOKIE["theme"]))
                 echo "#38b6ff";
             else
                 echo "rgba(254, 191, 1, 1)";
-            ?>;
+            ?>
+        ;
     }
 
     hr {
@@ -132,7 +133,7 @@ include 'includes/header.php';
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <center>
         <div style="background-color: #333;">
-            <img src="logo.jpg" width="100%" height="70px">
+            <img src="logo.png" width="100%" height="70px">
         </div>
 
 
@@ -145,11 +146,15 @@ include 'includes/header.php';
             $stmt->execute();
             foreach ($stmt as $row) {
                 if ($row['message_id'] == 1 && !empty($row['message'])) { ?>
-                    <marquee style="color:yellow;"><?php echo $row['message']; ?></marquee>
+                    <marquee style="color:yellow;">
+                        <?php echo $row['message']; ?>
+                    </marquee>
                 <?php }
                 if ($row['message_id'] == 2 && !empty($row['message'])) { ?>
-                    <marquee style="color:yellow;"><?php echo $row['message']; ?></marquee>
-            <?php }
+                    <marquee style="color:yellow;">
+                        <?php echo $row['message']; ?>
+                    </marquee>
+                <?php }
             } ?>
             <?php
             if (isset($_SESSION['error'])) {
@@ -173,187 +178,196 @@ include 'includes/header.php';
                 unset($_SESSION['success']);
             }
             ?>
-    </center>
-    <section class="content">
-        <button style="width:100%;height:50px;border:2px solid black;margin-bottom:8px;border-radius :15px;background-color:lightblue;" class="btn btn-sm history btn-flat "><b>ORDERS HISTORY</b></button>
-        <div class="modal-content">
-            <div class="modal-body">
-                <table style="width: 100%;">
-                    <?php
-                    $display_machine_id= isset($_COOKIE['theme']) ? $_COOKIE['theme'] : 1;
-                    $stmt = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id WHERE cart_user_id=:user_id AND  display_machine_id=:display_machine_id");
-                    $stmt->execute(['user_id' => $user_id, 'display_machine_id'=>$display_machine_id]);
-                    foreach ($stmt as $row111) {
-                        $id = $row111['cart_id'];
-                        $qty = $row111['display_items_qty'];
-                        if ($qty == 0) {
-                            $stmt = $conn->prepare("DELETE FROM cart WHERE cart_id=:id");
-                            $stmt->execute(['id' => $id]);
-                        } elseif ($row111['display_items_qty'] < $row111['cart_qty']) {
-                            $stmt = $conn->prepare("UPDATE cart SET cart_qty=:qty WHERE cart_id=:id");
-                            $stmt->execute(['qty' => $qty, 'id' => $id]);
+        </center>
+        <section class="content">
+            <button
+                style="width:100%;height:50px;border:2px solid black;margin-bottom:8px;border-radius :15px;background-color:lightblue;"
+                class="btn btn-sm history btn-flat "><b>ORDERS HISTORY</b></button>
+            <div class="modal-content">
+                <div class="modal-body">
+                    <table style="width: 100%;">
+                        <?php
+
+                        $total = $i = 0;
+                        $stmt = $conn->prepare("SELECT * FROM cart left join items on items_id=cart_items_id WHERE cart_user_id=:user_id");
+                        $stmt->execute(['user_id' => $user_id]);
+                        foreach ($stmt as $row11) {
+                            $i = 1;
+                            $items_id = $row11['items_id'];
+                            $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_id=:items_id");
+                            $stmt1->execute(['items_id' => $items_id]);
+                            foreach ($stmt1 as $row1) {
+                                ?>
+                                <tr>
+                                    <td rowspan="3"> <img style=" border-radius: 10px; "
+                                            src="./items_images/<?php echo $row1['items_image']; ?>" height="100px" width="100px">
+                                    </td>
+                                    <td colspan="2">
+                                        <?php echo "<span style='text-transform: capitalize;font-weight:bold; color:black'>" . $row1['items_name'] . "</span>"; ?>
+                                    </td>
+                                <tr>
+                                    <td colspan="2">
+                                        <form method="POST" action="Minus">
+                                            <center>
+                                                <input type="hidden" name="id" value="<?php echo $row11['cart_id']; ?>">
+                                                <?php if ($row11['cart_qty'] == '1') { ?>
+                                                    <input style="background-color:aliceblue;border: none;" type="submit" name="remove"
+                                                        value="&#10060;">
+                                                <?php } else { ?>
+                                                    <input style="background-color: #d24026;border: none;" type="submit" name="minus"
+                                                        value=" - ">
+                                                <?php } ?>
+                                                &nbsp;
+                                                <input type="text" name="qty" size="1" onfocus="blur()"
+                                                    value="<?php echo $row11['cart_qty']; ?>" style="border:none;">
+                                                &nbsp;
+                                                <input style="background-color:chartreuse;border: none;" type="submit" name="add"
+                                                    value=" + ">
+                                            </center>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Sub-Total
+                                    </td>
+                                    <td>
+                                        <?php
+                                        $total += $row11['cart_qty'] * $row1['items_cost'];
+                                        echo '<b>&#8377;' . $row11['cart_qty'] * $row1['items_cost'] . '</b>'; ?>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                            <tr>
+                                <td colspan="3">
+                                    <hr>
+                                </td>
+                            </tr>
+                            <?php
                         }
-                    }
-                    $total = $i = 0;
-                    $stmt = $conn->prepare("SELECT * FROM cart left join display_items on display_spring_id=cart_spring_id WHERE cart_user_id=:user_id AND  display_machine_id=:display_machine_id");
-                    $stmt->execute(['user_id' => $user_id, 'display_machine_id'=>$display_machine_id]);
-                    foreach ($stmt as $row11) {
-                        $i = 1;
-                        $items_id = $row11['display_items_id'];
-                        $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_id=:items_id");
-                        $stmt1->execute(['items_id' => $items_id]);
-                        foreach ($stmt1 as $row1) {
-                    ?>
+                        if ($i == 1) { ?>
                             <tr>
-                                <td rowspan="3"> <img src="./items_images/<?php echo $row1['items_image']; ?>" height="150px" width="150px"> </td>
-                                <td colspan="2">
-                                    <?php echo "<h2 style='text-transform: uppercase;'>" . $row1['items_name'] . "</h2>"; ?>
-                                </td>
-                            <tr>
-                                <td colspan="2">
-                                    <form method="POST" action="Minus">
-                                        <center>
-                                            <input type="hidden" name="id" value="<?php echo $row11['cart_id']; ?>">
-                                            <?php if ($row11['cart_qty'] == '1') { ?>
-                                                <input style="background-color:aliceblue;border: none;" type="submit" name="remove" value="&#10060;">
-                                            <?php } else { ?>
-                                                <input style="background-color: #d24026;border: none;" type="submit" name="minus" value=" - ">
-                                            <?php } ?>
-                                            &nbsp;
-                                            <input type="text" name="qty" size="1" onfocus="blur()" value="<?php echo $row11['cart_qty']; ?>">
-                                            &nbsp;
-                                            <input style="background-color:chartreuse;border: none;" type="submit" name="add" value=" + ">
-                                        </center>
-                                    </form>
-                                </td>
+                                <th colspan='2'>
+                                    <center>TOTAL AMOUNT:</center>
+                                </th>
+                                <th>
+                                    <center>&#8377;
+                                        <?php echo $total; ?>
+                                    </center>
+                                </th>
                             </tr>
                             <tr>
-                                <td>
-                                    Sub-Total
-                                </td>
-                                <td>
-                                    <?php
-                                    $total += $row11['cart_qty'] * $row1['items_cost'];
-                                    echo '<b>&#8377;' . $row11['cart_qty'] * $row1['items_cost'] . '</b>'; ?>
+                                <td colspan='3'>
+                                    <a href="Delivery">
+                                        <button
+                                            style="width:95%;height:50px;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;border-radius:25px;"
+                                            class="btn btn-success btn-sm btn-flat">
+                                            Buy Now
+                                        </button>
+                                    </a>
                                 </td>
                             </tr>
-                        <?php } ?>
-                        <tr>
-                            <td colspan="3">
-                                <hr>
-                            </td>
-                        </tr>
-                    <?php
+                        <?php }
+                        ?>
+                    </table>
+                    <?php if ($i == 0) {
+                        echo "<center>"; ?>
+                        <?php
+                        try {
+                            $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
+                            $stmt->execute(); ?>
+                            <h4 style="font-size:30px;font-family: cursive;text-transform: capitalize;">
+                                <?php
+                                foreach ($stmt as $row)
+                                    echo $row['slogan_sentance']; ?>
+                            </h4>
+                        <?php } catch (PDOException $e) {
+                            $_SESSION['error'] = "Something Went Wrong.";
+                        }
+                        $pdo->close();
+                        echo "<img src='./images/hunger.png'>";
+                        echo "<h2 style='font-family: cursive;'>Order Somthing..</h2></center>";
                     }
-                    if ($i == 1) { ?>
-                        <tr>
-                            <th colspan='2'>
-                                <center>TOTAL AMOUNT:</center>
-                            </th>
-                            <th>
-                                <center>&#8377;<?php echo $total; ?></center>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td colspan='2'>
-                                <button style="width:95%;height:50px;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;border-radius:25px;;" class="btn btn-success btn-sm buy btn-flat">Buy Now</button>
-                            </td>
-                        </tr>
-                    <?php }
                     ?>
-                </table>
-                <?php if ($i == 0) {
-                    echo "<center>"; ?>
-                    <?php
-                    try {
-                        $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
-                        $stmt->execute(); ?>
-                        <h4 style="font-size:30px;font-family: cursive;text-transform: capitalize;"><?php
-                                                                                                    foreach ($stmt as $row)
-                                                                                                        echo $row['slogan_sentance']; ?></h4>
-                <?php } catch (PDOException $e) {
-                        $_SESSION['error'] = "Something Went Wrong.";
-                    }
-                    $pdo->close();
-                    echo "<img src='./images/hunger.png'>";
-                    echo "<h2 style='font-family: cursive;'>Order Somthing..</h2></center>";
-                }
-                ?>
+                </div>
             </div>
-        </div>
-    </section>
-<?php } else { ?>
-    <center style="margin-top:20rem;">
-        <?php
+        </section>
+    <?php } else { ?>
+        <center style="margin-top:20rem;">
+            <?php
             $conn = $pdo->open();
             try {
                 $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
                 $stmt->execute(); ?>
-            <h4 style="color:red;font-size:30px;font-family: cursive;text-transform: capitalize;"><?php
-                                                                                                    foreach ($stmt as $row)
-                                                                                                        echo $row['slogan_sentance']; ?></h4>
-        <?php } catch (PDOException $e) {
+                <h4 style="color:red;font-size:30px;font-family: cursive;text-transform: capitalize;">
+                    <?php
+                    foreach ($stmt as $row)
+                        echo $row['slogan_sentance']; ?>
+                </h4>
+            <?php } catch (PDOException $e) {
                 $_SESSION['error'] = "Something Went Wrong.";
             }
             $pdo->close(); ?>
-        <a href="LogMe">
-            <button style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
-                LOGIN</button>
+            <a href="LogMe">
+                <button
+                    style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
+                    LOGIN</button>
+            </a>
+
+        </center>
+    <?php } ?>
+    <br><br><br><br>
+    <nav class="nav">
+
+        <a href="MyHome" class="nav__link ">
+            <i class="material-icons nav__icon">home</i>
+            <span class="nav__text">Home</span>
         </a>
 
-    </center>
-<?php } ?>
-<br><br><br><br>
-<nav class="nav">
+        <a href="MyProfile" class="nav__link">
+            <i class="material-icons nav__icon">person</i>
+            <span class="nav__text">Profile</span>
+        </a>
 
-    <a href="MyHome" class="nav__link ">
-        <i class="material-icons nav__icon">home</i>
-        <span class="nav__text">Home</span>
-    </a>
+        <a href="MyCart" class="nav__link nav__link--active">
+            <?php
+            $i = 0;
+            if (isset($_SESSION['vm_id'])) {
+                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
+                $stmt->execute(['user_id' => $_SESSION['vm_id']]);
+                foreach ($stmt as $row)
+                    $i++;
+                ?>
 
-    <a href="MyWallet" class="nav__link">
-        <i class="material-icons nav__icon">account_balance_wallet</i>
-        <span class="nav__text">Wallet</span>
-    </a>
-
-    <a href="MyCart" class="nav__link nav__link--active">
-        <?php
-        $i = 0;
-        if (isset($_SESSION['vm_id'])) {
-            $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id AND cart_machine_id=:machine_id");
-            $stmt->execute(['user_id' => $_SESSION['vm_id'], 'machine_id' =>$display_machine_id]);
-            foreach ($stmt as $row)
-                $i++;
-        ?>
-
-        <?php } ?>
-        <div class="container_cart">
-            <i class="material-icons nav__icon">shopping_cart</i>
-            <?php if ($i != 0) { ?>
-                <span class="badge_cart"><?php echo $i; ?></span>
             <?php } ?>
-        </div>
-        <span class="nav__text">Cart</span>
-    </a>
+            <div class="container_cart">
+                <i class="material-icons nav__icon">shopping_cart</i>
+                <?php if ($i != 0) { ?>
+                    <span class="badge_cart">
+                        <?php echo $i; ?>
+                    </span>
+                <?php } ?>
+            </div>
+            <span class="nav__text">Cart</span>
+        </a>
 
-    <a href="MySettings" class="nav__link">
-        <i class="material-icons nav__icon">settings</i>
-        <span class="nav__text">Settings</span>
-    </a>
+        <a href="MySettings" class="nav__link">
+            <i class="material-icons nav__icon">settings</i>
+            <span class="nav__text">Settings</span>
+        </a>
 
-</nav>
+    </nav>
 
 </body>
 <?php include './cart_module.php'; ?>
 <?php include 'includes/scripts.php'; ?>
 <script>
-    $(function() {
-        $(document).on('click', '.buy', function(e) {
+    $(function () {
+        $(document).on('click', '.buy', function (e) {
             e.preventDefault();
             $('#buy').modal('show');
         });
-        $(document).on('click', '.history', function(e) {
+        $(document).on('click', '.history', function (e) {
             e.preventDefault();
             $('#history').modal('show');
         });

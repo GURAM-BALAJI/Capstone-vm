@@ -1,6 +1,5 @@
 <?php include '../includes/session.php'; ?>
 <?php include '../includes/header.php';?>
-<?php if($admin['message_view']){?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -88,5 +87,4 @@
     <?php include '../includes/scripts.php'; ?>
 <!-- ./wrapper -->
 </body>
-<?php } ?>
 </html>

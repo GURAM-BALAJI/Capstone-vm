@@ -4,12 +4,10 @@ include '../includes/session.php';
 if (isset($_POST['edit'])) {
 	$id = test_input($_POST['id']);
 	$name = test_input($_POST['name']);
-	$email = test_input($_POST['email']);
+	$address = test_input($_POST['address']);
 	$password = test_input($_POST['password']);
 	$contact = test_input($_POST['contact']);
 	//Sanitizing inputs.
-	if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-		$_SESSION['error'] = "Invalid email format.";
 	if (!validateMobileNumber($contact))
 		$_SESSION['error'] = 'Invalid phone number format.';
 	if (strlen($name) > 20)
@@ -31,8 +29,8 @@ if (isset($_POST['edit'])) {
 		}
 
 		try {
-			$stmt = $conn->prepare("UPDATE admin SET admin_email=:email, admin_password=:password, admin_name=:name, admin_phone=:contact,admin_updated_date=:admin_updated_date WHERE admin_id=:id");
-			$stmt->execute(['email' => $email, 'password' => $password, 'name' => $name, 'contact' => $contact, 'admin_updated_date' => $today, 'id' => $id]);
+			$stmt = $conn->prepare("UPDATE admin SET admin_address=:admin_address, admin_password=:password, admin_name=:name, admin_phone=:contact,admin_updated_date=:admin_updated_date WHERE admin_id=:id");
+			$stmt->execute(['admin_address'=>$address,'password' => $password, 'name' => $name, 'contact' => $contact, 'admin_updated_date' => $today, 'id' => $id]);
 			$_SESSION['success'] = 'admin updated successfully';
 		} catch (PDOException $e) {
 			$_SESSION['error'] = "Something Went Wrong.";
